@@ -9,7 +9,7 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: null,
-  label: 'عنوان'
+  label: ''
 });
 
 const emit = defineEmits(['changed', 'update:modelValue']);
@@ -29,11 +29,12 @@ const text = computed({
 
 <template>
   <div style="width:100%">
-    <v-text-field
-      v-model="text"
-      clearable
-      :label="label"
-    ></v-text-field>
+    <div class="form-group">
+      <div class="row">
+        <label v-if="label!=''" for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">{{ label }} : </label>
+        <v-text-field :class= "`${label=='' ?'col-sm-12' : 'col-sm-9' }`" density="compact" v-model="text" clearable variant="solo"></v-text-field>
+      </div>
+    </div>
   </div>
 </template>
 

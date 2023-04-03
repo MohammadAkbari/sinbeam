@@ -1,5 +1,7 @@
 export enum TabItems {
 
+    Welcome = 0,
+
     GeneralDetails = 1,
     Localisation = 2, 
     Beam = 3, 

@@ -24,7 +24,8 @@ const selected = computed({
 </script>
 <template>
     <v-card>
-        <v-tabs bg-color="grey-lighten-1" v-model="selected" center-active>
+        <v-tabs bg-color="blue-lighten-3" v-model="selected" center-active>
+            <v-tab value="0">Welcome</v-tab>
             <v-tab value="1">General Details</v-tab>
             <v-tab value="2">Localisation</v-tab>
             <v-tab value="3">Beam</v-tab>

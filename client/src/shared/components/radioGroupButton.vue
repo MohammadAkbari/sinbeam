@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
   <div style="width:100%">    
-    <v-radio-group v-model="selected" :label="label">
+    <v-radio-group v-model="selected" :label="label" density="compact">
       <v-radio v-for="(item,index ) in props.items" :key="index" :label="item[props.title]" :value="item[props.value]" ></v-radio>
     </v-radio-group>
   </div>

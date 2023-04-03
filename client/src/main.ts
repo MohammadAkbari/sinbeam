@@ -12,7 +12,7 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import 'bootstrap/dist/css/bootstrap.rtl.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './assets/main.css';
 

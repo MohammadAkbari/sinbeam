@@ -36,8 +36,10 @@ import { defineAsyncComponent, ref } from 'vue';
 
 const seletedTab = ref(1 as TabItems);
 
-const tabComponent = computed(()=>{  
+const tabComponent = computed(() => {
   switch (+seletedTab.value) {
+    case +TabItems.Welcome:
+      return defineAsyncComponent(() => import('./tabs/welcome.vue'));
     case +TabItems.GeneralDetails:
       return defineAsyncComponent(() => import('./tabs/generalDetails.vue'));
     case +TabItems.Localisation:
@@ -74,26 +76,32 @@ const tabComponent = computed(()=>{
 
 
 <template>
-  <div class="row">
-    <div class="col col-12">
-      <tabs v-model="seletedTab" />  
-      <component :is="tabComponent" />
-    </div>
+    
+      <tabs v-model="seletedTab" />
+
+      <div class="container h-100" style="height: 100%;background-color: #fff;padding: 20px;">
+        <component :is="tabComponent" />
+      </div>
+
+
+
+
+   
     <!-- <div class="col col-6">
-        <single-select label="انتخاب کنید" :items="items" v-model="item" value="abbr" title="state"
-          @changed="changeDropDown($event)" />
+          <single-select label="انتخاب کنید" :items="items" v-model="item" value="abbr" title="state"
+            @changed="changeDropDown($event)" />
       
-        <persian-date-picker label="تاریخ" v-model="date" @changed="changedate" />
+          <persian-date-picker label="تاریخ" v-model="date" @changed="changedate" />
 
-        <radio-group-button v-model="selected" :items="items" value="abbr" title="state"/>
+          <radio-group-button v-model="selected" :items="items" value="abbr" title="state"/>
 
-        <check-box v-model="isActive"/>
-        <input-text v-model="text"/>
+          <check-box v-model="isActive"/>
+          <input-text v-model="text"/>
 
-        <input-number v-model="number"/>
+          <input-number v-model="number"/>
 
       
 
-      </div> -->
-  </div>
+        </div> -->
+ 
 </template>
