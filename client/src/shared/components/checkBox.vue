@@ -31,8 +31,11 @@ const selected = computed({
 
 <template>
   <div style="width:100%">
-    <v-checkbox-btn v-model="selected" :label="label" class="pe-2" >
-    </v-checkbox-btn>
+    <!-- <q-checkbox dense v-model="selected" :label="label" color="beam" class="pe-2"/> -->
+
+
+    <!-- <v-checkbox-btn v-model="selected" :label="label" class="pe-2" > -->
+    <!-- </v-checkbox-btn> -->
   </div>
 </template>
 

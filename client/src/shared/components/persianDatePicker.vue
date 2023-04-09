@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from '@vue/reactivity';
-import Vue3PersianDatetimePicker from 'vue3-persian-datetime-picker';
+// import Vue3PersianDatetimePicker from 'vue3-persian-datetime-picker';
 
 export interface Props {  
   modelValue:string;
@@ -32,7 +32,7 @@ const date = computed({
 
 <template>
   <div style="width:100%">
-    <Vue3PersianDatetimePicker    
+    <custom-date-picker    
         v-model="date"
         :disabled="props.isDisabled"
         :clearable="isClearable"        

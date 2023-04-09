@@ -14,12 +14,14 @@ const ULDItems = [
 ];
 
 const desigenItem = ref(undefined);
-const uldItem = ref(undefined);
+const uldItem = ref('FL');
 
 </script>
 
 
 <template>    
-    <radio-group-button v-model="desigenItem" :items="desigenItems" value="abbr" title="state" label="Desigen To"/>
-    <radio-group-button v-model="uldItem" :items="ULDItems" value="abbr" title="state" label="ULS Loads calculated to EN 1990"/>
+
+    <radio-group-button v-model="desigenItem" :items="desigenItems" name="desigenItems" value="abbr" title="state" label="Desigen To"/>
+   
+    <radio-group-button v-model="uldItem" :items="ULDItems" name="ULDItems" value="abbr" title="state" label="ULS Loads calculated to EN 1990"/>
 </template>

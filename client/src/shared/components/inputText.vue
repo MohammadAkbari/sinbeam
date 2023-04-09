@@ -28,12 +28,10 @@ const text = computed({
 </script>
 
 <template>
-  <div style="width:100%">
-    <div class="form-group">
-      <div class="row">
-        <label v-if="label!=''" for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">{{ label }} : </label>
-        <v-text-field :class= "`${label=='' ?'col-sm-12' : 'col-sm-9' }`" density="compact" v-model="text" clearable variant="solo"></v-text-field>
-      </div>
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">{{ label }} : </label>
+    <div class="col-sm-9">
+      <input type="text" v-model="text" class="form-control" />
     </div>
   </div>
 </template>

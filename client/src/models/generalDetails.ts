@@ -5,5 +5,6 @@ export default class GeneralDetails extends BaseModel{
     public project:string;
     public beam:string;
     public designer:string;
-    public notes:string;
+    public note:string;
+    public orderDate:Date;
 }

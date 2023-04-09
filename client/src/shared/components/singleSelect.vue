@@ -25,7 +25,20 @@ const changeRoute =function(event:any){
 
 <template>
   <div style="width:100%">
-    <v-select
+
+    <!-- <q-select
+      :dense="true"
+      filled 
+      emit-value
+      v-model="props.modelValue"
+      :options="props.items"     
+      :option-value="props.value"
+      :option-label="props.title"
+      @update:modelValue="changeRoute"
+      
+      clearable/> -->
+
+    <!-- <v-select
       v-model="props.modelValue"   
       :items="props.items"
       :item-title="props.title"
@@ -34,7 +47,7 @@ const changeRoute =function(event:any){
       variant="solo"
       @update:modelValue="changeRoute"
       clearable
-  ></v-select>  
+  ></v-select>   -->
   </div>
 </template>
 
