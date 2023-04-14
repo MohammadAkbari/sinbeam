@@ -11,8 +11,9 @@ import inputNumber from '@/shared/components/inputNumber.vue';
 import { TabItems } from '@/enums/tabItems';
 import { computed } from '@vue/reactivity';
 // import TabItems from '@/enums/tabItems.ts';
-import { defineAsyncComponent, provide, ref } from 'vue';
+import { defineAsyncComponent, provide, reactive, ref } from 'vue';
 import ApiService from '@/core/services/api.service';
+import type Link from '@/models/link';
 
 // const items = [
 //   { state: 'Florida', abbr: 'FL' },
@@ -100,15 +101,21 @@ const changeTab = (value: number) => {
 const seletedTab = ref(0 as TabItems);
 const topSeletedTab = ref(0 as TabItems);
 
-const newxtStep = () => {
+const links = ref([] as Link[]);
+
+const nextStep = () => {
   seletedTab.value++;
 
-  if(seletedTab.value>topSeletedTab.value)
+  if (seletedTab.value > topSeletedTab.value)
     topSeletedTab.value = seletedTab.value;
 }
 
+const saveLinks = (newLinks) => {
+  links.value.push(...(newLinks.filter(e=>!links.value.some(q=>q.rel == e.rel))));
+}
 
-provide('apiServise',new ApiService)
+
+provide('apiServise', new ApiService)
 
 const tabComponent = computed(() => {
   switch (+seletedTab.value) {
@@ -150,19 +157,22 @@ const tabComponent = computed(() => {
   <div class="d-flex align-items-start">
     <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
       <template v-for="(item, index) in list" :key="index">
-        <button @click="changeTab(item.value)" 
-          :disabled="topSeletedTab < item.value"
-          :class="`nav-link ${item.value == seletedTab ? 'active' : ''}`"
-          :id="`v-pills-tab-${item.value}`" :data-bs-target="`#v-pills-${item.value}`" type="button" role="tab"
-          :aria-controls="`v-pills-${item.value}`" :aria-selected="item.value == seletedTab">{{ item.title }}</button>
+        <button @click="changeTab(item.value)" :disabled="topSeletedTab < item.value"
+          :class="`nav-link ${item.value == seletedTab ? 'active' : ''}`" :id="`v-pills-tab-${item.value}`"
+          :data-bs-target="`#v-pills-${item.value}`" type="button" role="tab" :aria-controls="`v-pills-${item.value}`"
+          :aria-selected="item.value == seletedTab">{{ item.title }}</button>
       </template>
     </div>
-    <div class="tab-content" id="v-pills-tabContent" style="width: 100%;">
-      <div class="tab-pane fade show active" :id="`v-pills-${seletedTab}`" role="tabpanel"      
+    <div class="tab-content" id="v-pills-tabContent" style="width: 100%;">  
+      <div class="tab-pane fade show active" :id="`v-pills-${seletedTab}`" role="tabpanel"
         :aria-labelledby="`v-pills-tab-${seletedTab}`">
-        <component :is="tabComponent" :isCreate="topSeletedTab == seletedTab"/>
+        <component :is="tabComponent" :hasCreated="topSeletedTab == seletedTab" :links='links' @saveLinks="saveLinks($event)" @nextStep="nextStep" />
         <div class="row">
-          <button @click="newxtStep()">next</button>
+          <div class="col col-md-3"> 
+           
+            <!-- <button class="btn btn-success" @click="nextStep()">next</button> -->
+          </div>
+         
         </div>
       </div>
     </div>

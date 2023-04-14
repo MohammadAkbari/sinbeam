@@ -30,8 +30,7 @@ const text = computed({
 <template>
   <div class="mb-3 row">
     <label v-if="label!=''" class="col-sm-3 col-form-label">{{ label }} : </label>
-    <div class="col-sm-9">
-      {{ text }}
+    <div class="col-sm-9">   
       <textarea v-model="text" :class="`form-control ${label=='' ?'col-sm-12' : 'col-sm-9' }`" rows="3"></textarea>
     </div>
   </div>

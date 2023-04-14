@@ -5,6 +5,7 @@ import { computed } from '@vue/reactivity';
 export interface Props {
   modelValue: any;
   label?: string;
+  name: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -30,13 +31,12 @@ const selected = computed({
 </script>
 
 <template>
-  <div style="width:100%">
-    <!-- <q-checkbox dense v-model="selected" :label="label" color="beam" class="pe-2"/> -->
-
-
-    <!-- <v-checkbox-btn v-model="selected" :label="label" class="pe-2" > -->
-    <!-- </v-checkbox-btn> -->
-  </div>
+    <div class="form-check">
+      <label class="form-check-label" :for="name">
+        {{ label }}
+      </label>
+      <input class="form-check-input" type="checkbox" :value="selected" :id="name" v-model="selected">
+    </div>
 </template>
 
 <style scoped></style>

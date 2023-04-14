@@ -1,7 +1,18 @@
+<script setup lang="ts">
+
+const emit = defineEmits(['nextStep']);
+
+const next=()=>{
+    emit('nextStep');
+}
+</script>
 <template>
     <div style="text-align:center;margin-top:20%">
         <h1 class="blinking">WELCOME</h1>
     </div>
+    <div class="row">
+            <button class="btn btn-success col col-md-4" @click="next()"> next</button>
+        </div>
 </template>
 <style scoped>
 .blinking {
