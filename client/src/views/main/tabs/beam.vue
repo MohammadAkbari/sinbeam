@@ -81,13 +81,13 @@ const refreshSectionDrawing = () => {
     });
 }
 
-const saveModel = (isNextStep = false)=>{
-  apiServise.callApi(props.links, constants.beam.saveBeam,beamDto).then((data) => {
-    if(isNextStep){
-        unwatch();
-        emit('nextStep');
-    }
-  });
+const saveModel = (isNextStep = false) => {
+    apiServise.callApi(props.links, constants.beam.saveBeam, beamDto).then((data) => {
+        if (isNextStep) {
+            unwatch();
+            emit('nextStep');
+        }
+    });
 }
 
 
@@ -97,7 +97,7 @@ const saveModel = (isNextStep = false)=>{
 <template>
     <div class="row">
         <div class="col col-md-9">
-            <panel label="general">
+            <panel label="Web">
                 <template v-slot:body>
                     <div class="row">
                         <div class="col col-md-6">
@@ -110,7 +110,7 @@ const saveModel = (isNextStep = false)=>{
                     <div class="row">
                         <div class="col col-md-6">
                             <input-number v-if="beamDto.isUniformDepth" label="Web depth (mm)" :labelWidth="7"
-                                v-model="beamDto.webThickness" />
+                                v-model="beamDto.webDepthLeft" />
                             <input-number v-else label="Web depth, left (mm)" :labelWidth="7"
                                 v-model="beamDto.webDepthLeft" />
                         </div>
@@ -118,9 +118,23 @@ const saveModel = (isNextStep = false)=>{
                             <input-number label="Web depth, right (mm)" v-model="beamDto.webDepthRight" :labelWidth="7" />
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col col-md-6">
+                            <single-select :items="webThicknessCollection" v-model="beamDto.webThickness"
+                                label="Web thickness" :labelWidth="7" />
+                        </div>
+                        <div class="col col-md-6">
+                            <fieldset class="border rounded-3 p-3">
+                                <legend class="float-none w-auto px-3" style="line-height: 0px; font-size: 16px;">
+                                    Web Steel
+                                </legend>
+                                <radio-group-button name="center" :items="listRadioBotton" :isInline="true" />
+                            </fieldset>
+                        </div>
+                    </div>
                 </template>
             </panel>
-            <panel label="top">
+            <panel label="Top Flange">
                 <template v-slot:body>
                     <div class="row">
                         <div class="col col-md-6">
@@ -140,26 +154,7 @@ const saveModel = (isNextStep = false)=>{
                     </div>
                 </template>
             </panel>
-            <panel label="center">
-                <template v-slot:body>
-                    <div class="row">
-                        <div class="col col-md-6">
-                            <single-select :items="webThicknessCollection" v-model="beamDto.webThickness"
-                                label="Web thickness" :labelWidth="7" />
-
-                        </div>
-                        <div class="col col-md-6">
-                            <fieldset class="border rounded-3 p-3">
-                                <legend class="float-none w-auto px-3" style="line-height: 0px; font-size: 16px;">
-                                    Web Steel
-                                </legend>
-                                <radio-group-button name="center" :items="listRadioBotton" :isInline="true" />
-                            </fieldset>
-                        </div>
-                    </div>
-                </template>
-            </panel>
-            <panel label="Bottom">
+            <panel label="Bottom Flange">
                 <template v-slot:body>
                     <div class="row">
                         <div class="col col-md-6">
@@ -169,7 +164,6 @@ const saveModel = (isNextStep = false)=>{
                                 label="Bottom flange width" :labelWidth="7" />
                         </div>
                         <div class="col col-md-6">
-
                             <fieldset class="border rounded-3 p-3">
                                 <legend class="float-none w-auto px-3" style="line-height: 0px; font-size: 16px;">
                                     Bottom flange

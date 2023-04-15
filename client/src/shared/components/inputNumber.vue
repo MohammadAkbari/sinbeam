@@ -10,7 +10,6 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: null,
-  label: 'مقدار',
   labelWidth:3
 });
 
@@ -39,7 +38,7 @@ const text = computed({
 
 
   <div class="mb-3 row " style="margin-bottom: 1px!important">
-    <label :class="`col-sm-${props.labelWidth} col-form-label`" style="padding-right: 0px;">{{ label }} :</label>
+    <label v-if="label" :class="`col-sm-${props.labelWidth} col-form-label`" style="padding-right: 0px;">{{ label }} :</label>
     <div :class="`col-sm-${12-props.labelWidth}`">
       <input type="number" v-model.number="text" class="form-control form-control-sm" />
     </div>

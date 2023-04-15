@@ -1,7 +1,8 @@
 import type { LoadType } from "@/enums/loadType";
 import type Link from "./link";
 import type LoadParameters from "./loadParameters";
-import type PointLoadDto from "./pointLoadDto";
+import type UltimatePointLoadDto from "./ultimatePointLoadDto";
+import type CharacteristicPointLoadDto from "./characteristicPointLoadDto";
 
 export default class LoadingDto {
     selfWeight: number;
@@ -10,7 +11,7 @@ export default class LoadingDto {
     permanentLoads: LoadParameters;
     variableLoads: LoadParameters;
     ultimateLoads: LoadParameters;
-    pointLoads: PointLoadDto[];
-
+    ultimatePointLoads: UltimatePointLoadDto[];
+    CharacteristicPointLoads:CharacteristicPointLoadDto[];
     _links: Link[];
 }

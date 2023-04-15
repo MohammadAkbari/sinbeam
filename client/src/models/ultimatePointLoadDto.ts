@@ -1,6 +1,6 @@
 import BaseModel from "./baseModel";
 
-export default class PointLoadDto extends BaseModel {
+export default class UltimatePointLoadDto extends BaseModel {
     position: number;
     load: number;
 }
