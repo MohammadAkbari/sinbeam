@@ -96,7 +96,11 @@ const saveModel = (isNextStep = false) => {
 
 <template>
     <div class="row">
+<<<<<<< HEAD
         <div class="col col-md-9">
+=======
+        <div class="col col-md-9"> 
+>>>>>>> 3680c24ddf142e8ead9cbcf6de034d22d2f0af70
             <panel label="Web">
                 <template v-slot:body>
                     <div class="row">
@@ -118,10 +122,18 @@ const saveModel = (isNextStep = false) => {
                             <input-number label="Web depth, right (mm)" v-model="beamDto.webDepthRight" :labelWidth="7" />
                         </div>
                     </div>
+<<<<<<< HEAD
                     <div class="row">
                         <div class="col col-md-6">
                             <single-select :items="webThicknessCollection" v-model="beamDto.webThickness"
                                 label="Web thickness" :labelWidth="7" />
+=======
+                     <div class="row">
+                        <div class="col col-md-6">
+                            <single-select :items="webThicknessCollection" v-model="beamDto.webThickness"
+                                label="Web thickness" :labelWidth="7" />
+
+>>>>>>> 3680c24ddf142e8ead9cbcf6de034d22d2f0af70
                         </div>
                         <div class="col col-md-6">
                             <fieldset class="border rounded-3 p-3">
