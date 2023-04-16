@@ -2,7 +2,7 @@
 
 const emit = defineEmits(['nextStep']);
 
-const next=()=>{
+const next = () => {
     emit('nextStep');
 }
 </script>
@@ -10,9 +10,17 @@ const next=()=>{
     <div style="text-align:center;margin-top:20%">
         <h1 class="blinking">WELCOME</h1>
     </div>
-    <div class="row">
-            <button class="btn btn-success col col-md-4" @click="next()"> next</button>
-        </div>
+
+
+    <div class="row" style="position: absolute;bottom: 70px;right: 75px; justify-content: end; display: flex;width: 100%;">
+        <button class="btn btn-primary col col-md-2 mx-2" @click="next()">next</button>
+    </div>
+<!-- 
+        <div class="card-body" style="position: absolute;bottom: 70px;right: 75px;">
+            
+            <button class="btn btn-primary col col-md-2 mx-2"  @click="next()">
+                next</button>
+    </div> -->
 </template>
 <style scoped>
 .blinking {
@@ -25,7 +33,7 @@ const next=()=>{
     }
 
     49% {
-        color: #0054a6;
+        olor: #0054a6;
     }
 
     50% {

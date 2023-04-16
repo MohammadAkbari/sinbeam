@@ -59,8 +59,10 @@ const nextStep = ()=>{
             </panel>
         </div>
     </div>
-    <div class="row">
-        
-        <button class="btn btn-success col col-md-4" @click="nextStep()">next</button>
+
+
+    <div class="row" style="position: absolute;bottom: 30px;right: 75px; justify-content: end; display: flex;width: 100%;">
+
+        <button class="btn btn-success col col-md-2 mx-2" @click="nextStep()">next</button>
     </div>
 </template>

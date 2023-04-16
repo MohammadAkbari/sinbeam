@@ -53,27 +53,31 @@ const saveModel = (isNextStep = false) => {
 <template>
     <div class="form-horizontal">
         <div class="row">
-            <div class="col col-6">
+            <div class="col col-12">
+                <div class="col col-6">
                 <input-text label="Company" v-model="generalDetails.company" />
                 <input-text label="Project" v-model="generalDetails.project" />
                 <input-text label="Beam" v-model="generalDetails.beam" />
                 <input-text label="Designer" v-model="generalDetails.designer" />
                 <text-area label="Note" v-model="generalDetails.note" />
             </div>
-            <div class="col col-6">
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Date : </label>
+            </div>
+            <div class="col col-12">
+                <Div class="col col-sm-6">
+                <div class="mb-1 row">
+                    <label class="col-sm-3 col-form-label">Date : </label>
                     <div class="col-sm-9">
                         <datepicker v-model="generalDetails.orderDate" class="form-control" />
                     </div>
+                </Div>
                 </div>
 
                 <!-- <miladi-date-picker label="date" v-model="generalDetails.date"/> -->
             </div>
         </div>
-        <div class="row">
-            <button class="btn btn-primary col col-md-4" @click="saveModel()">save</button>
-            <button class="btn btn-success col col-md-4" @click="saveModel(true)">save and next</button>
-        </div>
+            <div class="row" style="position: absolute;bottom: 70px;right: 75px; justify-content: end; display: flex;width: 100%;">
+                <button class="btn btn-primary col col-md-2 mx-2" @click="saveModel()">save</button>
+                <button class="btn btn-success col col-md-2 mx-2" @click="saveModel(true)">save and next</button>
+            </div>
     </div>
 </template>

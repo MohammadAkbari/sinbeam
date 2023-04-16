@@ -94,7 +94,7 @@ const psiList = [
 
 <template>
   <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-4">
       <panel label="Desigen To">
         <template v-slot:body>
           <radio-group-button v-model="localizationDto.designType" :items="designTypes" name="desigenItems" value="id"
@@ -145,7 +145,7 @@ const psiList = [
         </template>
       </panel>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       <panel label="Deflection Limits(span/limit)">
         <template v-slot:body>
           <input-number v-model="localizationDto.deflectionLimit.variableLoads" label="Variable loads" :labelWidth="7" />
@@ -154,8 +154,9 @@ const psiList = [
       </panel>
     </div>
   </div>
-  <div class="row">
-    <button class="btn btn-primary col col-md-4" @click="saveModel()">save</button>
-    <button class="btn btn-success col col-md-4" @click="saveModel(true)">save and next</button>
+
+  <div class="row" style="position: absolute;bottom: 70px;right: 75px; justify-content: end; display: flex;width: 100%;">
+    <button class="btn btn-primary col col-md-2 mx-2" @click="saveModel()">save</button>
+    <button class="btn btn-success col col-md-2 mx-2" @click="saveModel(true)">save and next</button>
   </div>
 </template>

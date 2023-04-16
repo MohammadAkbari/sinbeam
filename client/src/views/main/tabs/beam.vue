@@ -96,12 +96,8 @@ const saveModel = (isNextStep = false) => {
 
 <template>
     <div class="row">
-<<<<<<< HEAD
         <div class="col col-md-9">
-=======
-        <div class="col col-md-9"> 
->>>>>>> 3680c24ddf142e8ead9cbcf6de034d22d2f0af70
-            <panel label="Web">
+            <panel label="Web" style="margin-bottom: 10px;">
                 <template v-slot:body>
                     <div class="row">
                         <div class="col col-md-6">
@@ -122,21 +118,15 @@ const saveModel = (isNextStep = false) => {
                             <input-number label="Web depth, right (mm)" v-model="beamDto.webDepthRight" :labelWidth="7" />
                         </div>
                     </div>
-<<<<<<< HEAD
+
                     <div class="row">
                         <div class="col col-md-6">
                             <single-select :items="webThicknessCollection" v-model="beamDto.webThickness"
                                 label="Web thickness" :labelWidth="7" />
-=======
-                     <div class="row">
-                        <div class="col col-md-6">
-                            <single-select :items="webThicknessCollection" v-model="beamDto.webThickness"
-                                label="Web thickness" :labelWidth="7" />
 
->>>>>>> 3680c24ddf142e8ead9cbcf6de034d22d2f0af70
                         </div>
                         <div class="col col-md-6">
-                            <fieldset class="border rounded-3 p-3">
+                            <fieldset class="border rounded-3 px-3">
                                 <legend class="float-none w-auto px-3" style="line-height: 0px; font-size: 16px;">
                                     Web Steel
                                 </legend>
@@ -146,7 +136,7 @@ const saveModel = (isNextStep = false) => {
                     </div>
                 </template>
             </panel>
-            <panel label="Top Flange">
+            <panel label="Top Flange"  style="margin-bottom: 10px;">
                 <template v-slot:body>
                     <div class="row">
                         <div class="col col-md-6">
@@ -166,7 +156,7 @@ const saveModel = (isNextStep = false) => {
                     </div>
                 </template>
             </panel>
-            <panel label="Bottom Flange">
+            <panel label="Bottom Flange"  style="margin-bottom: 10px;">
                 <template v-slot:body>
                     <div class="row">
                         <div class="col col-md-6">
@@ -195,8 +185,9 @@ const saveModel = (isNextStep = false) => {
             </div>
         </div>
     </div>
-    <div class="row">
-        <button class="btn btn-primary col col-md-4" @click="saveModel()">save</button>
-        <button class="btn btn-success col col-md-4" @click="saveModel(true)">save and next</button>
+
+    <div class="row" style="position: absolute;bottom: 70px;right: 75px; justify-content: end; display: flex;width: 100%;">
+        <button class="btn btn-primary col col-md-2 mx-2" @click="saveModel()">save</button>
+        <button class="btn btn-success col col-md-2 mx-2" @click="saveModel(true)">save and next</button>
     </div>
 </template>

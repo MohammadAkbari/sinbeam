@@ -13,6 +13,7 @@ import router from './router'
 //import Quasar from "quasar-framework/dist/quasar.mat.esm";
 //Vue.use(Quasar, { components: [QLayout, QInput, QBtn] });
 
+import '@/assets/fontawesome/css/all.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 
