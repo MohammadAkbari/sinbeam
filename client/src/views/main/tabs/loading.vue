@@ -324,23 +324,18 @@ const updateShape = () => {
 
         <div class="row">
 
-
-
-
-
-            <div
-                style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;border-radius: 15px;padding: 15px; position: relative; height: 150px;">
+            <div style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;border-radius: 15px;padding: 15px; position: relative; height: 150px;">
 
                 <div style="margin: 5px 50px; height: 15px">
                     <div :style="`width :${leftWidth}%;height:100%;display: inline-block`"></div>
-                    <div :style="`width :${centerWidth}%;background-color: black;height:100%;display: inline-block`"></div>
+                    <div :style="`width :${centerWidth}%;background-color: #fdc3c3;height:100%;display: inline-block`"></div>
                     <!-- <div :style="`width :${rightWidth}%;height:100%;display: inline`"></div> -->
                 </div>
 
 
 
                 <div v-if="loadingDto.loadType == loadTypeCharacteristicLoads ? loadingDto.permanentLoads.udl : loadingDto.ultimateLoads.udl"
-                    style="background-color: black; margin: 5px 50px; height: 15px"></div>
+                    style="background-color: #94fdd6; margin: 5px 50px; height: 15px"></div>
                 <div v-else style="margin: 5px 50px; height: 15px"></div>
 
               
