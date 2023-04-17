@@ -82,7 +82,7 @@ const refreshSectionDrawing = () => {
 }
 
 const saveModel = (isNextStep = false) => {
-    apiServise.callApi(props.links, constants.beam.saveBeam, beamDto).then((data) => {
+    apiServise.callApi(props.links, constants.beam.saveBeam, beamDto.value).then((data) => {
         if (isNextStep) {
             unwatch();
             emit('nextStep');

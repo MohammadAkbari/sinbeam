@@ -115,6 +115,8 @@ const updateShape = () => {
             </div>
             <div class="col col-md-6">
 
+                <div style="text-align: right; font-size: 14px; font-weight: 600;">Self Weight: {{ loadingDto.selfWeight }}</div>
+                <hr />
                 <label class="col col-md-4"></label>
                 <template v-if="loadingDto.loadType == loadTypeCharacteristicLoads">
                     <label class="col col-md-2" style="margin: 0 7px;">Permanent</label>
@@ -373,7 +375,7 @@ const updateShape = () => {
                     <div style="width: 48%;">
                         <hr class="arrow left">
                     </div>
-                    <div style="width: 4%; padding: 0 5px;">{{ loadingDto.span }}</div>
+                    <div style="width: 4%; padding: 5px 5px; text-align: center; font-size: 14px;">{{ loadingDto.span }}</div>
                     <div style="width: 48%;">
                         <hr class="arrow">
                     </div>
