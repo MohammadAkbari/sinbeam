@@ -78,15 +78,17 @@ const ultimatePoints = computed(()=>{
     console.log(loadingDto.value.loadType);
 
     if(loadingDto.value.loadType == loadTypeCharacteristicLoads){
-        if (loadingDto.value.CharacteristicPointLoads && loadingDto.value.CharacteristicPointLoads.every(e=>e.position >=0 && e.position <= loadingDto.value.span))
+        if (loadingDto.value.CharacteristicPointLoads)
             return loadingDto.value.CharacteristicPointLoads
+            .filter(e=>e.position >=0 && e.position <= loadingDto.value.span)
             .filter(e=>!isNullOrUndefinedOrEmpty(e.position))
             .filter(e=>!isNullOrUndefinedOrEmpty(e.permanentAction) || !isNullOrUndefinedOrEmpty(e.variableAction))
             .map(e=>e.position*100/loadingDto.value.span);
     
     }else{
-        if (loadingDto.value.ultimatePointLoads && loadingDto.value.ultimatePointLoads.every(e=>e.position >=0 && e.position <= loadingDto.value.span))
+        if (loadingDto.value.ultimatePointLoads)
             return loadingDto.value.ultimatePointLoads
+            .filter(e=>e.position >=0 && e.position <= loadingDto.value.span)
             .filter(e=>!isNullOrUndefinedOrEmpty(e.position))
             .filter(e=>!isNullOrUndefinedOrEmpty(e.load))
             .map(e=>e.position*100/loadingDto.value.span)
