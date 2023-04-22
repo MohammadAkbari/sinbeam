@@ -83,15 +83,17 @@ const ultimatePoints = computed(()=>{
             .filter(e=>!isNullOrUndefinedOrEmpty(e.position))
             .filter(e=>!isNullOrUndefinedOrEmpty(e.permanentAction) || !isNullOrUndefinedOrEmpty(e.variableAction))
             .map(e=>e.position*100/loadingDto.value.span);
+    
     }else{
         if (loadingDto.value.ultimatePointLoads && loadingDto.value.ultimatePointLoads.every(e=>e.position >=0 && e.position <= loadingDto.value.span))
             return loadingDto.value.ultimatePointLoads
             .filter(e=>!isNullOrUndefinedOrEmpty(e.position))
             .filter(e=>!isNullOrUndefinedOrEmpty(e.load))
-            .map(e=>e.position*100/loadingDto.value.span);
-    }
+            .map(e=>e.position*100/loadingDto.value.span)
     
-    return [];
+    
+        return [];
+    }
 });
 
 const isNullOrUndefinedOrEmpty =(val)=> val == null || val == undefined || val === ' ' || val === '';
