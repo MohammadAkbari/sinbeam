@@ -14,7 +14,6 @@ export default class ApiService {
 
 
 callApi = async (links :Link[],key:string ,model = null) => {
-debugger
   const link = links.find(e=>e.rel == key);
 
   switch(link.method.toLocaleLowerCase()){

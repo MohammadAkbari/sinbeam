@@ -9,7 +9,7 @@ html, body {
 body {
   /* font-family: IRANSans; */
   font-style: normal;
-  overflow: hidden;
+  overflow: auto;
   background-color: #f2f2f2;
 }
 

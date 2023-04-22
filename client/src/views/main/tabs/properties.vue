@@ -21,10 +21,6 @@ const apiServise = inject('apiServise') as ApiServise;
 const properties = ref({} as Properties);
 
 apiServise.callApi(props.links, constants.properties.getProperties).then((data: Properties) => {
-
-debugger
-
-
     properties.value = data;
 });
 

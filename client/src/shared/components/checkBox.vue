@@ -17,12 +17,10 @@ const emit = defineEmits(['changed', 'update:modelValue']);
 
 const selected = computed({
   get: () => {
-    debugger
     const val = props.modelValue;
     return val;
   },
   set: (val) => {
-    debugger
     emit('update:modelValue', val);
     emit('changed', val);
   },

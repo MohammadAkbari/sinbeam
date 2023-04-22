@@ -2,7 +2,7 @@
 import type Link from '@/models/link';
 import type ApiServise from '@/core/services/api.service';
 
-import { inject, reactive, ref, watch } from 'vue';
+import { computed, inject, reactive, ref, watch } from 'vue';
 import constants from '@/shared/globals/constants';
 import type BeamDto from '@/models/beamDto';
 import type ListItem from '@/models/listItem';
@@ -41,7 +41,6 @@ const loadTypeCharacteristicLoads = LoadType.CharacteristicLoads;
 
 apiServise.callApi(props.links, constants.loading.getLoading).then((data: LoadingDto) => {
 
-    console.log(data)
     loadingDto.value.loadType = data.loadType;
     loadingDto.value.selfWeight = data.selfWeight;
     loadingDto.value.span = data.span;
@@ -74,6 +73,30 @@ const removeUltimatePointLoads = (index) => loadingDto.value.ultimatePointLoads.
 const leftWidth = ref(0 as number);
 const centerWidth = ref(0 as number);
 
+const ultimatePoints = computed(()=>{
+    console.log(loadTypeCharacteristicLoads);
+    console.log(loadingDto.value.loadType);
+
+    if(loadingDto.value.loadType == loadTypeCharacteristicLoads){
+        if (loadingDto.value.CharacteristicPointLoads && loadingDto.value.CharacteristicPointLoads.every(e=>e.position >=0 && e.position <= loadingDto.value.span))
+            return loadingDto.value.CharacteristicPointLoads
+            .filter(e=>!isNullOrUndefinedOrEmpty(e.position))
+            .filter(e=>!isNullOrUndefinedOrEmpty(e.permanentAction))
+            .filter(e=>!isNullOrUndefinedOrEmpty(e.variableAction))
+            .map(e=>e.position*100/loadingDto.value.span);
+    }else{
+        if (loadingDto.value.ultimatePointLoads && loadingDto.value.ultimatePointLoads.every(e=>e.position >=0 && e.position <= loadingDto.value.span))
+            return loadingDto.value.ultimatePointLoads
+            .filter(e=>!isNullOrUndefinedOrEmpty(e.position))
+            .filter(e=>!isNullOrUndefinedOrEmpty(e.load))
+            .map(e=>e.position*100/loadingDto.value.span);
+    }
+    
+    return [];
+});
+
+const isNullOrUndefinedOrEmpty =(val)=> val == null || val == undefined || val === ' ' || val === '';
+
 const updateShape = () => {
 
     if (loadingDto.value.permanentLoads.partialUdlStart >= 0
@@ -81,15 +104,22 @@ const updateShape = () => {
         && loadingDto.value.permanentLoads.partialUdlEnd >= 0
         && loadingDto.value.permanentLoads.partialUdlEnd <= loadingDto.value.span
         && loadingDto.value.permanentLoads.partialUdlStart < loadingDto.value.permanentLoads.partialUdlEnd) {
+
         if (loadingDto.value.loadType == loadTypeCharacteristicLoads) {
             if (loadingDto.value.permanentLoads.partialUdl) {
                 leftWidth.value = loadingDto.value.permanentLoads.partialUdlStart * 100 / loadingDto.value.span;
                 centerWidth.value = (loadingDto.value.permanentLoads.partialUdlEnd - loadingDto.value.permanentLoads.partialUdlStart) * 100 / loadingDto.value.span;
+            }else{
+                leftWidth.value = 0
+                centerWidth.value = 0
             }
         } else {
             if (loadingDto.value.ultimateLoads.partialUdl) {
                 leftWidth.value = loadingDto.value.permanentLoads.partialUdlStart * 100 / loadingDto.value.span;
                 centerWidth.value = (loadingDto.value.permanentLoads.partialUdlEnd - loadingDto.value.permanentLoads.partialUdlStart) * 100 / loadingDto.value.span;
+            }else{
+                leftWidth.value = 0
+                centerWidth.value = 0
             }
         }
     }
@@ -110,7 +140,7 @@ const updateShape = () => {
                     <legend class="float-none w-auto px-3" style="line-height: 0px; font-size: 16px;">
                         Load Input
                     </legend>
-                    <radio-group-button name="top" :items="loadType" v-model="loadingDto.loadType" />
+                    <radio-group-button name="top" :items="loadType" v-model="loadingDto.loadType" @changed="updateShape" />
                 </fieldset>
             </div>
             <div class="col col-md-6">
@@ -311,8 +341,8 @@ const updateShape = () => {
                     <div class="col col-md-2"></div>
                     <div class="col col-md-6" style="max-height: 140px; overflow-y: scroll;">
                         <div class="row" v-for="(item, index) in loadingDto.ultimatePointLoads" :key="index">
-                            <div class="col col-md-5"> <input-number v-model="item.load" :labelWidth="0" /></div>
                             <div class="col col-md-5"> <input-number v-model="item.position" :labelWidth="0" /></div>
+                            <div class="col col-md-5"> <input-number v-model="item.load" :labelWidth="0" /></div>
                             <div class="col col-md-2">
                                 <span @click="removeUltimatePointLoads(index)" class="fa fa-minus-circle"></span>
                             </div>
@@ -334,6 +364,17 @@ const updateShape = () => {
                     <!-- <div :style="`width :${rightWidth}%;height:100%;display: inline`"></div> -->
                 </div>
 
+                <div style="margin: 5px 50px; position: relative;">   
+                    <div v-for="(item,index) in ultimatePoints" :key="index" :style="`position:absolute; bottom:-20px;left: ${item}%;`">
+                        <img src="@/assets/img/bottom.png" style="margin: -2px; height: 55px;">
+                    </div>                
+                    
+                    <!-- <span  style=" position: absolute; top: 12px; margin: 5px 50px;"></span> -->
+
+                </div>
+             
+          
+              
 
 
                 <div v-if="loadingDto.loadType == loadTypeCharacteristicLoads ? loadingDto.permanentLoads.udl : loadingDto.ultimateLoads.udl"
@@ -359,6 +400,8 @@ const updateShape = () => {
                         style="color: red; position: absolute; top: 77px; left: 35px;">
                         <img src="@/assets/img/right.png" style="height: 22px;">
                     </span>
+
+
          
 
                 <span class="fa fa-close" style="color: red; position: absolute; top: 55px; left: 60px;"></span>
