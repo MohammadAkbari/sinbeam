@@ -19,6 +19,10 @@ const constants = {
     loading: {
         getLoading: 'get-loading',
         saveLoading: 'save-loading'
-    }
+    },
+    analysis: {
+        getBending: 'get-bending'
+    },
+   
 }
 export default constants;

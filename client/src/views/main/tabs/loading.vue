@@ -8,7 +8,7 @@ import type BeamDto from '@/models/beamDto';
 import type ListItem from '@/models/listItem';
 import type LoadingDto from '@/models/loadingDto';
 
-import panel from '@/shared/components/panel.vue';
+import shape from '@/shared/components/shape.vue';
 import inputNumber from '@/shared/components/inputNumber.vue';
 import checkBox from '@/shared/components/checkBox.vue';
 import singleSelect from '@/shared/components/singleSelect.vue';
@@ -17,10 +17,7 @@ import { LoadType } from '@/enums/loadType';
 import helper from '@/shared/common/helper';
 import type CharacteristicPointLoadDto from '@/models/characteristicPointLoadDto';
 import type UltimatePointLoadDto from '@/models/ultimatePointLoadDto';
-
-
-
-
+import type LoadParameters from '@/models/loadParameters';
 
 export interface Props {
     links: Link[]
@@ -38,12 +35,22 @@ const loadType = helper.convertEnumToListItem(LoadType)
 
 const loadTypeCharacteristicLoads = LoadType.CharacteristicLoads;
 
+const reRenderShape = ref(0 as number);
+
 
 apiServise.callApi(props.links, constants.loading.getLoading).then((data: LoadingDto) => {
 
     loadingDto.value.loadType = data.loadType;
     loadingDto.value.selfWeight = data.selfWeight;
     loadingDto.value.span = data.span;
+    loadingDto.value.permanentLoads = data.permanentLoads ?? {} as LoadParameters;
+    loadingDto.value.ultimateLoads = data.ultimateLoads ?? {} as LoadParameters;
+    loadingDto.value.variableLoads = data.variableLoads ?? {} as LoadParameters;
+    loadingDto.value.ultimatePointLoads = data.ultimatePointLoads ?? [] as UltimatePointLoadDto[];
+    loadingDto.value.characteristicPointLoads = data.characteristicPointLoads ?? [] as CharacteristicPointLoadDto[];
+
+
+    reRenderShape.value++;
     // loadingDto.value.loadType = loadTypeCharacteristicLoads;
     emit('saveLinks', data._links)
 })
@@ -51,13 +58,13 @@ apiServise.callApi(props.links, constants.loading.getLoading).then((data: Loadin
 
 const addCharacteristicPointLoads = () => {
 
-    if (!loadingDto.value.CharacteristicPointLoads)
-        loadingDto.value.CharacteristicPointLoads = [] as CharacteristicPointLoadDto[];
+    if (!loadingDto.value.characteristicPointLoads)
+        loadingDto.value.characteristicPointLoads = [] as CharacteristicPointLoadDto[];
 
-    loadingDto.value.CharacteristicPointLoads.push({} as CharacteristicPointLoadDto)
+    loadingDto.value.characteristicPointLoads.push({} as CharacteristicPointLoadDto)
 };
 
-const removeCharacteristicPointLoads = (index) => loadingDto.value.CharacteristicPointLoads.splice(index, 1);
+const removeCharacteristicPointLoads = (index) => loadingDto.value.characteristicPointLoads.splice(index, 1);
 
 const addUltimatePointLoads = () => {
 
@@ -73,63 +80,48 @@ const removeUltimatePointLoads = (index) => loadingDto.value.ultimatePointLoads.
 const leftWidth = ref(0 as number);
 const centerWidth = ref(0 as number);
 
-const ultimatePoints = computed(()=>{
-    console.log(loadTypeCharacteristicLoads);
-    console.log(loadingDto.value.loadType);
-
-    if(loadingDto.value.loadType == loadTypeCharacteristicLoads){
-        if (loadingDto.value.CharacteristicPointLoads)
-            return loadingDto.value.CharacteristicPointLoads
-            .filter(e=>e.position >=0 && e.position <= loadingDto.value.span)
-            .filter(e=>!isNullOrUndefinedOrEmpty(e.position))
-            .filter(e=>!isNullOrUndefinedOrEmpty(e.permanentAction) || !isNullOrUndefinedOrEmpty(e.variableAction))
-            .map(e=>e.position*100/loadingDto.value.span);
-    
-    }else{
-        if (loadingDto.value.ultimatePointLoads)
-            return loadingDto.value.ultimatePointLoads
-            .filter(e=>e.position >=0 && e.position <= loadingDto.value.span)
-            .filter(e=>!isNullOrUndefinedOrEmpty(e.position))
-            .filter(e=>!isNullOrUndefinedOrEmpty(e.load))
-            .map(e=>e.position*100/loadingDto.value.span)
-    
-    
-        return [];
-    }
-});
-
-const isNullOrUndefinedOrEmpty =(val)=> val == null || val == undefined || val === ' ' || val === '';
-
 const updateShape = () => {
 
-    if (loadingDto.value.permanentLoads.partialUdlStart >= 0
-        && loadingDto.value.permanentLoads.partialUdlStart <= loadingDto.value.span
-        && loadingDto.value.permanentLoads.partialUdlEnd >= 0
-        && loadingDto.value.permanentLoads.partialUdlEnd <= loadingDto.value.span
-        && loadingDto.value.permanentLoads.partialUdlStart < loadingDto.value.permanentLoads.partialUdlEnd) {
+    if (loadingDto.value.loadType == loadTypeCharacteristicLoads) {
+        if (loadingDto.value.permanentLoads.partialUdl
+            && loadingDto.value.permanentLoads.partialUdlStart >= 0
+            && loadingDto.value.permanentLoads.partialUdlStart <= loadingDto.value.span
+            && loadingDto.value.permanentLoads.partialUdlEnd >= 0
+            && loadingDto.value.permanentLoads.partialUdlEnd <= loadingDto.value.span
+            && loadingDto.value.permanentLoads.partialUdlStart < loadingDto.value.permanentLoads.partialUdlEnd) {
 
-        if (loadingDto.value.loadType == loadTypeCharacteristicLoads) {
-            if (loadingDto.value.permanentLoads.partialUdl) {
-                leftWidth.value = loadingDto.value.permanentLoads.partialUdlStart * 100 / loadingDto.value.span;
-                centerWidth.value = (loadingDto.value.permanentLoads.partialUdlEnd - loadingDto.value.permanentLoads.partialUdlStart) * 100 / loadingDto.value.span;
-            }else{
-                leftWidth.value = 0
-                centerWidth.value = 0
-            }
+
+            leftWidth.value = loadingDto.value.permanentLoads.partialUdlStart * 100 / loadingDto.value.span;
+            centerWidth.value = (loadingDto.value.permanentLoads.partialUdlEnd - loadingDto.value.permanentLoads.partialUdlStart) * 100 / loadingDto.value.span;
         } else {
-            if (loadingDto.value.ultimateLoads.partialUdl) {
-                leftWidth.value = loadingDto.value.permanentLoads.partialUdlStart * 100 / loadingDto.value.span;
-                centerWidth.value = (loadingDto.value.permanentLoads.partialUdlEnd - loadingDto.value.permanentLoads.partialUdlStart) * 100 / loadingDto.value.span;
-            }else{
-                leftWidth.value = 0
-                centerWidth.value = 0
-            }
+            leftWidth.value = 0
+            centerWidth.value = 0
+        }
+    } else {
+        if (loadingDto.value.ultimateLoads.partialUdl
+            && loadingDto.value.ultimateLoads.partialUdlStart >= 0
+            && loadingDto.value.ultimateLoads.partialUdlStart <= loadingDto.value.span
+            && loadingDto.value.ultimateLoads.partialUdlEnd >= 0
+            && loadingDto.value.ultimateLoads.partialUdlEnd <= loadingDto.value.span
+            && loadingDto.value.ultimateLoads.partialUdlStart < loadingDto.value.ultimateLoads.partialUdlEnd) {
+
+            leftWidth.value = loadingDto.value.ultimateLoads.partialUdlStart * 100 / loadingDto.value.span;
+            centerWidth.value = (loadingDto.value.ultimateLoads.partialUdlEnd - loadingDto.value.ultimateLoads.partialUdlStart) * 100 / loadingDto.value.span;
+        } else {
+            leftWidth.value = 0
+            centerWidth.value = 0
         }
     }
-    else {
-        leftWidth.value = 0
-        centerWidth.value = 0
-    }
+
+    reRenderShape.value++;
+}
+
+const saveModel = (isNextStep = false) => {
+    apiServise.callApi(props.links, constants.loading.saveLoading, loadingDto.value).then((data) => {
+        if (isNextStep) {
+            emit('nextStep');
+        }
+    });
 }
 
 </script>
@@ -148,7 +140,8 @@ const updateShape = () => {
             </div>
             <div class="col col-md-6">
 
-                <div style="text-align: right; font-size: 14px; font-weight: 600;">Self Weight: {{ loadingDto.selfWeight }}</div>
+                <div style="text-align: right; font-size: 14px; font-weight: 600;">Self Weight: {{ loadingDto.selfWeight }}
+                </div>
                 <hr />
                 <label class="col col-md-4"></label>
                 <template v-if="loadingDto.loadType == loadTypeCharacteristicLoads">
@@ -199,12 +192,27 @@ const updateShape = () => {
                     </template>
 
                     <div class="col col-md-2">
-                        <input-number v-model="loadingDto.permanentLoads.partialUdlStart" :labelWidth="0"
-                            @changed="updateShape" />
+
+                        <template v-if="loadingDto.loadType == loadTypeCharacteristicLoads">
+                            <input-number v-model="loadingDto.permanentLoads.partialUdlStart" :labelWidth="0"
+                                @changed="updateShape" />
+                        </template>
+                        <template v-if="loadingDto.loadType != loadTypeCharacteristicLoads">
+                            <input-number v-model="loadingDto.ultimateLoads.partialUdlStart" :labelWidth="0"
+                                @changed="updateShape" />
+                        </template>
+
                     </div>
                     <div class="col col-md-2">
-                        <input-number v-model="loadingDto.permanentLoads.partialUdlEnd" :labelWidth="0"
+                        <template v-if="loadingDto.loadType == loadTypeCharacteristicLoads">
+                            <input-number v-model="loadingDto.permanentLoads.partialUdlEnd" :labelWidth="0"
+                                @changed="updateShape" />
+                        </template>
+                        <template v-if="loadingDto.loadType != loadTypeCharacteristicLoads">
+                            <input-number v-model="loadingDto.ultimateLoads.partialUdlEnd" :labelWidth="0"
                             @changed="updateShape" />
+                    </template>
+
                     </div>
                 </div>
                 <hr>
@@ -306,7 +314,7 @@ const updateShape = () => {
                 <div class="row">
                     <div class="col col-md-2"></div>
                     <div class="col col-md-6" style="max-height: 140px; overflow-y: scroll;">
-                        <div class="row" v-for="(item, index) in loadingDto.CharacteristicPointLoads" :key="index">
+                        <div class="row" v-for="(item, index) in loadingDto.characteristicPointLoads" :key="index">
                             <div class="col col-md-3"> <input-number v-model="item.position" :labelWidth="0" /></div>
                             <div class="col col-md-3"> <input-number v-model="item.permanentAction" :labelWidth="0" /></div>
                             <div class="col col-md-3"> <input-number v-model="item.variableAction" :labelWidth="0" /></div>
@@ -357,130 +365,12 @@ const updateShape = () => {
         </div>
         <hr>
 
-        <div class="row">
-
-            <div style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;border-radius: 15px;padding: 15px; position: relative; height: 150px;">
-
-                <div style="margin: 5px 50px; height: 15px">
-                    <div :style="`width :${leftWidth}%;height:100%;display: inline-block`"></div>
-                    <div :style="`width :${centerWidth}%;background-color: #fdc3c3;height:100%;display: inline-block`"></div>
-                    <!-- <div :style="`width :${rightWidth}%;height:100%;display: inline`"></div> -->
-                </div>
-
-                <div style="margin: 5px 50px; position: relative;">   
-                    <div v-for="(item,index) in ultimatePoints" :key="index" :style="`position:absolute; bottom:-20px;left: ${item}%;`">
-                        <img src="@/assets/img/bottom.png" style="margin: -2px; height: 55px;">
-                    </div>                
-                    
-                    <!-- <span  style=" position: absolute; top: 12px; margin: 5px 50px;"></span> -->
-
-                </div>
-             
-          
-              
-
-
-                <div v-if="loadingDto.loadType == loadTypeCharacteristicLoads ? loadingDto.permanentLoads.udl : loadingDto.ultimateLoads.udl"
-                    style="background-color: #94fdd6; margin: 5px 50px; height: 15px"></div>
-                <div v-else style="margin: 5px 50px; height: 15px"></div>
-
-              
-                    <span v-if="loadingDto.loadType == loadTypeCharacteristicLoads ? loadingDto.permanentLoads.endMomentLeft : loadingDto.ultimateLoads.endMomentLeft"
-                        style="color: red; position: absolute; top: 70px; left: 50px;">
-                        <img src="@/assets/img/ss.png" style="height: 40px;">
-                    </span>
-                    <span v-if="loadingDto.loadType == loadTypeCharacteristicLoads ? loadingDto.permanentLoads.endMomentRight : loadingDto.ultimateLoads.endMomentRight"
-                        style="color: red; position: absolute; top: 70px; right: 50px;">
-                        <img src="@/assets/img/ss.png" style="height: 40px;">
-                    </span>
-
-                    <span v-if="loadingDto.loadType == loadTypeCharacteristicLoads ? loadingDto.permanentLoads.axialForce : loadingDto.ultimateLoads.axialForce"
-                        style="color: red; position: absolute; top: 77px; right: 35px;">
-                        <img src="@/assets/img/left.png" style="height: 22px;">
-                    </span>
-
-                    <span v-if="loadingDto.loadType == loadTypeCharacteristicLoads ? loadingDto.permanentLoads.axialForce : loadingDto.ultimateLoads.axialForce"
-                        style="color: red; position: absolute; top: 77px; left: 35px;">
-                        <img src="@/assets/img/right.png" style="height: 22px;">
-                    </span>
-
-
-         
-
-                <span class="fa fa-close" style="color: red; position: absolute; top: 55px; left: 60px;"></span>
-                <span class="fa fa-close" style="color: red; position: absolute; top: 112px; left: 60px;"></span>
-                <span class="fa fa-close" style="color: red; position: absolute; top: 55px; right: 61px;"></span>
-                <span class="fa fa-close" style="color: red; position: absolute; top: 112px; right: 61px;"></span>
-
-                <div style="border: solid; margin: auto auto; height: 60px; margin: 0 50px; border-width: 2px ">
-
-
-                </div>
-
-                <div class="row" style="padding: 0 50px;">
-                    <div style="width: 48%;">
-                        <hr class="arrow left">
-                    </div>
-                    <div style="width: 4%; padding: 5px 5px; text-align: center; font-size: 14px;">{{ loadingDto.span }}</div>
-                    <div style="width: 48%;">
-                        <hr class="arrow">
-                    </div>
-                </div>
-
-
-
-            </div>
-        </div>
-
-
-
-
+        <div class="row" >
+            <shape :loadingDto="loadingDto" :reRenderShape="reRenderShape" />
+        </div>      
+    </div>
+    <div class="row" style="position: absolute;bottom: 70px;right: 75px; justify-content: end; display: flex;width: 100%;">
+        <button class="btn btn-primary col col-md-2 mx-2" @click="saveModel()">save</button>
+        <button class="btn btn-success col col-md-2 mx-2" @click="saveModel(true)">save and next</button>
     </div>
 </template>
-<style scoped lang="scss">
-$page-color: #eee;
-$arrow-color: #0af;
-$arrow-size: 6px;
-
-
-.left {
-    transform: rotate(180deg);
-}
-
-// Where the magic happens
-.arrow {
-
-    max-width: 100%;
-    height: $arrow-size * 2;
-    margin: 1em auto;
-    border: 0;
-    position: relative;
-    overflow: hidden;
-    background-image: linear-gradient($page-color $arrow-size - $arrow-size / 3,
-            $arrow-color $arrow-size - $arrow-size / 3,
-            $arrow-color $arrow-size + $arrow-size / 3,
-            $page-color $arrow-size + $arrow-size / 3);
-}
-
-.arrow:before,
-.arrow:after {
-    content: "";
-    position: absolute;
-}
-
-.arrow:after {
-    right: -$arrow-size;
-    border: $arrow-size solid;
-    border-color: $page-color $page-color $page-color $arrow-color;
-}
-
-
-
-// Base stuff; pay no mind
-html {
-    background-color: $page-color;
-}
-
-p {
-    text-align: center;
-}</style>

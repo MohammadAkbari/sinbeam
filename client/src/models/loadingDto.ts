@@ -11,7 +11,7 @@ export default class LoadingDto {
         this.variableLoads = {} as LoadParameters;
         this.ultimateLoads = {} as LoadParameters;
         this.ultimatePointLoads = [] as UltimatePointLoadDto[];
-        this.CharacteristicPointLoads = [] as CharacteristicPointLoadDto[];
+        this.characteristicPointLoads = [] as CharacteristicPointLoadDto[];
     }
 
     span :number
@@ -22,6 +22,6 @@ export default class LoadingDto {
     variableLoads: LoadParameters;
     ultimateLoads: LoadParameters;
     ultimatePointLoads: UltimatePointLoadDto[];
-    CharacteristicPointLoads: CharacteristicPointLoadDto[];
+    characteristicPointLoads: CharacteristicPointLoadDto[];
     _links: Link[];
 }

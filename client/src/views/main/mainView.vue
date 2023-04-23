@@ -209,6 +209,7 @@ const tabComponent = computed(() => {
 
                 <div class="p-3" :id="`v-pills-${seletedTab}`" 
                   :aria-labelledby="`v-pills-tab-${seletedTab}`" style="width: 100%;">
+                  <!-- {{ links }} -->
                     <component :is="tabComponent" :hasCreated="topSeletedTab == seletedTab" :links='links'
                     @saveLinks="saveLinks($event)" @nextStep="nextStep" />
                 </div>
