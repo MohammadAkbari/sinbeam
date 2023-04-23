@@ -14,6 +14,7 @@ import constants from '@/shared/globals/constants';
 import { inject, ref } from 'vue';
 import type CharacteristicPointLoadDto from '@/models/characteristicPointLoadDto';
 import type Point from '@/models/point';
+import type AnalysisResultDto from '@/models/analysisResultDto';
 
 
 export interface Props {
@@ -31,98 +32,84 @@ const reRenderShape = ref(0 as number);
 const reRenderBendingData = ref(0 as number);
 
 const bendingData = ref([] as LineChartDto[]);
+const sheerData = ref([] as LineChartDto[]);
 
-const data1 = [
-    {
-        title: 1,
-        values: [0]
-    } as LineChartDto,
-    {
-        title: 2,
-        values: [6]
-    } as LineChartDto,
+const deflectionData = ref([] as LineChartDto[]);
 
-] as LineChartDto[];
+const chartTypes = helper.convertEnumToListItem(ChartType);
+const selectedChart = ref(ChartType.Bending as ChartType);
 
-const data2 = [
-    {
-        title: 1,
-        values: [0]
-    } as LineChartDto,
-    {
-        title: 2,
-        values: [6]
-    } as LineChartDto,
-    {
-        title: 3,
-        values: [6]
-    } as LineChartDto, {
-        title: 4,
-        values: [6]
-    } as LineChartDto,
-] as LineChartDto[];
-
-const labels=['behnam'];
-
+const shearLabels = ['shear'];
+const bendingLabels = ['bending'];
+const deflectionDataLabels = [];
 
 apiServise.callApi(props.links, constants.loading.getLoading).then((data: LoadingDto) => {
 
-loadingDto.value.loadType = data.loadType;
-loadingDto.value.selfWeight = data.selfWeight;
-loadingDto.value.span = data.span;
-loadingDto.value.permanentLoads = data.permanentLoads ?? {} as LoadParameters;
-loadingDto.value.ultimateLoads = data.ultimateLoads ?? {} as LoadParameters;
-loadingDto.value.variableLoads = data.variableLoads ?? {} as LoadParameters;
-loadingDto.value.ultimatePointLoads = data.ultimatePointLoads ?? [] as UltimatePointLoadDto[];
-loadingDto.value.characteristicPointLoads = data.characteristicPointLoads ?? [] as CharacteristicPointLoadDto[];
+    loadingDto.value.loadType = data.loadType;
+    loadingDto.value.selfWeight = data.selfWeight;
+    loadingDto.value.span = data.span;
+    loadingDto.value.permanentLoads = data.permanentLoads ?? {} as LoadParameters;
+    loadingDto.value.ultimateLoads = data.ultimateLoads ?? {} as LoadParameters;
+    loadingDto.value.variableLoads = data.variableLoads ?? {} as LoadParameters;
+    loadingDto.value.ultimatePointLoads = data.ultimatePointLoads ?? [] as UltimatePointLoadDto[];
+    loadingDto.value.characteristicPointLoads = data.characteristicPointLoads ?? [] as CharacteristicPointLoadDto[];
 
 
-reRenderShape.value++;
-// loadingDto.value.loadType = loadTypeCharacteristicLoads;
-emit('saveLinks', data._links)
+    reRenderBendingData.value++;
+
+    emit('saveLinks', data._links)
 })
 
 
-apiServise.callApi(props.links, constants.analysis.getBending).then((data: {points : Point[]}) => {
+apiServise.callApi(props.links, constants.analysis.getBending).then((data: AnalysisResultDto) => {
 
-    data.points = data.points.filter((value, index, self) =>
-    index === self.findIndex((t) => (
-        t.x === value.x && t.y === value.y
-    )))
+    bendingData.value = removeDupliate(data.bending.points).map(e => ({ title: e.x, values: [e.y] } as LineChartDto));
+    sheerData.value = removeDupliate(data.shear.points).map(e => ({ title: e.x, values: [e.y] } as LineChartDto));
 
-    bendingData.value = data.points.map(e=>({title : e.x,values:[e.y]} as LineChartDto ))
+    deflectionData.value = removeDupliate(data.deflection.bending).map(e => ({ title: e.x, values: [e.y] } as LineChartDto));
+    deflectionDataLabels.push('bending')
+
+
+    data.deflection.sheer.forEach((item)=>{
+        deflectionData.value.find(e=>e.title == item.x).values.push(item.y);
+    });
+    deflectionDataLabels.push('sheer')
+
+    data.deflection.total.forEach((item)=>{
+        deflectionData.value.find(e=>e.title == item.x).values.push(item.y);
+    })
+    deflectionDataLabels.push('total')
+
     reRenderBendingData.value++;
 })
 
 
-
-
-
-
-
- const chartTypes = helper.convertEnumToListItem(ChartType);
- const selectedChart = ref(ChartType.Bending as ChartType);
-
-
+const removeDupliate = (data: Point[]): Point[] => {
+    return data.filter((value, index, self) => {
+        return index === self.findIndex((t) => {
+            return t.x === value.x && t.y === value.y
+        })
+    });
+}
 
 </script>
 
 <template>
-<div class="row" >
-    <div class="col col-2">
-        <single-select :items="chartTypes" v-model="selectedChart" label="Show" :labelWidth="0"/>
+    <div class="row">
+        <div class="col col-2">
+            <single-select :items="chartTypes" v-model="selectedChart" label="Show" :labelWidth="0" />
+        </div>
+        <div class="col col-10" :key="reRenderBendingData">
+            <line-chart v-if="selectedChart == ChartType.Bending" :chartData="bendingData" :labels="shearLabels"
+                yAxisText="Bending Moment (kNm)" :inversed="true" />
+            <line-chart v-if="selectedChart == ChartType.Shear" :chartData="sheerData" :labels="bendingLabels"
+                yAxisText="Shear Force (kN)" />
+            <line-chart v-if="selectedChart == ChartType.Deflection" :chartData="deflectionData" :labels="deflectionDataLabels"
+                yAxisText="Deflection (mm)" :inversed="true" :isPoint="true" />
+        </div>
     </div>
-    <div class="col col-10" :key="reRenderBendingData">
-        <line-chart v-if="selectedChart == ChartType.Bending" :chartData="bendingData" :labels="labels"></line-chart>
-        <line-chart v-if="selectedChart == ChartType.Shear" :chartData="data1" :labels="labels"></line-chart>
-        <line-chart v-if="selectedChart == ChartType.Deflection" :chartData="data2" :labels="labels"></line-chart>
-    </div>
-</div>
-<br>
-    <div class="row"  >
+    <br>
+    <div class="row">
         <shape :loadingDto="loadingDto" :reRenderShape="reRenderShape" />
-    </div> 
-
-
-    
+    </div>
 </template>

@@ -303,8 +303,8 @@ const saveModel = (isNextStep = false) => {
                             <div class="col col-md-3">
                                 <label>Variable</label>
                             </div>
-                            <div class="col col-md-3">
-                                <span @click="addCharacteristicPointLoads" class="fa fa-plus-circle"></span>
+                            <div class="col col-md-3" style="margin-left: -15px; color: #009d00;">
+                                <span @click="addCharacteristicPointLoads" class="fa fa-plus-circle fa-2x"></span>
                             </div>
                         </div>
 
@@ -319,7 +319,7 @@ const saveModel = (isNextStep = false) => {
                             <div class="col col-md-3"> <input-number v-model="item.permanentAction" :labelWidth="0" /></div>
                             <div class="col col-md-3"> <input-number v-model="item.variableAction" :labelWidth="0" /></div>
                             <div class="col col-md-3">
-                                <span @click="removeCharacteristicPointLoads(index)" class="fa fa-minus-circle"></span>
+                                <span @click="removeCharacteristicPointLoads(index)" style="color: red;" class="fa fa-minus-circle fa-2x"></span>
                             </div>
                         </div>
                     </div>
@@ -340,9 +340,9 @@ const saveModel = (isNextStep = false) => {
                             <div class="col col-md-5">
                                 <label>ULS Loads</label>
                             </div>
-                            <div class="col col-md-2">
-                                <span @click="addUltimatePointLoads" class="fa fa-plus-circle"></span>
-                            </div>
+                            <div class="col col-md-2" style="margin-left: -15px; color: #009d00;">
+                                <span @click="addUltimatePointLoads" class="fa fa-plus-circle fa-2x"></span>
+                            </div>                           
                         </div>
 
                     </div>
@@ -355,7 +355,7 @@ const saveModel = (isNextStep = false) => {
                             <div class="col col-md-5"> <input-number v-model="item.position" :labelWidth="0" /></div>
                             <div class="col col-md-5"> <input-number v-model="item.load" :labelWidth="0" /></div>
                             <div class="col col-md-2">
-                                <span @click="removeUltimatePointLoads(index)" class="fa fa-minus-circle"></span>
+                                <span @click="removeUltimatePointLoads(index)" style="color: red;" class="fa fa-minus-circle fa-2x"></span>
                             </div>
                         </div>
                     </div>
