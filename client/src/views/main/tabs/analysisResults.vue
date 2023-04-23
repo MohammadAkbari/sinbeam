@@ -61,7 +61,13 @@ apiServise.callApi(props.links, constants.loading.getLoading).then((data: Loadin
 })
 
 
+const analysisResultDto = ref({}as AnalysisResultDto);
+
 apiServise.callApi(props.links, constants.analysis.getBending).then((data: AnalysisResultDto) => {
+
+    analysisResultDto.value.bending=data.bending;
+    analysisResultDto.value.shear=data.shear;
+    analysisResultDto.value.deflection=data.deflection;
 
     bendingData.value = removeDupliate(data.bending.points).map(e => ({ title: e.x, values: [e.y] } as LineChartDto));
     sheerData.value = removeDupliate(data.shear.points).map(e => ({ title: e.x, values: [e.y] } as LineChartDto));
@@ -98,11 +104,45 @@ const removeDupliate = (data: Point[]): Point[] => {
     <div class="row">
         <div class="col col-2">
             <single-select :items="chartTypes" v-model="selectedChart" label="Show" :labelWidth="0" />
+
+            <template v-if="selectedChart == ChartType.Bending">
+                <div class="col col-12">
+                    <span>max moment</span> = 
+                    <span>{{ analysisResultDto.bending.maxMoment.toFixed(4)  }} kNm</span>
+                </div>
+                <div class="col col-12">
+                    <span>min moment</span> = 
+                    <span>{{ analysisResultDto.bending.minMoment.toFixed(4)  }} kNm</span>
+                </div>  
+            </template>
+
+            <template v-if="selectedChart == ChartType.Shear">
+                <div class="col col-12">
+                    <span>max shear</span> = 
+                    <span>{{ analysisResultDto.shear.maxShear.toFixed(4)  }} kNm</span>
+                </div>
+                <div class="col col-12">
+                    <span>min shear</span> = 
+                    <span>{{ analysisResultDto.shear.minShear.toFixed(4)  }} kNm</span>
+                </div>  
+            </template>
+
+            <template v-if="selectedChart == ChartType.Deflection">
+                <div class="col col-12">
+                    <span>max defln under variable loads</span> = 
+                    <span>{{ analysisResultDto.deflection.maxDefln.toFixed(4) }} kNm</span>
+                </div>
+                
+            </template>
+
+
+
+
         </div>
         <div class="col col-10" :key="reRenderBendingData">
-            <line-chart v-if="selectedChart == ChartType.Bending" :chartData="bendingData" :labels="shearLabels"
+            <line-chart v-if="selectedChart == ChartType.Bending" :chartData="bendingData" :labels="bendingLabels"
                 yAxisText="Bending Moment (kNm)" :inversed="true" />
-            <line-chart v-if="selectedChart == ChartType.Shear" :chartData="sheerData" :labels="bendingLabels"
+            <line-chart v-if="selectedChart == ChartType.Shear" :chartData="sheerData" :labels="shearLabels"
                 yAxisText="Shear Force (kN)" />
             <line-chart v-if="selectedChart == ChartType.Deflection" :chartData="deflectionData" :labels="deflectionDataLabels"
                 yAxisText="Deflection (mm)" :inversed="true" :isPoint="true" />
