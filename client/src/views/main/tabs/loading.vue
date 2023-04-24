@@ -128,7 +128,7 @@ const saveModel = (isNextStep = false) => {
 
 
 <template>
-    <div style="font-size: 13px;">
+    <div style="font-size: 13px;display: block">
         <div class="row">
             <div class="col col-md-3">
                 <fieldset class="border rounded-3 p-3">
@@ -369,7 +369,7 @@ const saveModel = (isNextStep = false) => {
             <shape :loadingDto="loadingDto" :reRenderShape="reRenderShape" />
         </div>      
     </div>
-    <div class="row" style="position: absolute;bottom: 70px;right: 75px; justify-content: end; display: flex;width: 100%;">
+    <div class="row" style="justify-content: end; margin-top: 70px;width: 100%;">
         <button class="btn btn-primary col col-md-2 mx-2" @click="saveModel()">save</button>
         <button class="btn btn-success col col-md-2 mx-2" @click="saveModel(true)">save and next</button>
     </div>

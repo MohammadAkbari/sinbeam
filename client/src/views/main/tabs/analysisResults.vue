@@ -102,7 +102,7 @@ const removeDupliate = (data: Point[]): Point[] => {
 
 <template>
     <div class="row">
-        <div class="col col-2">
+        <div class="col col-3">
             <single-select :items="chartTypes" v-model="selectedChart" label="Show" :labelWidth="0" />
 
             <template v-if="selectedChart == ChartType.Bending">
@@ -139,7 +139,7 @@ const removeDupliate = (data: Point[]): Point[] => {
 
 
         </div>
-        <div class="col col-10" :key="reRenderBendingData">
+        <div class="col col-9" :key="reRenderBendingData">
             <line-chart v-if="selectedChart == ChartType.Bending" :chartData="bendingData" :labels="bendingLabels"
                 yAxisText="Bending Moment (kNm)" :inversed="true" />
             <line-chart v-if="selectedChart == ChartType.Shear" :chartData="sheerData" :labels="shearLabels"

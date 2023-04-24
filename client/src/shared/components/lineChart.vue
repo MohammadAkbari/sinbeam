@@ -38,7 +38,7 @@ const initChart = () => {
     wheelX: "panX",
     wheelY: "panX",
     pinchZoomX: true,
-    pinchZoomY: true
+    pinchZoomY: true,
   }));
 
   const cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
@@ -64,6 +64,7 @@ const initChart = () => {
   })
   const xAxis = chart.xAxes.push(am5xy.ValueAxis.new(root, {
     renderer: xRenderer,
+    
     // min: 0,
     strictMinMax: true
   }));
@@ -87,7 +88,7 @@ const initChart = () => {
 
 
   props.labels.forEach((item, index) => {
-    const series = chart.series.push(am5xy.LineSeries.new(root, {
+    const series = chart.series.push(am5xy.SmoothedXLineSeries.new(root, {
       calculateAggregates: true,
       name: item,
       xAxis: xAxis,
@@ -149,7 +150,7 @@ const initChart = () => {
 </script>
 
 <template>
-  <div class="lineChart position-relative" ref="lineChartZoomDiv" dir="ltr" style="width: 100%;height:500px">
+  <div class="lineChart position-relative" ref="lineChartZoomDiv" dir="ltr" style="width: 70%;height:350px">
   </div>
 </template>
 
