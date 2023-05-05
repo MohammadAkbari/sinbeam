@@ -112,6 +112,8 @@ const nextStep = () => {
 
 const saveLinks = (newLinks) => {
   links.value.push(...(newLinks.filter(e=>!links.value.some(q=>q.rel == e.rel))));
+
+  console.log(links.value)
 }
 
 

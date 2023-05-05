@@ -98,6 +98,10 @@ const removeDupliate = (data: Point[]): Point[] => {
     });
 }
 
+const next =()=>{
+    emit('nextStep');
+}
+
 </script>
 
 <template>
@@ -108,22 +112,22 @@ const removeDupliate = (data: Point[]): Point[] => {
             <template v-if="selectedChart == ChartType.Bending">
                 <div class="col col-12">
                     <span>max moment</span> = 
-                    <span>{{ analysisResultDto.bending.maxMoment.toFixed(4)  }} kNm</span>
+                    <span>{{ analysisResultDto.bending?.maxMoment.toFixed(4)  }} kNm</span>
                 </div>
                 <div class="col col-12">
                     <span>min moment</span> = 
-                    <span>{{ analysisResultDto.bending.minMoment.toFixed(4)  }} kNm</span>
+                    <span>{{ analysisResultDto.bending?.minMoment.toFixed(4)  }} kNm</span>
                 </div>  
             </template>
 
             <template v-if="selectedChart == ChartType.Shear">
                 <div class="col col-12">
                     <span>max shear</span> = 
-                    <span>{{ analysisResultDto.shear.maxShear.toFixed(4)  }} kNm</span>
+                    <span>{{ analysisResultDto.shear?.maxShear.toFixed(4)  }} kNm</span>
                 </div>
                 <div class="col col-12">
                     <span>min shear</span> = 
-                    <span>{{ analysisResultDto.shear.minShear.toFixed(4)  }} kNm</span>
+                    <span>{{ analysisResultDto.shear?.minShear.toFixed(4)  }} kNm</span>
                 </div>  
             </template>
 
@@ -151,5 +155,8 @@ const removeDupliate = (data: Point[]): Point[] => {
     <br>
     <div class="row">
         <shape :loadingDto="loadingDto" :reRenderShape="reRenderShape" />
+    </div>
+    <div class="row" style="justify-content: end; margin-top: 70px;width: 100%;">
+        <button class="btn btn-primary col col-md-2 mx-2" @click="next()">next</button>
     </div>
 </template>

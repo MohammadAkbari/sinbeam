@@ -83,6 +83,10 @@ const ultimatePoints = computed(() => {
   }
 });
 
+const closeValue = (point) : number=>{
+  return point * 100 / props.loadingDto.span;
+}
+
 </script>
 
 <template>
@@ -130,10 +134,23 @@ const ultimatePoints = computed(() => {
       <img src="@/assets/img/right.png" style="height: 22px;">
     </span>
 
-    <span class="fa fa-close" style="color: red; position: absolute; top: 55px; left: 60px;"></span>
-    <span class="fa fa-close" style="color: red; position: absolute; top: 112px; left: 60px;"></span>
-    <span class="fa fa-close" style="color: red; position: absolute; top: 55px; right: 61px;"></span>
-    <span class="fa fa-close" style="color: red; position: absolute; top: 112px; right: 61px;"></span>
+    <div style="margin:5px 50px; position: relative; " v-if="!loadingDto.fullRestraintTopFlange">
+      <div v-for="(item, index) in loadingDto.topFlangeRestraints" :key="index"
+        :style="`position:absolute; top:-11px; left: ${closeValue(item)}%;`">
+        <span class="fa fa-close" :style="`color: red; margin-left: ${(((closeValue(item)/100) * 2)+5)*-1}px;`"></span>
+      </div>
+    </div>
+     <div style="margin:5px 50px; position: relative; top:58px " v-if="!loadingDto.fullRestraintBottomFlange">
+      <div v-for="(item, index) in loadingDto.bottomFlangeRestraints" :key="index"
+        :style="`position:absolute; top:-11px; left: ${closeValue(item)}%;`">
+        <span class="fa fa-close" :style="`color: red; margin-left: ${(((closeValue(item)/100) * 2)+5)*-1}px;`"></span>
+      </div>
+    </div>
+
+   <!-- <span class="fa fa-close" style="color: red; position: absolute; top: 55px; right: 61px;"></span> -->
+
+    <!-- <span class="fa fa-close" style="color: red; position: absolute; top: 112px; left: 60px;"></span>
+    <span class="fa fa-close" style="color: red; position: absolute; top: 112px; right: 61px;"></span> -->
 
     <div style="border: solid; margin: auto auto; height: 60px; margin: 0 50px; border-width: 2px ">
 

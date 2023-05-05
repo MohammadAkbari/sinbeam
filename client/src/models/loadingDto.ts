@@ -24,4 +24,12 @@ export default class LoadingDto {
     ultimatePointLoads: UltimatePointLoadDto[];
     characteristicPointLoads: CharacteristicPointLoadDto[];
     _links: Link[];
+
+
+    /////////////////////
+    fullRestraintTopFlange: boolean = false;
+    topFlangeRestraints: Array<number> = [];
+
+    fullRestraintBottomFlange: boolean = false;
+    bottomFlangeRestraints: Array<number> = [];
 }
