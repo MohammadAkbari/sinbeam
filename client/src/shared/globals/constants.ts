@@ -23,6 +23,15 @@ const constants = {
     analysis: {
         getBending: 'get-bending'
     },
-   
+    restraints:{
+        getRestraint:'get-restraint',
+        saveRestraint:'save-restraint'
+    },
+    topFlangeVerification:{
+        getTopFlangeVerification:'get-top-flange-verification'
+    },
+    bottomFlangeVerification:{
+        getBottomFlangeVerification:'get-bottom-flange-verification'
+    }   
 }
 export default constants;
