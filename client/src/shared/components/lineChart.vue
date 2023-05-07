@@ -150,7 +150,7 @@ const initChart = () => {
 </script>
 
 <template>
-  <div class="lineChart position-relative" ref="lineChartZoomDiv" dir="ltr" style="width: 70%;height:350px">
+  <div class="lineChart position-relative" ref="lineChartZoomDiv" dir="ltr" style="width: 80%;height:300px">
   </div>
 </template>
 
