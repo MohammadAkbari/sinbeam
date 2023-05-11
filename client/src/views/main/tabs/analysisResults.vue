@@ -90,6 +90,19 @@ apiServise.callApi(props.links, constants.analysis.getBending).then((data: Analy
 })
 
 
+apiServise.callApi(props.links, constants.restraints.getRestraint).then((data: RestraintDto) => {
+    loadingDto.value.fullRestraintTopFlange = data.fullRestraintTopFlange;
+    loadingDto.value.topFlangeRestraints = data.topFlangeRestraints ?? [];
+
+    loadingDto.value.fullRestraintBottomFlange = data.fullRestraintBottomFlange;
+    loadingDto.value.bottomFlangeRestraints = data.bottomFlangeRestraints ?? [];
+   
+    
+
+    reRenderShape.value++;
+});
+
+
 const removeDupliate = (data: Point[]): Point[] => {
     return data.filter((value, index, self) => {
         return index === self.findIndex((t) => {
@@ -156,7 +169,7 @@ const next =()=>{
     <div class="row">
         <shape :loadingDto="loadingDto" :reRenderShape="reRenderShape" />
     </div>
-    <div class="row" style="justify-content: end; margin-top: 70px;width: 100%;">
+    <div class="row" style="position: absolute;bottom: 30px;right: 75px; justify-content: end; display: flex;width: 100%;">
         <button class="btn btn-primary col col-md-2 mx-2" @click="next()">next</button>
     </div>
 </template>

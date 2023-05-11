@@ -55,6 +55,18 @@ apiServise.callApi(props.links, constants.loading.getLoading).then((data: Loadin
     emit('saveLinks', data._links)
 })
 
+apiServise.callApi(props.links, constants.restraints.getRestraint).then((data: RestraintDto) => {
+    loadingDto.value.fullRestraintTopFlange = data.fullRestraintTopFlange;
+    loadingDto.value.topFlangeRestraints = data.topFlangeRestraints ?? [];
+
+    loadingDto.value.fullRestraintBottomFlange = data.fullRestraintBottomFlange;
+    loadingDto.value.bottomFlangeRestraints = data.bottomFlangeRestraints ?? [];
+   
+    
+
+    reRenderShape.value++;
+});
+
 
 const addCharacteristicPointLoads = () => {
 

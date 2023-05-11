@@ -53,7 +53,7 @@ apiServise.callApi(props.links, constants.restraints.getRestraint).then((data: R
     loadingDto.value.fullRestraintTopFlange = data.fullRestraintTopFlange;
     loadingDto.value.topFlangeRestraints = data.topFlangeRestraints ?? [];
 
-     loadingDto.value.fullRestraintBottomFlange = data.fullRestraintBottomFlange;
+    loadingDto.value.fullRestraintBottomFlange = data.fullRestraintBottomFlange;
     loadingDto.value.bottomFlangeRestraints = data.bottomFlangeRestraints ?? [];
    
     
@@ -71,6 +71,8 @@ const addTopFlange = () => {
 
     if (loadingDto.value.topFlangeRestraints.every(e => e != topFlange.value))
         loadingDto.value.topFlangeRestraints.push(topFlange.value);
+
+    loadingDto.value.topFlangeRestraints.sort();    
     topFlange.value = undefined;
 }
 const removeTopFlange = (index: number) => {
@@ -85,6 +87,8 @@ const addBottomFlange = () => {
 
     if (loadingDto.value.bottomFlangeRestraints.every(e => e != bottomFlange.value))
         loadingDto.value.bottomFlangeRestraints.push(bottomFlange.value);
+
+    loadingDto.value.bottomFlangeRestraints.sort() 
     bottomFlange.value = undefined;
 }
 const removeBottomFlange = (index: number) => {
