@@ -146,7 +146,7 @@ const next =()=>{
 
             <template v-if="selectedChart == ChartType.Deflection">
                 <div class="col col-12">
-                    <span>max defln under variable loads</span> = 
+                    <span>max defln</span> = 
                     <span>{{ analysisResultDto.deflection.maxDefln.toFixed(4) }} kNm</span>
                 </div>
                 
