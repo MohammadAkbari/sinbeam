@@ -38,7 +38,7 @@ console.log(props.links);
 
 
 apiServise.callApi(props.links, constants.localisation.getLocalization).then((data: LocalizationDto) => {
-
+debugger
   localizationDto.defaultNA = data.defaultNA;
   localizationDto.deflectionLimit = data.deflectionLimit;
   localizationDto.designParameters = data.designParameters;

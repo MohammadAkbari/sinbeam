@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type ApiServise from '@/core/services/api.service';
-import { ChartType } from '@/enums/chartType';
 import type Link from '@/models/link';
 import type LoadParameters from '@/models/loadParameters';
 import type LoadingDto from '@/models/loadingDto';
@@ -65,7 +64,7 @@ apiServise.callApi(props.links, constants.restraints.getRestraint).then((data: R
 const addTopFlange = () => {
 
     if (topFlange.value > loadingDto.value.span || topFlange.value < 0 || topFlange.value == undefined) {
-        console.log('خارج ز محدوده')
+        console.log('خارج از محدوده')
         return;
     }
 
@@ -81,7 +80,7 @@ const removeTopFlange = (index: number) => {
 
 const addBottomFlange = () => {
     if (bottomFlange.value > loadingDto.value.span || bottomFlange.value < 0 || bottomFlange.value == undefined) {
-        console.log('خارج ز محدوده')
+        console.log('خارج از محدوده')
         return;
     }
 
@@ -111,26 +110,10 @@ const saveModel = (isNextStep = false) => {
         }
     });
 }
-
-
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <template>
-    <div class="col col-6">
+    <div class="col col-8">
         <div class="row">
             <div class="col col-6">
                 <h3>To Top Flange</h3>

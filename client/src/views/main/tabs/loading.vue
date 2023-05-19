@@ -18,6 +18,7 @@ import helper from '@/shared/common/helper';
 import type CharacteristicPointLoadDto from '@/models/characteristicPointLoadDto';
 import type UltimatePointLoadDto from '@/models/ultimatePointLoadDto';
 import type LoadParameters from '@/models/loadParameters';
+import type RestraintDto from '@/models/restraintDto';
 
 export interface Props {
     links: Link[]

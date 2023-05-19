@@ -6,11 +6,14 @@ export interface Props {
   modelValue: any;
   label?: string;
   name: string;
+  labelWidth:number;
+  disabled:boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: null,
-  label: 'انتخاب کنید'
+  labelWidth:3,
+  disabled : false
 });
 
 const emit = defineEmits(['changed', 'update:modelValue']);
@@ -30,10 +33,11 @@ const selected = computed({
 
 <template>
     <div class="form-check">
-      <label class="form-check-label" :for="name">
+
+      <label v-if="label" :class="`col-sm-${props.labelWidth} form-check-label`" :for="name">
         {{ label }}
       </label>
-      <input class="form-check-input" type="checkbox" :value="selected" :id="name" v-model="selected">
+      <input class="form-check-input" type="checkbox" :value="selected" :id="name" v-model="selected" :disabled="disabled">
     </div>
 </template>
 

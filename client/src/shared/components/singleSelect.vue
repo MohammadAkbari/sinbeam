@@ -7,29 +7,30 @@ export interface Props {
   title?: string;
   items: any[];
   labelWidth?:number
+  disabled:boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  msg: 'انتخاب کنید',
-  label: 'انتخاب کنید',
+const props = withDefaults(defineProps<Props>(), { 
   value: 'id',
   title: 'title',
-  labelWidth:3
+  labelWidth:3,
+  disabled:false
 });
 
 const emit = defineEmits(['changed', 'update:modelValue']);
 
 const changeRoute = function (event: any) {
-  emit('changed',props.items.find(e=>e[props.value] == event.target.value));
   emit('update:modelValue', event.target.value);
+  emit('changed',props.items.find(e=>e[props.value] == event.target.value));
+  
 }
 </script>
 
 <template>
   <div class="mb-3 row " style="margin-bottom: 1px!important">
-  <label :class="`col-sm-${props.labelWidth} col-form-label`" style="padding-right: 0px;">{{ label }} : </label>
+  <label v-if="label" :class="`col-sm-${props.labelWidth} col-form-label`" style="padding-right: 0px;">{{ label }} : </label>
   <div :class="`col-sm-${12 - props.labelWidth}`">
-    <select class="form-select form-select-sm" aria-label=".form-select-sm example" @change="changeRoute($event)">
+    <select class="form-select form-select-sm" aria-label=".form-select-sm example" @change="changeRoute($event)" :disabled="props.disabled">
         <option v-for="(item, index) in props.items" :key="index" :value="item[props.value]"
           :selected="item[props.value] == props.modelValue">{{ item[props.title] }}</option>
 

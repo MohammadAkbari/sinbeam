@@ -88,22 +88,9 @@ const nextStep = () => {
 </script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 <template>
     <div class="col col-8">
-        <div class="row" style="color: red;">
+        <div class="row">
             <div class="col col-6 offset-3">
                 <span style="color: red;">
                     Maximum Utilization is {{ flangeVerificationCaptions.maximumUtilization }}
