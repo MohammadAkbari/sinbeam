@@ -34,10 +34,10 @@ const selected = computed({
 <template>
     <div class="form-check">
 
-      <label v-if="label" :class="`col-sm-${props.labelWidth} form-check-label`" :for="name">
+      <label v-if="label" :class="`col-sm-${props.labelWidth} form-check-label`" :for="props.name">
         {{ label }}
       </label>
-      <input class="form-check-input" type="checkbox" :value="selected" :id="name" v-model="selected" :disabled="disabled">
+      <input class="form-check-input" type="checkbox" :value="selected" :id="props.name" v-model="selected" :disabled="disabled">
     </div>
 </template>
 
