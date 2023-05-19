@@ -24,7 +24,7 @@ const apiServise = inject('apiServise') as ApiServise;
 const generalDetails = reactive({} as GeneralDetails);
 
 
-
+debugger
 if (props.hasCreated) {
     apiServise.get(baseUrl).then((data: GeneralDetails) => {
 

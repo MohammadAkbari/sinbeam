@@ -1,17 +1,9 @@
 <script setup lang="ts">
 
-
-import singleSelect from '@/shared/components/singleSelect.vue';
-import persianDatePicker from '@/shared/components/persianDatePicker.vue';
-import miladiDatePicker from '@/shared/components/miladiDatePicker.vue';
-import radioGroupButton from '@/shared/components/radioGroupButton.vue';
-import checkBox from '@/shared/components/checkBox.vue';
-import inputText from '@/shared/components/inputText.vue';
-import inputNumber from '@/shared/components/inputNumber.vue';
 import { TabItems } from '@/enums/tabItems';
 import { computed } from '@vue/reactivity';
 // import TabItems from '@/enums/tabItems.ts';
-import { defineAsyncComponent, provide, reactive, ref } from 'vue';
+import { defineAsyncComponent, provide, ref } from 'vue';
 import ApiService from '@/core/services/api.service';
 import type Link from '@/models/link';
 
@@ -162,8 +154,8 @@ const tabComponent = computed(() => {
   <div id="sidebar-wrapper">
       <ul class="sidebar-nav" >
         <li class="sidebar-brand" style="border-bottom: 1px solid;">
-                    <a href="#">
-                       BEAM
+                    <a href="#" >
+                       <img src="/Beam.svg" alt="beam" style="height: 70px;">
                     </a>
                 </li>
           <li >
