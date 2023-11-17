@@ -75,6 +75,7 @@ const saveModel = (isNextStep = false) => {
                 <!-- <miladi-date-picker label="date" v-model="generalDetails.date"/> -->
             </div>
         </div>
+        
             <div class="row" style="position: absolute;bottom: 70px;right: 75px; justify-content: end; display: flex;width: 100%;">
                 <button class="btn btn-primary col col-md-2 mx-2" @click="saveModel()">save</button>
                 <button class="btn btn-success col col-md-2 mx-2" @click="saveModel(true)">save and next</button>

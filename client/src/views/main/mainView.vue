@@ -103,7 +103,7 @@ const nextStep = () => {
 }
 
 const saveLinks = (newLinks) => {
-  links.value.push(...(newLinks.filter(e=>!links.value.some(q=>q.rel == e.rel))));
+  links.value.push(...(newLinks.filter(e => !links.value.some(q => q.rel == e.rel))));
 
   console.log(links.value)
 }
@@ -146,217 +146,266 @@ const tabComponent = computed(() => {
 </script>
 
 
-
 <template>
-
-<div>
-<!-- Sidebar -->
-  <div id="sidebar-wrapper">
-      <ul class="sidebar-nav" >
-        <li class="sidebar-brand" style="border-bottom: 1px solid;">
-                    <a href="#" >
-                       <img src="/Beam.svg" alt="beam" style="height: 70px;">
-                    </a>
-                </li>
-          <li >
-            <template v-for="(item, index) in list" :key="index">
-              <button @click="changeTab(item.value)" :disabled="topSeletedTab < item.value" style="padding-left: 8px;"
-              :class="`nav-link ${item.value == seletedTab ? 'active' : ''}  pl-5`" :id="`v-pills-tab-${item.value}`"
-              :data-bs-target="`#v-pills-${item.value}`" type="button" role="tab" :aria-controls="`v-pills-${item.value}`"
-              :aria-selected="item.value == seletedTab">{{ item.title }}</button>
-            </template>
-          </li>    
-      </ul>
-  </div>
-
-  <!--  Content -->
-  <div id="page-content-wrapper">
-      <div class="container-fluid">
-          <div class="row">
-              <div class="col-lg-12">
-                <div style="float: left; flex-direction: column;width: 100%;height: 100vh; position: relative;">
-                <header class="mb-3">
-                <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #282a2c;">
-                  <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Beam</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                      <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                      <ul class="navbar-nav me-auto mb-2 mb-lg-0 " >
-                        <li class="nav-item" style="padding-left: 5px;">
-                          <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">Link</a>
-                        </li>
-                      </ul>
-                      <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                      </form>
+  <div class="container-fluid overflow-auto " style="height: 100vh;">
+  <div class="row bg-basic h-100">
+    <div class="d-flex flex-column" style="width: 20%;">
+      <div class="bg-box-primary sin-rounded  h-100 shadow-sm my-2">
+        <a href="/" class="d-flex flex-column pt-5 pb-4 me-md-auto text-decoration-none" style="padding-left: 1.5rem;">
+          <div class="d-flex align-items-center pb-2">
+            <!-- <img class="sin-logo me-2" src="@/assets/img/Logo-text.png" alt=""> -->
+            <img class="sin-logo me-2" src="@/assets/img/logo.png" />
+            <span class="pt-1 text-black fs-18" style="font-weight: 500; opacity: 0.87;">SinDesigner LOGO</span>
+          </div>
+          <span class="fs-16" style="color: #9B9B9B;font-weight: 400;">SINdesigner version 1.0.0</span>
+        </a>
+        <ul class="nav nav-pills flex-column mb-auto ">
+          <li v-for="(item, index) in list" :key="index" @click="changeTab(item.value)">
+            <span
+              :class="`sin-nav-item ${item.value == seletedTab ? 'active' : ''} ${item.value < seletedTab ? 'done' : ''}`">
+              <span class="fs-16" :style="`font-weight: ${item.value == seletedTab ? '600' : '400'}`">{{ item.title
+              }}</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="d-flex flex-column overflow-auto ps-0" style="height: 100vh;width: 80%;">
+      <div class="w-100 py-2">
+        <div class="row">
+          <div class="col-lg-2">
+            <a href="#" class="d-flex justify-content-center" style="height: 60px;">
+              <div class="bg-box-primary sin-rounded w-100 h-100 fs-12 d-flex align-items-center px-2 shadow-sm"
+                style="margin: 0 auto;">
+                <img src="@/assets/img/home-text.png" alt="" style="margin: 0 auto;">
+                </div>
+              </a>
+            </div>
+            <div class="col-lg-10 ps-0">
+              <div class="d-flex justify-content-start" style="height: 60px;">
+                <div
+                  class="bg-box-primary sin-rounded w-100 h-100 d-flex align-items-center px-2 justify-content-between shadow-sm">
+                  <div class="d-flex fs-12">
+                    <img class="mt-2" style="width: 42px; height: 42px;" src="@/assets/img/user.png" />
+                    <div class="d-flex flex-column px-2 justify-content-center">
+                      <span class="fs-14" style="font-weight: 500;">profile panel</span>
+                      <span class="fs-10"> 25% is xompleted</span>
                     </div>
                   </div>
-                </nav>
-                </header>
+                  <div class="d-flex fs-10">
+                    <a href="#" class="px-2 mx-2 py-1 bg-box-primary sin-rounded justify-content-center"
+                      style="height: 35px; background-color: #f4f4f491;">
+                      <img src="@/assets/img/help-text.png" style="width: 95%;" alt="">
 
-                <div class="p-3" :id="`v-pills-${seletedTab}`" 
-                  :aria-labelledby="`v-pills-tab-${seletedTab}`" style="width: 100%;">
-                  <!-- {{ links }} -->
-                    <component :is="tabComponent" :hasCreated="topSeletedTab == seletedTab" :links='links'
-                    @saveLinks="saveLinks($event)" @nextStep="nextStep" />
+                    </a>
+                    <a hewf="#" class="px-2 mx-2 py-1 bg-basic shadow-sm sin-rounded justify-content-center"
+                      style="height: 35px;">
+                      <img src="@/assets/img/whatsApp-text.png" style="width: 95%;" alt="">
+                    </a>
+                  </div>
                 </div>
               </div>
-              </div>
+            </div>
           </div>
+        </div>
+        <div class="row ps-1 h-100" style="padding: 10px 0;">
+          <component :is="tabComponent" :hasCreated="topSeletedTab == seletedTab" :links='links'
+            @saveLinks="saveLinks($event)" @nextStep="nextStep">
+            <!-- <div class="row">
+              <div class="col-md-12">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5 mb-3">
+                  <button class="btn me-md-2 shadow-sm btn-light fs-12 sin-rounded bg-box-primary text-primary"
+                    type="button" style="width: 120px;">Clear All</button>
+                  <button class="btn btn-primary fs-12 sin-rounded" type="button" style="width: 120px;">Next</button>
+                </div>
+              </div>
+            </div> -->
+          </component>
+          <!-- <div class="col-lg-5 shadow-sm bg-box-secondary sin-rounded mx-2">
+              <a class="bg-box-primary sin-rounded d-flex my-2 justify-content-center d-flex" style="height: 40px;">
+                <span class="w-100 h-100 d-flex align-items-center px-2 fs-12">General Information</span>
+              </a>
+              <div class="mb-3 pt-3">
+                <label for="exampleFormControlInput1" class="form-label mb-1">Project Name</label>
+                <input type="text" class="form-control fs-10" id="exampleFormControlInput1">
+              </div>
+              <div class="pt-2">
+                <label class="form-label mb-2">Element Item</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    column
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    rafter
+                  </label>
+                </div>
+                <div class="mb-1 pt-1">
+                  <label for="exampleFormControlInput1" class="form-label mb-1">Column Height/Rater Span (m)</label>
+                  <input type="text" class="form-control fs-10" id="exampleFormControlInput1">
+                </div>
+                <div class="mb-1 pt-1">
+                  <label for="exampleFormControlInput1" class="form-label mb-1">Designer</label>
+                  <input type="text" class="form-control fs-10" id="exampleFormControlInput1">
+                </div>
+                <div class="mb-1 pt-1">
+                  <label for="exampleFormControlTextarea1" class="form-label mb-1">Note</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 p-0">
+              <div class="col-lg-12 p-2  shadow-sm bg-box-secondary sin-rounded mx-2 h-auto"
+                style="margin:0 4px !important;">
+                <a class="bg-box-primary sin-rounded d-flex my-2 justify-content-center d-flex" style="height: 40px;">
+                  <span class="w-100 h-100 d-flex align-items-center px-2 fs-12">Location</span>
+                </a>
+                <div class="hadow-sm bg-box-secondary sin-rounded my-1" style="width: 18rem;">
+                  <a class="bg-box-primary d-flex justify-content-center d-flex" style="height: 25px;">
+                    <span class="w-100 h-100 d-flex align-items-center fs-10 ps-2">Design to</span>
+                  </a>
+                  <div class="card-body d-flex pt-2 pb-3 px-2">
+                    <select class="form-select fs-10" aria-label="Default select example fs-10 px-2 ">
+                      <option selected>Open this select menu</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                    <span class="mx-3">OR</span>
+                    <button type="button" class="btn btn-primary px-2 fs-10">Primary</button>
+                  </div>
+                </div>
+                <div class="hadow-sm bg-box-secondary sin-rounded my-1" style="width: 18rem;">
+                  <a class="bg-box-primary d-flex justify-content-center d-flex" style="height: 25px;">
+                    <span class="w-100 h-100 d-flex align-items-center fs-10 ps-2">Location</span>
+                  </a>
+                  <div class="card-body px-2 py-2">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                      <label class="form-check-label" for="flexRadioDefault2">
+                        rafter
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        column
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 py-2" style="margin:0 4px !important;">
+                <div class="shadow-sm bg-box-secondary sin-rounded px-2" style="width: 18rem;">
+                  <a class="bg-box-primary sin-rounded d-flex my-2 justify-content-center d-flex" style="height: 40px;">
+                    <span class="w-100 h-100 d-flex align-items-center px-2 fs-12">Deflection Limits( span / limit)</span>
+                  </a>
+                  <div class="card-body px-2 py-2">
+                    <div class="row mb-1 pt-1 d-flex">
+                      <div class="col-lg-4 p-0 py-1">
+                        <label for="exampleFormControlInput1"
+                          class="form-label mb-0 d-flex align-self-center fs-12">Variable Loads</label>
+                      </div>
+                      <div class="col-lg-8 py-1">
+                        <input type="text" class="form-control fs-12 mx-2" id="exampleFormControlInput1"
+                          style="width: 150px;">
+                      </div>
+                      <div class="col-lg-4 p-0 py-1">
+                        <label for="exampleFormControlInput1" class="form-label mb-0 d-flex align-self-center fs-12">Total
+                          Loads</label>
+                      </div>
+                      <div class="col-lg-8 py-1">
+                        <input type="text" class="form-control fs-12 mx-2" id="exampleFormControlInput1"
+                          style="width: 150px;">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+        </div>
       </div>
+    </div>
   </div>
-</div>
 </template>
 
 <style scoped>
-.nav-link{
-  background-color: rgb(0 0 0 / 80%) !important;
-color: #fff !important;
-border: none;
-}
-.active{
-background-color: rgba(90, 90, 90, 0.719) !important;
-width: 100%;
-text-align: left;
-}
-#wrapper {
-    padding-left: 250px;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+* {
+  font-size: 12px;
 }
 
-#wrapper.toggled {
-    padding-left: 250px;
+a {
+  text-decoration: none;
 }
 
-#sidebar-wrapper {
-    z-index: 1000;
-    position: fixed;
-    left: 250px;
-    width:250px;
-    height: 100%;
-    margin-left: -250px;
-    overflow-y: auto;
-    background: #000;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+.fs-8 {
+  font-size: 8px !important;
 }
 
-#wrapper.toggled #sidebar-wrapper {
-    width: 250px;
+.fs-10 {
+  font-size: 10px !important;
 }
 
-#page-content-wrapper {
-    width: 100%;
-    position: absolute;
+.fs-12 {
+  font-size: 12px !important;
 }
 
-#wrapper.toggled #page-content-wrapper {
-    position: absolute;
-    margin-right: -250px;
-}
-@media(min-width:992px) {
-    #wrapper {
-        padding-left: 250px;
-    }
-
-    #wrapper.toggled {
-        padding-left: 0;
-    }
-
-    #sidebar-wrapper {
-        width: 250px;
-    }
-
-    #wrapper.toggled #sidebar-wrapper {
-        width: 0;
-    }
-    .col-lg-12 {
-    flex: 0 0 auto;
-    width: 100%;
-    padding: 0;
+.fs-14 {
+  font-size: 14px !important;
 }
 
-    #page-content-wrapper {
-        padding-left: 250px;
-        position: relative;
-    }
-
-    #wrapper.toggled #page-content-wrapper {
-        position: relative;
-        margin-right: 0;
-    }
-}
-/* Sidebar Styles */
-
-.sidebar-nav {
-    position: absolute;
-    top: 0;
-    width: 250px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+.fs-16 {
+  font-size: 16px !important;
 }
 
-.sidebar-nav li {
-    text-indent: 20px;
-    line-height: 40px;
+.fs-18 {
+  font-size: 18px !important;
 }
 
-.sidebar-nav li a {
-    display: block;
-    text-decoration: none;
-    color: #999999;
+.sin-rounded {
+  border-radius: 3px;
 }
 
-.sidebar-nav li a:hover {
-    text-decoration: none;
-    color: #fff;
-    background: rgba(255,255,255,0.2);
+img.sin-logo {
+  width: 45px;
 }
 
-.sidebar-nav li a:active,
-.sidebar-nav li a:focus {
-    text-decoration: none;
+.bg-basic {
+  STROKE: white;
 }
 
-.sidebar-nav > .sidebar-brand {
-    height: 65px;
-    font-size: 18px;
-    line-height: 60px;
+.bg-box-primary {
+  background-color: #F4F4F4;
 }
 
-.sidebar-nav > .sidebar-brand a {
-    color: #999999;
+.bg-box-secondary {
+  border: 1px solid #F4F4F4;
+  STROKE: #FEFEFE;
 }
 
-.sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
-    background: none;
+.sin-nav-item {
+  color: #888888;
+  border-left: 3px solid #E0E0E0;
+  text-decoration: none;
+  display: block;
+  height: 33px;
+  font-size: 15px;
+  margin: 3px auto;
+  padding: 3px 20px;
+  margin-left: 1.5rem;
 }
 
-button:hover {
-  background-color: #00aacc !important;
-  width: 100%;
-  color: #ffffff;
-  text-align: left;
+span.sin-nav-item.active {
+  color: #000000DE !important;
+
+  border-left: 3px solid #125CCB !important;
 }
 
-
-button:disabled,
-button[disabled]{
-  color: #666666 !important;
-}
-
-</style>
+span.sin-nav-item.done {
+  color: #000000DE !important;
+  font-weight: 400;
+  border-left: 3px solid #69C179 !important;
+}</style>

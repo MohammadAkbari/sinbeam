@@ -12,6 +12,8 @@ const next = () => {
     </div>
 
 
+     
+
     <div class="row" style="position: absolute;bottom: 70px;right: 75px; justify-content: end; display: flex;width: 100%;">
         <button class="btn btn-primary col col-md-2 mx-2" @click="next()">next</button>
     </div>
