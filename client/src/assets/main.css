@@ -17,3 +17,135 @@
   height: 100%;
   font-weight: normal;
 } 
+* {
+  font-size: 12px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.fs-8 {
+  font-size: 8px !important;
+}
+
+.fs-10 {
+  font-size: 10px !important;
+}
+
+.fs-12 {
+  font-size: 12px !important;
+}
+
+.fs-14 {
+  font-size: 14px !important;
+}
+
+.fs-16 {
+  font-size: 16px !important;
+}
+
+.fs-18 {
+  font-size: 18px !important;
+}
+
+.fs-20 {
+  font-size: 20px !important;
+}
+
+.fw-100 {
+  font-weight: 100 !important;
+}
+
+.fw-200 {
+  font-weight: 200 !important;
+}
+
+.fw-300 {
+  font-weight: 300 !important;
+}
+
+.fw-400 {
+  font-weight: 400 !important;
+}
+
+.fw-500 {
+  font-weight: 500 !important;
+}
+
+.fw-600 {
+  font-weight: 600 !important;
+}
+
+.fw-700 {
+  font-weight: 700 !important;
+}
+
+.fw-800 {
+  font-weight: 800 !important;
+}
+
+.fw-900 {
+  font-weight: 900 !important;
+}
+
+.sin-rounded {
+  border-radius: 3px;
+}
+
+img.sin-logo {
+  width: 45px;
+}
+
+.bg-basic {
+  STROKE: white;
+}
+
+.bg-box-primary {
+  background-color: #F4F4F4;
+}
+
+.bg-box-secondary {
+  border: 1px solid #F4F4F4;
+  STROKE: #FEFEFE;
+}
+
+.sin-nav-item {
+  color: #888888;
+  border-left: 3px solid #E0E0E0;
+  text-decoration: none;
+  display: block;
+  height: 33px;
+  font-size: 15px;
+  margin: 3px auto;
+  padding: 3px 20px;
+  margin-left: 1.5rem;
+}
+
+span.sin-nav-item.active {
+  color: #000000DE !important;
+
+  border-left: 3px solid #125CCB !important;
+}
+
+span.sin-nav-item.done {
+  color: #000000DE !important;
+  font-weight: 400;
+  border-left: 3px solid #69C179 !important;
+}
+
+.panel-icon{
+  width: 24px;
+  height: 24px;
+}
+
+.panel-header-text{
+  color: #125CCB;
+
+}
+
+.input-label{
+  color: #5C5C5C;
+  font-size: 14px;
+  font-weight: 500;
+}

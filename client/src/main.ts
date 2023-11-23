@@ -3,6 +3,10 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import panel from '@/shared/newComponents/panel.vue';
+import subPanel from '@/shared/newComponents/subPanel.vue';
+import modal from '@/shared/newComponents/modal.vue';
+import dropdownWithImg from '@/shared/newComponents/dropdownWithImg.vue';
 
 
 // import 'vuetify/styles'
@@ -17,18 +21,29 @@ import '@/assets/fontawesome/css/all.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 
-
 import './assets/main.css';
 
 import '@/assets/iransans/css/fontiran.css';
-import "bootstrap/dist/js/bootstrap.js"
+import "bootstrap/dist/js/bootstrap.js";
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 
+import VueUniversalModal from 'vue-universal-modal';
+
+import 'vue-universal-modal/dist/index.css'
 const app = createApp(App)
 
+// components 
+app.component('panel', panel);
+app.component('dropdown-with-img', dropdownWithImg);
+app.component('sub-panel', subPanel);
+app.component('vue-modal', modal);
 
+app.use(createPinia());
+app.use(router);
 
-app.use(createPinia())
-app.use(router)
+app.use(VueUniversalModal, {
+    teleportTarget: '#modals',
+});
 
 
 app.mount('#app')

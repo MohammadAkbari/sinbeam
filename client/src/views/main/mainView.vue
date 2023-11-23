@@ -221,7 +221,7 @@ const tabComponent = computed(() => {
               </div>
             </div> -->
           </component>
-          <!-- <div class="col-lg-5 shadow-sm bg-box-secondary sin-rounded mx-2">
+          <div class="col-lg-5 shadow-sm bg-box-secondary sin-rounded mx-2">
               <a class="bg-box-primary sin-rounded d-flex my-2 justify-content-center d-flex" style="height: 40px;">
                 <span class="w-100 h-100 d-flex align-items-center px-2 fs-12">General Information</span>
               </a>
@@ -325,7 +325,7 @@ const tabComponent = computed(() => {
                   </div>
                 </div>
               </div>
-            </div> -->
+            </div>
         </div>
       </div>
     </div>
