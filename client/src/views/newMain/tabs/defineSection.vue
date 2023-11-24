@@ -1,6 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
+
+
 const showNoteModal = ref(false as boolean);
+
+const state = reactive({
+  value: [10, 100],
+  value2: 40,
+});
+
+
 </script>
 
 
@@ -277,8 +286,74 @@ const showNoteModal = ref(false as boolean);
 
 
     <vue-modal btnClassList="btn btn-success" :isShowModal="showNoteModal" headerTitle="Corrugated Web Sections Library"
-        @closeModal="showNoteModal = !showNoteModal" width="95%" height="95%">
-
+        @closeModal="showNoteModal = !showNoteModal" width="95%" height="900px">
+        <div class="row">
+            <div class="col-3 px-5">
+                <img src="src/assets/img/info-circle.png" alt="">
+                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Weight (kg/m)</label>
+                <dropdown-range style="width: 100%"></dropdown-range>
+            </div>           
+            <div class="col-3 px-5">
+                <img src="src/assets/img/info-circle.png" alt="">
+                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Web height (mm)</label>
+                <dropdown-range style="width: 100%"></dropdown-range>
+            </div>           
+            <div class="col-3 px-5">
+                <img src="src/assets/img/info-circle.png" alt="">
+                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Web thickness (mm)</label>
+                <dropdown-range style="width: 100%"></dropdown-range>
+            </div>           
+            <div class="col-3 px-5">
+                <img src="src/assets/img/info-circle.png" alt="">
+                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Flange width (mm)</label>
+                <dropdown-range style="width: 100%"></dropdown-range>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 px-5">
+                <img src="src/assets/img/info-circle.png" alt="">
+                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Flange thickness (mm)</label>
+                <dropdown-range style="width: 100%"></dropdown-range>
+            </div>           
+            <div class="col-3 px-5">
+                <img src="src/assets/img/info-circle.png" alt="">
+                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Section perimeter (m2/m)</label>
+                <dropdown-range style="width: 100%"></dropdown-range>
+            </div>           
+            <div class="col-3 px-5">
+                <img src="src/assets/img/info-circle.png" alt="">
+                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Moment of inertia Iy (cm4)</label>
+                <dropdown-range style="width: 100%"></dropdown-range>
+            </div>           
+            <div class="col-3 px-5">
+                <img src="src/assets/img/info-circle.png" alt="">
+                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Moment of inertia Iz (cm4)</label>
+                <dropdown-range style="width: 100%"></dropdown-range>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 px-5">
+                <img src="src/assets/img/info-circle.png" alt="">
+                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Bending capacity</label>
+                <dropdown-range style="width: 100%"></dropdown-range>
+            </div>           
+            <div class="col-3 px-5">
+                <img src="src/assets/img/info-circle.png" alt="">
+                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Shear capacity</label>
+                <dropdown-range style="width: 100%"></dropdown-range>
+            </div>           
+            <div class="col-3 px-5">
+                <img src="src/assets/img/info-circle.png" alt="">
+                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Axial capacity</label>
+                <dropdown-range style="width: 100%"></dropdown-range>
+            </div>           
+            <div class="col-3 px-5">
+               
+            </div>
+        </div>
+        <div class="row">
+            
+        </div>
     </vue-modal>
 </template>
 

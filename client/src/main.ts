@@ -7,6 +7,8 @@ import panel from '@/shared/newComponents/panel.vue';
 import subPanel from '@/shared/newComponents/subPanel.vue';
 import modal from '@/shared/newComponents/modal.vue';
 import dropdownWithImg from '@/shared/newComponents/dropdownWithImg.vue';
+import dropdownRange from '@/shared/newComponents/dropdownRange.vue';
+import rangeSlider from '@/shared/newComponents/rangeSlider.vue';
 
 
 // import 'vuetify/styles'
@@ -25,18 +27,25 @@ import './assets/main.css';
 
 import '@/assets/iransans/css/fontiran.css';
 import "bootstrap/dist/js/bootstrap.js";
-import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 import VueUniversalModal from 'vue-universal-modal';
+import 'vue-universal-modal/dist/index.css';
 
-import 'vue-universal-modal/dist/index.css'
+import vueSimpleRangeSlider from 'vue-simple-range-slider';
+import 'vue-simple-range-slider/css';
+
+
+
 const app = createApp(App)
 
 // components 
 app.component('panel', panel);
 app.component('dropdown-with-img', dropdownWithImg);
+app.component('dropdown-range', dropdownRange);
 app.component('sub-panel', subPanel);
 app.component('vue-modal', modal);
+app.component('range-slider', rangeSlider);
+app.component('vue-simple-range-slider', vueSimpleRangeSlider);
 
 app.use(createPinia());
 app.use(router);

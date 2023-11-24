@@ -4,12 +4,14 @@ export interface Props {
     headerTitle?: string;
     isShowModal?: boolean;
     width?: string;
+    height?:string
 }
 
 const props = withDefaults(defineProps<Props>(), {
     headerTitle: 'پنجره',
     isShowModal: false,
-    width: '700'
+    width: '700',
+    height: '100%'
 });
 
 const emit = defineEmits(['closeModal']);
@@ -26,10 +28,10 @@ const options = {
 </script>
 
 <template>
-    <div class="col-md-12" style="height: 700px;">
+    <div class="col-md-12">
         <Modal v-model="props.isShowModal" :close="close" :options="options">
 
-            <div class="vueModal modal-content" :style="`width:${props.width}`">
+            <div class="vueModal modal-content" :style="`width:${props.width}; `">
 
                 <div class="w-100 h-100 d-flex justify-content-center">
                     <span @click="close()" class="fa-regular fa-xmark close-btn-modal"></span>
@@ -39,7 +41,7 @@ const options = {
                 </div>
 
                 <hr style="color:  #F2F2F2">
-                <div class="p-2 modal-body">
+                <div class="p-2 modal-body" :style="`height:${props.height}`">
                     <slot></slot>
                 </div>
 
