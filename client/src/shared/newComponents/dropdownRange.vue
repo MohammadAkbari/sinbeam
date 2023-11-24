@@ -14,7 +14,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 let isDropdownOpen = ref(false as boolean);
 
-let selectedOption = props.options[0];
 
 const selectOption = (option) => {
     selectedOption = option;
@@ -22,8 +21,7 @@ const selectOption = (option) => {
 };
 
 const state = reactive({
-    value: [10, 100],
-    value2: 40,
+    value: [10, 100]
 });
 
 const reRender = ref(0);
@@ -32,9 +30,8 @@ const reRender = ref(0);
 
 <template>
     <div class="dropdown">
-        <div class="dropdown-toggle-local" @click="isDropdownOpen = !isDropdownOpen" style="background-color: #EFEFEF;">
-            <img :src="selectedOption?.image" class="dropdown-option-image">
-            <span class="dropdown-option-label fs-14 fw-500">{{ selectedOption?.label }}</span>
+        <div class="dropdown-toggle-local" @click="isDropdownOpen = !isDropdownOpen" style="background-color: #EFEFEF;">           
+            <span class="dropdown-option-label fs-14 fw-500">{{ state.value[0] }} - {{ state.value[1] }}</span>
             <span class="dropdown-caret-icon"></span>
         </div>
         <div class="dropdown-menu-body" v-if="isDropdownOpen">
