@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-    <div class="hadow-sm bg-box-secondary sin-rounded mx-4 my-4">
+    <div class="hadow-sm bg-box-secondary sin-rounded my-4">
         <span class="bg-box-primary d-flex justify-content-center d-flex" style="height: 36px; opacity: 87%;">
             <span class="w-100 h-100 d-flex align-items-center fs-14 ps-4 fw-500"> {{ props.label }}</span>
         </span>
