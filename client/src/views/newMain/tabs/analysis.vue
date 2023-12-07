@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+const emit = defineEmits(['nextStep', 'clearForm']);
 
+const nextStep = () => {
+    emit("nextStep");
+}
 
-const loadInput = ref(true as boolean)
-
-
-
-const designTypes = [
-    { id: 1, label: 'UK NA', image: 'src/assets/img/UK-icon.png' },
-    { id: 1, label: 'Irish NA', image: 'src/assets/img/irish-icon.png' },
-    { id: 1, label: 'IR NA', image: 'src/assets/img/IR-icon.png' },
-]
+const clearForm = () => {
+    emit("clearForm");
+}
 
 
 </script>
@@ -26,35 +23,31 @@ const designTypes = [
                         <span class="fs-14 fw-500 mx-4" style="opacity: 78%;">Combination:</span>
                         <div class="form-check mx-4">
                             <input class="form-check-input fs-16" type="radio" name="Element" value="C1"
-                                 id="Characteristic">
+                                id="Characteristic">
                             <label class="form-check-label fs-16 fw-400" style="opacity: 78%;" for="Characteristic">
                                 C1
                             </label>
                         </div>
                         <div class="form-check mx-4">
-                            <input class="form-check-input fs-16" type="radio" name="Element" value="false"
-                                 id="Ultimate">
+                            <input class="form-check-input fs-16" type="radio" name="Element" value="false" id="Ultimate">
                             <label class="form-check-label fs-16 fw-400" style="opacity: 78%;" for="Ultimate">
                                 C2
                             </label>
                         </div>
                         <div class="form-check mx-4">
-                            <input class="form-check-input fs-16" type="radio" name="Element" value="false"
-                                 id="Ultimate">
+                            <input class="form-check-input fs-16" type="radio" name="Element" value="false" id="Ultimate">
                             <label class="form-check-label fs-16 fw-400" style="opacity: 78%;" for="Ultimate">
                                 C3
                             </label>
                         </div>
                         <div class="form-check mx-4">
-                            <input class="form-check-input fs-16" type="radio" name="Element" value="false"
-                                 id="Ultimate">
+                            <input class="form-check-input fs-16" type="radio" name="Element" value="false" id="Ultimate">
                             <label class="form-check-label fs-16 fw-400" style="opacity: 78%;" for="Ultimate">
                                 C4
                             </label>
                         </div>
                         <div class="form-check mx-4">
-                            <input class="form-check-input fs-16" type="radio" name="Element" value="false"
-                                 id="Ultimate">
+                            <input class="form-check-input fs-16" type="radio" name="Element" value="false" id="Ultimate">
                             <label class="form-check-label fs-16 fw-400" style="opacity: 78%;" for="Ultimate">
                                 C5
                             </label>
@@ -77,7 +70,7 @@ const designTypes = [
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">37.9485 kNm at 1.2m</span>                                                
+                                                <span class="justify-content-start">37.9485 kNm at 1.2m</span>
                                             </div>
                                         </div>
                                     </div>
@@ -91,7 +84,7 @@ const designTypes = [
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">0.0000 kNm at 1.2m</span>                                                
+                                                <span class="justify-content-start">0.0000 kNm at 1.2m</span>
                                             </div>
                                         </div>
                                     </div>
@@ -99,7 +92,7 @@ const designTypes = [
                             </div>
                             <div class="col-8">
                                 <span class="fs-14 fw-500 chart-title" style="">Bending moment kNm</span>
-                                <img src="src/assets/img/chart-1.png" alt="">
+                                <img src="/src/assets/img/chart-1.png" alt="">
                             </div>
                         </div>
                     </template>
@@ -117,7 +110,7 @@ const designTypes = [
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">7.5900 kNm at 1.2m</span>                                                
+                                                <span class="justify-content-start">7.5900 kNm at 1.2m</span>
                                             </div>
                                         </div>
                                     </div>
@@ -131,7 +124,7 @@ const designTypes = [
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">-7.5900 kNm at 1.2m</span>                                                
+                                                <span class="justify-content-start">-7.5900 kNm at 1.2m</span>
                                             </div>
                                         </div>
                                     </div>
@@ -139,7 +132,7 @@ const designTypes = [
                             </div>
                             <div class="col-8">
                                 <span class="fs-14 fw-500 chart-title" style="">Shear force (kN)</span>
-                                <img src="src/assets/img/chart-2.png" alt="">
+                                <img src="/src/assets/img/chart-2.png" alt="">
                             </div>
                         </div>
                     </template>
@@ -157,21 +150,28 @@ const designTypes = [
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span  class="justify-content-start">8.5000 kNm at 1.2m</span>                                                
+                                                <span class="justify-content-start">8.5000 kNm at 1.2m</span>
                                             </div>
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
                             <div class="col-8">
                                 <span class="fs-14 fw-500 chart-title" style="">Deflection (mm)</span>
-                                <img src="src/assets/img/chart-3.png" alt="">
+                                <img src="/src/assets/img/chart-3.png" alt="">
                             </div>
                         </div>
                     </template>
                 </sub-panel>
             </template>
         </panel>
+
+        <div class="row d-flex justify-content-end py-5">
+            <button type="button" class="btn px-2 fs-16 fw-500 mx-2" @click="clearForm"
+                style="background-color: #F4F4F4; width: 196px; height: 42px; color: #125CCB;">Clear All</button>
+            <button type="button" class="btn btn-primary px-2 fs-16 fw-500  mx-2" @click="nextStep"
+                style="background-color: #125CCB; width: 196px; height: 42px;">Next</button>
+        </div>
     </div>
 </template>
 

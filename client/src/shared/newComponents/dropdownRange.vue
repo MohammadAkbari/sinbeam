@@ -9,12 +9,14 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    options: []
+    options: Array<any>
 });
 
 let isDropdownOpen = ref(false as boolean);
 
+let showNoteModal = ref(false as boolean);
 
+let selectedOption = props.options[0];
 const selectOption = (option) => {
     selectedOption = option;
     isDropdownOpen.value = false;

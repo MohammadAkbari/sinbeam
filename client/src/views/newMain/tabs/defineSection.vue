@@ -1,14 +1,22 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 
+const emit = defineEmits(['nextStep', 'clearForm']);
 
 const showNoteModal = ref(false as boolean);
 
 const state = reactive({
-  value: [10, 100],
-  value2: 40,
+    value: [10, 100],
+    value2: 40,
 });
 
+const nextStep = () => {
+  emit("nextStep");
+}
+
+const clearForm = () => {
+  emit("clearForm");
+}
 
 </script>
 
@@ -282,6 +290,12 @@ const state = reactive({
                 </div>
             </div>
         </div>
+        <div class="row d-flex justify-content-end py-5">
+            <button type="button" class="btn px-2 fs-16 fw-500 mx-2" @click="clearForm"
+                style="background-color: #F4F4F4; width: 196px; height: 42px; color: #125CCB;">Clear All</button>
+            <button type="button" class="btn btn-primary px-2 fs-16 fw-500  mx-2" @click="nextStep"
+                style="background-color: #125CCB; width: 196px; height: 42px;">Next</button>
+        </div>
     </div>
 
 
@@ -289,70 +303,70 @@ const state = reactive({
         @closeModal="showNoteModal = !showNoteModal" width="95%" height="900px">
         <div class="row">
             <div class="col-3 px-5">
-                <img src="src/assets/img/info-circle.png" alt="">
+                <img src="/src/assets/img/info-circle.png" alt="">
                 <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Weight (kg/m)</label>
                 <dropdown-range style="width: 100%"></dropdown-range>
-            </div>           
+            </div>
             <div class="col-3 px-5">
-                <img src="src/assets/img/info-circle.png" alt="">
+                <img src="/src/assets/img/info-circle.png" alt="">
                 <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Web height (mm)</label>
                 <dropdown-range style="width: 100%"></dropdown-range>
-            </div>           
+            </div>
             <div class="col-3 px-5">
-                <img src="src/assets/img/info-circle.png" alt="">
+                <img src="/src/assets/img/info-circle.png" alt="">
                 <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Web thickness (mm)</label>
                 <dropdown-range style="width: 100%"></dropdown-range>
-            </div>           
+            </div>
             <div class="col-3 px-5">
-                <img src="src/assets/img/info-circle.png" alt="">
+                <img src="/src/assets/img/info-circle.png" alt="">
                 <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Flange width (mm)</label>
                 <dropdown-range style="width: 100%"></dropdown-range>
             </div>
         </div>
         <div class="row">
             <div class="col-3 px-5">
-                <img src="src/assets/img/info-circle.png" alt="">
+                <img src="/src/assets/img/info-circle.png" alt="">
                 <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Flange thickness (mm)</label>
                 <dropdown-range style="width: 100%"></dropdown-range>
-            </div>           
+            </div>
             <div class="col-3 px-5">
-                <img src="src/assets/img/info-circle.png" alt="">
+                <img src="/src/assets/img/info-circle.png" alt="">
                 <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Section perimeter (m2/m)</label>
                 <dropdown-range style="width: 100%"></dropdown-range>
-            </div>           
+            </div>
             <div class="col-3 px-5">
-                <img src="src/assets/img/info-circle.png" alt="">
+                <img src="/src/assets/img/info-circle.png" alt="">
                 <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Moment of inertia Iy (cm4)</label>
                 <dropdown-range style="width: 100%"></dropdown-range>
-            </div>           
+            </div>
             <div class="col-3 px-5">
-                <img src="src/assets/img/info-circle.png" alt="">
+                <img src="/src/assets/img/info-circle.png" alt="">
                 <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Moment of inertia Iz (cm4)</label>
                 <dropdown-range style="width: 100%"></dropdown-range>
             </div>
         </div>
         <div class="row">
             <div class="col-3 px-5">
-                <img src="src/assets/img/info-circle.png" alt="">
+                <img src="/src/assets/img/info-circle.png" alt="">
                 <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Bending capacity</label>
                 <dropdown-range style="width: 100%"></dropdown-range>
-            </div>           
+            </div>
             <div class="col-3 px-5">
-                <img src="src/assets/img/info-circle.png" alt="">
+                <img src="/src/assets/img/info-circle.png" alt="">
                 <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Shear capacity</label>
                 <dropdown-range style="width: 100%"></dropdown-range>
-            </div>           
+            </div>
             <div class="col-3 px-5">
-                <img src="src/assets/img/info-circle.png" alt="">
+                <img src="/src/assets/img/info-circle.png" alt="">
                 <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Axial capacity</label>
                 <dropdown-range style="width: 100%"></dropdown-range>
-            </div>           
+            </div>
             <div class="col-3 px-5">
-               
+
             </div>
         </div>
         <div class="row">
-            
+
         </div>
     </vue-modal>
 </template>

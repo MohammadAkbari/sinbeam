@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-
+const emit = defineEmits(['nextStep', 'clearForm']);
 const loadInput = ref(true as boolean)
 
 
@@ -10,7 +10,16 @@ const designTypes = [
     { id: 1, label: 'UK NA', image: 'src/assets/img/UK-icon.png' },
     { id: 1, label: 'Irish NA', image: 'src/assets/img/irish-icon.png' },
     { id: 1, label: 'IR NA', image: 'src/assets/img/IR-icon.png' },
-]
+];
+
+
+const nextStep = () => {
+    emit("nextStep");
+}
+
+const clearForm = () => {
+    emit("clearForm");
+}
 
 
 </script>
@@ -117,7 +126,7 @@ const designTypes = [
                                     <td><input type="number" name="Parament6" id="Parament6"></td>
                                     <td><input type="number" name="Parament7" id="Parament7"></td>
                                     <td style="width: 35%;" rowspan="2">
-                                        <img src="src/assets/img/compression.png" alt="">
+                                        <img src="/src/assets/img/compression.png" alt="">
                                     </td>
 
                                 </tr>
@@ -137,7 +146,7 @@ const designTypes = [
                                     <td style="background-color:#F6F6F6;">Parament</td>
                                     <td style="background-color:#F6F6F6;">Variable</td>
                                     <td style="width: 35%;" rowspan="2">
-                                        <img src="src/assets/img/compression-2.png" alt="">
+                                        <img src="/src/assets/img/compression-2.png" alt="">
                                     </td>
 
                                 </tr>
@@ -148,7 +157,7 @@ const designTypes = [
                                 </tr>
                             </tbody>
                         </table>
-                    </div>                   
+                    </div>
                 </template>
                 <template v-else>
                     <div class="row px-4 py-3">
@@ -193,7 +202,7 @@ const designTypes = [
                                     <td><input type="number" name="Parament6" id="Parament6"></td>
                                     <td><input type="number" name="Parament7" id="Parament7"></td>
                                     <td style="width: 35%;" rowspan="2">
-                                        <img src="src/assets/img/compression.png" alt="">
+                                        <img src="/src/assets/img/compression.png" alt="">
                                     </td>
 
                                 </tr>
@@ -213,7 +222,7 @@ const designTypes = [
                                     <td style="background-color:#F6F6F6;">Parament</td>
                                     <td style="background-color:#F6F6F6;">Variable</td>
                                     <td style="width: 35%;" rowspan="2">
-                                        <img src="src/assets/img/compression-2.png" alt="">
+                                        <img src="/src/assets/img/compression-2.png" alt="">
                                     </td>
 
                                 </tr>
@@ -275,17 +284,24 @@ const designTypes = [
         <sub-panel label="view" v-if="loadInput">
             <template v-slot:body>
                 <div class="row">
-                    <img src="src/assets/img/view.png" alt="">
+                    <img src="/src/assets/img/view.png" alt="">
                 </div>
             </template>
         </sub-panel>
         <sub-panel label="view" v-else>
             <template v-slot:body>
                 <div class="row">
-                    <img src="src/assets/img/view-2.png" alt="">
+                    <img src="/src/assets/img/view-2.png" alt="">
                 </div>
             </template>
         </sub-panel>
+
+        <div class="row d-flex justify-content-end py-5">
+            <button type="button" class="btn px-2 fs-16 fw-500 mx-2" @click="clearForm"
+                style="background-color: #F4F4F4; width: 196px; height: 42px; color: #125CCB;">Clear All</button>
+            <button type="button" class="btn btn-primary px-2 fs-16 fw-500  mx-2" @click="nextStep"
+                style="background-color: #125CCB; width: 196px; height: 42px;">Next</button>
+        </div>
     </div>
 </template>
 

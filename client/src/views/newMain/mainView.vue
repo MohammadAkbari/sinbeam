@@ -40,6 +40,9 @@ const changeTab = (value: number) => {
 
 const seletedTab = ref(1 as NewTabItems);
 const topSeletedTab = ref(1 as NewTabItems);
+const reRenderTab = ref(1 as NewTabItems);
+
+
 
 const links = ref([] as Link[]);
 
@@ -49,6 +52,14 @@ const nextStep = () => {
   if (seletedTab.value > topSeletedTab.value)
     topSeletedTab.value = seletedTab.value;
 }
+
+
+const clearForm = () => {
+  reRenderTab.value++;
+}
+
+
+
 
 const saveLinks = (newLinks) => {
   links.value.push(...(newLinks.filter(e => !links.value.some(q => q.rel == e.rel))));
@@ -143,8 +154,8 @@ const tabComponent = computed(() => {
           </div>
         </div>
         <div class="row ps-1 h-100">
-          <component :is="tabComponent" :hasCreated="topSeletedTab == seletedTab" :links='links'
-            @saveLinks="saveLinks($event)" @nextStep="nextStep">
+          <component :is="tabComponent" :hasCreated="topSeletedTab == seletedTab" :links='links' :key="reRenderTab"
+            @saveLinks="saveLinks($event)" @nextStep="nextStep" @clearForm="clearForm">
             <!-- <div class="row">
               <div class="col-md-12">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5 mb-3">

@@ -15,6 +15,7 @@ import { inject, ref } from 'vue';
 import type CharacteristicPointLoadDto from '@/models/characteristicPointLoadDto';
 import type Point from '@/models/point';
 import type AnalysisResultDto from '@/models/analysisResultDto';
+import type RestraintDto from '@/models/restraintDto';
 
 
 export interface Props {

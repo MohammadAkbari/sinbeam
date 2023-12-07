@@ -5,7 +5,7 @@ import { computed } from '@vue/reactivity';
 export interface Props {
   modelValue: any;
   label?: string;
-  name: string;
+  name?: string;
   labelWidth:number;
   disabled:boolean;
 }
