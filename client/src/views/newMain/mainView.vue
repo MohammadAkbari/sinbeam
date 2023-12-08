@@ -3,9 +3,15 @@
 import { NewTabItems } from '@/enums/newTabItems';
 import { computed } from '@vue/reactivity';
 // import TabItems from '@/enums/tabItems.ts';
-import { defineAsyncComponent, provide, ref } from 'vue';
+import { defineAsyncComponent, inject, onMounted, provide, ref } from 'vue';
 import ApiService from '@/core/services/api.service';
 import type Link from '@/models/link';
+import config from '@/shared/globals/config';
+
+import type ApiServise from '@/core/services/api.service';
+
+
+const apiServise = inject('apiServise') as ApiServise;
 
 const list = [
   {
@@ -46,6 +52,14 @@ const reRenderTab = ref(1 as NewTabItems);
 
 const links = ref([] as Link[]);
 
+
+onMounted(async () => {
+  const data = await apiServise.get(config);
+  saveLinks(data._links);
+})
+
+
+
 const nextStep = () => {
   seletedTab.value++;
 
@@ -62,8 +76,7 @@ const clearForm = () => {
 
 
 const saveLinks = (newLinks) => {
-  links.value.push(...(newLinks.filter(e => !links.value.some(q => q.rel == e.rel))));
-
+  newLinks && links.value.push(...(newLinks.filter(e => !links.value.some(q => q.rel == e.rel))));
   console.log(links.value)
 }
 
@@ -155,16 +168,7 @@ const tabComponent = computed(() => {
         </div>
         <div class="row ps-1 h-100">
           <component :is="tabComponent" :hasCreated="topSeletedTab == seletedTab" :links='links' :key="reRenderTab"
-            @saveLinks="saveLinks($event)" @nextStep="nextStep" @clearForm="clearForm">
-            <!-- <div class="row">
-              <div class="col-md-12">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5 mb-3">
-                  <button class="btn me-md-2 shadow-sm btn-light fs-12 sin-rounded bg-box-primary text-primary"
-                    type="button" style="width: 120px;">Clear All</button>
-                  <button class="btn btn-primary fs-12 sin-rounded" type="button" style="width: 120px;">Next</button>
-                </div>
-              </div>
-            </div> -->
+            @saveLinks="saveLinks" @nextStep="nextStep" @clearForm="clearForm">           
           </component>        
         </div>
       </div>

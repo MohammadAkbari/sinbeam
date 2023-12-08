@@ -5,39 +5,53 @@ import { reactive, ref } from 'vue';
 
 
 export interface Props {
-    options?: Array<any>;
+    min?: number;
+    max?: number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    options: Array<any>
+    min:0,
+    max:0
 });
+
+const emit = defineEmits(['change']);
 
 let isDropdownOpen = ref(false as boolean);
 
-let showNoteModal = ref(false as boolean);
-
-let selectedOption = props.options[0];
-const selectOption = (option) => {
-    selectedOption = option;
-    isDropdownOpen.value = false;
-};
-
 const state = reactive({
-    value: [10, 100]
+    value: [props.min, props.max]
 });
+
+const mainState = reactive({
+    value: [props.min, props.max]
+});
+
+const saveValue=()=>{
+    mainState.value = state.value;
+    emit('change',mainState.value)
+    outSideClickHandler();
+}
+
+const openDropdown = ()=>{
+    isDropdownOpen.value = true
+    state.value = mainState.value;
+}
+const outSideClickHandler = ()=> {
+    isDropdownOpen.value = false;
+}
 
 const reRender = ref(0);
 
 </script>
 
 <template>
-    <div class="dropdown">
-        <div class="dropdown-toggle-local" @click="isDropdownOpen = !isDropdownOpen" style="background-color: #EFEFEF;">           
-            <span class="dropdown-option-label fs-14 fw-500">{{ state.value[0] }} - {{ state.value[1] }}</span>
+    <div class="dropdown" v-click-outside="outSideClickHandler">
+        <div class="dropdown-toggle-local" @click="openDropdown" style="background-color: #EFEFEF;">           
+            <span class="dropdown-option-label fs-14 fw-500">{{ mainState.value[0] }} - {{ mainState.value[1] }}</span>
             <span class="dropdown-caret-icon"></span>
         </div>
         <div class="dropdown-menu-body" v-if="isDropdownOpen">
-            <range-slider v-model="state.value" :key="reRender" />
+            <range-slider v-model="state.value" :key="reRender" :min="props.min" :max="props.max" />
             <div class="row px-3">
                 <div class="col-6">
                     <div class="mb-3 py-2">
@@ -56,12 +70,11 @@ const reRender = ref(0);
             </div>
             <div class="row">
                 <div class="col-12 px-4">
-                    <button type="button" class="col-12 btn btn-primary px-2 fs-14 fw-400" @click="showNoteModal = true"
+                    <button type="button" class="col-12 btn btn-primary px-2 fs-14 fw-400" @click="saveValue"
                         style="background-color: #125CCB;">
                         Apply
                     </button>
                 </div>
-
             </div>
         </div>
     </div>

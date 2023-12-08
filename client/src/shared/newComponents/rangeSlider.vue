@@ -5,10 +5,14 @@ import { reactive } from 'vue';
 
 export interface Props {
   modelValue?: [];
+  min?:number;
+  max?:number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  modelValue: [10, 100]
+  modelValue: [10, 100],
+  min:0,
+  max:0
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -16,22 +20,16 @@ const emit = defineEmits(['update:modelValue']);
 
 const state = computed({
   get: () => props.modelValue,
-  set: (val) => {console.log(val);
+  set: (val) => {
    emit('update:modelValue', val);},
 });
 
-
-
-// const state = reactive({
-//   value: [10, 100],
-//   value2: 40,
-// });
 </script>
 
 <template>
   <div class="row">
-    <vue-simple-range-slider v-model="state" exponential active-bar-color="#125CCB"
-      bar-color="#E4E4E4" :max="1000000000">
+    <vue-simple-range-slider v-model="state" active-bar-color="#125CCB" significant-figures="1"
+      bar-color="#E4E4E4" :min="props.min" :max="props.max">
     </vue-simple-range-slider>
   </div>
   <div class="row">

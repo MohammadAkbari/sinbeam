@@ -9,6 +9,12 @@ import modal from '@/shared/newComponents/modal.vue';
 import dropdownWithImg from '@/shared/newComponents/dropdownWithImg.vue';
 import dropdownRange from '@/shared/newComponents/dropdownRange.vue';
 import rangeSlider from '@/shared/newComponents/rangeSlider.vue';
+import iron from '@/shared/newComponents/iron.vue';
+import ApiService from '@/core/services/api.service';
+import ClickOutside from '@/shared/common/outside';
+
+
+
 
 
 // import 'vuetify/styles'
@@ -38,6 +44,9 @@ import 'vue-simple-range-slider/css';
 
 const app = createApp(App)
 
+
+app.directive('click-outside', ClickOutside);
+
 // components 
 app.component('panel', panel);
 app.component('dropdown-with-img', dropdownWithImg);
@@ -46,9 +55,12 @@ app.component('sub-panel', subPanel);
 app.component('vue-modal', modal);
 app.component('range-slider', rangeSlider);
 app.component('vue-simple-range-slider', vueSimpleRangeSlider);
+app.component('iron', iron);
 
 app.use(createPinia());
 app.use(router);
+
+app.provide('apiServise', new ApiService())
 
 app.use(VueUniversalModal, {
     teleportTarget: '#modals',

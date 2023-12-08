@@ -2,14 +2,19 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+const emit = defineEmits(['changed', 'update:modelValue']);
 
 export interface Props {
     options?: Array<any>;
+    modelValue: number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
     options: Array<any>
 });
+
+
+const el = ref();
 
 let isDropdownOpen = ref(false as boolean);
 
@@ -18,15 +23,20 @@ let selectedOption = props.options[0];
 const selectOption = (option) => {
     selectedOption = option;
     isDropdownOpen.value = false;
+    emit('update:modelValue', option.id)
+    emit('changed', option)
 };
 
+const outSideClickHandler = (e)=> {
+    isDropdownOpen.value = false;
+}
 
-
+document.addEventListener('click', close)
 
 </script>
 
 <template>
-    <div class="dropdown">
+    <div class="dropdown" v-click-outside="outSideClickHandler">
         <div class="dropdown-toggle-local" @click="isDropdownOpen = !isDropdownOpen" style="background-color: #EFEFEF;">
             <img :src="selectedOption?.image" class="dropdown-option-image">
             <span class="dropdown-option-label fs-14 fw-500">{{ selectedOption?.label }}</span>
