@@ -377,7 +377,7 @@ const clearForm = () => {
                     data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <table class="properties table table-striped table-bordered">
-                            <tbody>
+                            <tbody v-if="webSectionDto.properties && webSectionDto.properties?.length > 9">
                                 <tr>
                                     <td>{{webSectionDto.properties[0]}}</td>
                                     <td>{{webSectionDto.properties[1]}}</td>
