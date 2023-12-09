@@ -21,5 +21,14 @@ const objectIntoQueryStringParameters = (obj: any) => {
   );
 };
 
+const chunks = (arr, n) => {
+  const list = [];
+  for (let i = 0; i < arr.length; i += n) {
+    list.push(arr.slice(i, i + n));
+  }
 
-export default { convertEnumToListItem , objectIntoQueryStringParameters }
+  return list;
+}
+
+
+export default { convertEnumToListItem , objectIntoQueryStringParameters ,chunks}

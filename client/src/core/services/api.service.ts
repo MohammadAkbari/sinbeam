@@ -32,6 +32,23 @@ export default class ApiService {
     }
   }
 
+  callApiByLink = async (link: Link, model = null) => {   
+    try {
+      switch (link.method.toLocaleLowerCase()) {
+        case 'post':
+          const postData = await axios.post(link.href, model);
+          return postData.data;
+        case 'get':
+          const url = link.href + (model == null ? '' : helper.objectIntoQueryStringParameters(model))
+          const getData = await axios.get(url);
+          return getData.data;
+      }
+    } catch (e) {
+      debugger
+      console.log(e);
+    }
+  }
+
   callService = async (href: string, method: string, model = null) => {
     
     try {

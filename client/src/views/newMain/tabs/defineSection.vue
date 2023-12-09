@@ -2,8 +2,11 @@
 import type Link from '@/models/link';
 import type ApiServise from '@/core/services/api.service';
 import constants from '@/shared/globals/newConstants';
-import { reactive, ref, onMounted, inject } from 'vue';
+import { reactive, ref, onMounted, inject, computed } from 'vue';
 import helper from '@/shared/common/helper';
+import type WebSection from '@/models/webSection';
+import type WebSectionDto from '@/dtos/webSectionDto';
+import  pager  from "@/shared/newComponents/pager.vue";
 
 
 enum Filter {
@@ -51,6 +54,18 @@ const showNoteModal = ref(false as boolean);
 const filter = Filter;
 let filterList = ref([]);
 
+const webSections = ref([] as Array<WebSection>);
+const webSectionDto = ref({} as WebSectionDto)
+const pageSize = 15 ,recordCount=ref(0) ,currentPage=ref(1) 
+
+
+
+
+const displayWebSections = computed(()=>{
+    recordCount.value = webSections.value.length;
+    return webSections.value.filter((u, i) => i >= (currentPage.value-1) * pageSize).filter((u, i) => i < pageSize);
+})
+
 const state = reactive({
     value: [10, 100],
     value2: 40,
@@ -74,12 +89,44 @@ onMounted(() => {
     });
 })
 
-const changeFilter = (event,item)=>{
+const changeFilter = (event, item) => {
     item.minValue = event[0];
     item.maxValue = event[1];
+
+    const model = {};
+
+    filterList.value.forEach((filter) => {
+        if (filter.minValue != filter.min || filter.maxValue != filter.max) {
+            const minfield = Filter[filter.id] + '.min';
+            const maxfield = Filter[filter.id] + '.max';
+
+            model[minfield] = filter.minValue;
+            model[maxfield] = filter.maxValue;
+        }
+    });
+
+    apiServise.callApi(props.links, constants.sections.querySections, model).then((data) => {
+        webSections.value = data;
+
+    })
 }
 
+const currentPageChange = (val: number) => {
+    debugger
+    currentPage.value = val;
+  }
 
+const getResultMode=(item)=>{
+    console.log(item);
+    apiServise.callApiByLink(item._links[0]).then((data)=>{
+        webSectionDto.value = data;
+        console.log('webSectionDto',webSectionDto.value);
+        
+    })
+
+
+    showNoteModal.value=false;
+}
 
 
 
@@ -111,10 +158,7 @@ const clearForm = () => {
                                     <div class="col-lg-4 p-0 py-1">
                                         <label for="exampleFormControlInput1"
                                             style="background-color: #FBFBFB ;height: 36px; width: 200px;"
-                                            class="form-label mb-0 d-flex justify-content-center input-label py-2">WT A 1000
-                                            /
-                                            300 X
-                                            15</label>
+                                            class="form-label mb-0 d-flex justify-content-center input-label py-2 fs-16">{{webSectionDto.id}}</label>
                                     </div>
                                     <div class="col-lg-8 py-1">
                                         <div class="form-check d-flex justify-content-center py-2">
@@ -135,7 +179,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">45000</span>
+                                                <span class="justify-content-start">{{webSectionDto.webDepth}}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
 
@@ -151,7 +195,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">45000</span>
+                                                <span class="justify-content-start">{{webSectionDto.webDepth}}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
 
@@ -167,7 +211,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">100000000</span>
+                                                <span class="justify-content-start">{{webSectionDto.webThickness}}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
 
@@ -183,7 +227,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">ST-37 (s 275)</span>
+                                                <span class="justify-content-start">{{webSectionDto.webSteel}}</span>
                                             </div>
 
                                         </div>
@@ -203,7 +247,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">12300000</span>
+                                                <span class="justify-content-start">{{webSectionDto.topFlangeThickness}}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
                                         </div>
@@ -218,7 +262,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">2319009</span>
+                                                <span class="justify-content-start">{{webSectionDto.topFlangeWidth}}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
 
@@ -234,7 +278,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">ST-37 (s 275)</span>
+                                                <span class="justify-content-start">{{webSectionDto.topFlangeSteel}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -253,7 +297,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">1200000</span>
+                                                <span class="justify-content-start">{{webSectionDto.bottomFlangeThickness}}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
                                         </div>
@@ -268,7 +312,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">12999000</span>
+                                                <span class="justify-content-start">{{webSectionDto.bottomFlangeWidth}}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
                                         </div>
@@ -283,7 +327,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">ST-37 (s 275)</span>
+                                                <span class="justify-content-start">{{webSectionDto.bottomFlangeSteel}}</span>
                                                 <!-- <span class="justify-content-end">mm</span> -->
                                             </div>
                                         </div>
@@ -332,31 +376,31 @@ const clearForm = () => {
                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                     data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <table class="table table-striped table-bordered">
+                        <table class="properties table table-striped table-bordered">
                             <tbody>
                                 <tr>
-                                    <td>Bean has uniform depth</td>
-                                    <td>Iy Major axis inertia = 61762 cm4</td>
-                                    <td>Iz Minor axis inertia = 10400 cm4</td>
+                                    <td>{{webSectionDto.properties[0]}}</td>
+                                    <td>{{webSectionDto.properties[1]}}</td>
+                                    <td>{{webSectionDto.properties[2]}}</td>
                                 </tr>
                                 <tr>
-                                    <td>iy Major axis gyration = 0 cm</td>
-                                    <td>iz Minor axis gyration = 14.7 cm</td>
-                                    <td>It Torsional inertia = 0 cm4</td>
+                                    <td>{{webSectionDto.properties[3]}}</td>
+                                    <td>{{webSectionDto.properties[4]}}</td>
+                                    <td>{{webSectionDto.properties[5]}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Iw Warping inertia = 4096576 cm6</td>
-                                    <td>A Cross section area = 48 cm2</td>
-                                    <td>Weight per m = 57 kg/m</td>
+                                    <td>{{webSectionDto.properties[6]}}</td>
+                                    <td>{{webSectionDto.properties[7]}}</td>
+                                    <td>{{webSectionDto.properties[8]}}</td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td>Weight per m = 57 kg/m</td>
                                     <td>Surface area per m = 2.4 m2/m</td>
                                     <td>Surface area per T = 42.3 m2/T</td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: center;" colspan="3">Ratio A/AQ = 1.15</td>
-                                </tr>
+                                </tr> -->
                             </tbody>
 
                         </table>
@@ -374,12 +418,12 @@ const clearForm = () => {
 
 
     <vue-modal btnClassList="btn btn-success" :isShowModal="showNoteModal" headerTitle="Corrugated Web Sections Library"
-        @closeModal="showNoteModal = !showNoteModal" width="95%" height="900px">
+        @closeModal="showNoteModal = !showNoteModal" width="95%" height="800px">
         <div class="row">
             <div class="col-3 px-5" v-for="(item) in filterList" :key="item.id">
                 <img src="/src/assets/img/info-circle.png" alt="">
                 <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">{{ item.title }}</label>
-                <dropdown-range style="width: 100%" :min="item.min" :max="item.max" 
+                <dropdown-range style="width: 100%" :min="item.min" :max="item.max"
                     @change="changeFilter($event, item)"></dropdown-range>
             </div>
             <!-- <div class="col-3 px-5">
@@ -436,16 +480,73 @@ const clearForm = () => {
 
             </div>
         </div>
+        <hr>
         <div class="row">
-
+            <div class="row px-4 py-3" style="overflow-y: scroll;  max-height: 450px;">
+                        <table class="filter table table-bordered text-center" style="margin-bottom: 0px;">
+                            <thead>
+                                <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
+                                    <th style="height: 48px;width:12%;background-color:#F6F6F6;">Section ID</th>
+                                    <th style="height: 48px;background-color:#F6F6F6;">Weight</th>
+                                    <th style="height: 48px;background-color:#F6F6F6;">Hw</th>
+                                    <th style="height: 48px;background-color:#F6F6F6;">TW</th>
+                                    <th style="height: 48px;background-color:#F6F6F6;">BF</th>
+                                    <th style="height: 48px;background-color:#F6F6F6;">TF</th>
+                                    <th style="height: 48px;background-color:#F6F6F6;">2P</th>
+                                    <th style="height: 48px;background-color:#F6F6F6;">Iy</th>
+                                    <th style="height: 48px;background-color:#F6F6F6;">Mn</th>
+                                    <th style="height: 48px;background-color:#F6F6F6;">Vn</th>
+                                    <th style="height: 48px;background-color:#F6F6F6;">Pn</th>
+                                    <th style="height: 48px;background-color:#F6F6F6;">Iz</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              
+                                <tr class="fs-14 fw-500 py-0" v-for="(item,index) in displayWebSections" :key="index" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
+                                    <td style="height: 48px; !important;color: #125CCB;text-decoration: underline;cursor: pointer;" @click="getResultMode(item)">{{ item.key }}</td>
+                                    <td style="height: 48px; !important">{{ item.weight }}</td>
+                                    <td style="height: 48px; !important">{{ item.webHeight }}</td>
+                                    <td style="height: 48px; !important">{{ item.webThickness }}</td>
+                                    <td style="height: 48px; !important">{{ item.flangeWidth }}</td>
+                                    <td style="height: 48px; !important">{{ item.flangeThickness }}</td>
+                                    <td style="height: 48px; !important">{{ item.sectionPerimeter }}</td>
+                                    <td style="height: 48px; !important">{{ item.momentOfInertiaIy }}</td>
+                                    <td style="height: 48px; !important">{{ item.momentOfInertiaIz }}</td>
+                                    <td style="height: 48px; !important">{{ item.bendingCapacity }}</td>
+                                    <td style="height: 48px; !important">{{ item.shearCapacity }}</td>
+                                    <td style="height: 48px; !important">{{ item.axialCapacity }}</td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>          
+                        <pager  v-if="recordCount > pageSize" :pageSize="pageSize" :recordCount="recordCount"  :currentPage="currentPage-1"  @currentPageChange="currentPageChange($event)"></pager>              
+                    </div>
+                    
         </div>
     </vue-modal>
 </template>
 
 <style>
-.table td {
+.properties td {
     font-size: 16px;
     font-weight: 400;
     padding-left: 35px;
 }
+
+.filter td {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.filter th{
+    width: 8%;
+}
+
+
+
+
+
+
+
+
 </style>

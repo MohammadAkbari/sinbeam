@@ -8,7 +8,7 @@ const newConstants = {
     sections:{
         getSection: 'get-section',
         getSectionsFilters: 'get-sections-filters',
-        querySections: 'query-sectionsn',
+        querySections: 'query-sections',
     }
 }
 export default newConstants;
