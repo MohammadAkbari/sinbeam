@@ -11,17 +11,17 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    top : Part =>({borderWidth:'',height:50,width:150}),
-    bottom :Part =>({borderWidth:'',height:50,width:150}),
-    center :Part =>({borderWidth:'',height:500,width:50}),
+    // top : Part =>({borderWidth:'',height:50,width:150}),
+    // bottom :Part =>({borderWidth:'',height:50,width:150}),
+    // center :Part =>({borderWidth:'',height:500,width:50}),
 });
 
 </script>
 
 <template>
-    <div class="row" style="display: block;">
+    <div v-if="props.top && props.center && props.bottom" class="row" style="display: block;">
 
-        <div :style="`width: ${props.top.scaledWidth}px;margin:0 auto;padding: 0px;`">
+        <div :style="`width: ${props.top.width}px;margin:0 auto;padding: 0px;`">
             <h2><i class="arrow left"></i><span class="fs-16 fw-400">{{props.top.width}} mm</span><i class="arrow right"></i></h2>
             <div :style="`height:${props.top.scaledHeight}px; background-color: #b4b5b5; border: 1px solid #000000;`"></div>
         </div>
@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
             </div>
     
         </div>
-        <div  :style="`width: ${props.bottom.scaledWidth}px;margin:0 auto;padding: 0px;`" >
+        <div  :style="`width: ${props.bottom.width}px;margin:0 auto;padding: 0px;`" >
             <div :style="`height:${props.bottom.scaledHeight}px;background-color: #b4b4b4; border: 1px solid #000000;`"></div>
             <h2><i class="arrow left"></i><span class="fs-16 fw-400">{{props.bottom.width}} mm</span><i class="arrow right"></i></h2>
         </div>
