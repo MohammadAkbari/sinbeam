@@ -9,6 +9,7 @@ import { DesignType } from '@/enums/designType';
 import type DeflectionLimit from '@/models/deflectionLimit';
 import type DesignParameters from '@/models/designParameters';
 import { ULSLoadExpression } from '@/enums/uLSLoadExpression';
+import { SteelType } from '@/enums/steelType';
 
 
 export interface Props {
@@ -28,24 +29,27 @@ const showNoteModal = ref(false as boolean)
 const orderDto = reactive(
   {
     elementType: ElementType.Column,
-    designType: DesignType.UK,
+    designType: DesignType.UserDefined,
     uLSLoadExpression: ULSLoadExpression.Expression610a,
     deflectionLimit: {} as DeflectionLimit,
-    designParameters: {} as DesignParameters
+    designParameters: {} as DesignParameters,
+    steelType: SteelType.S235
   } as OrderDto);
 
 const designParameters = reactive({} as DesignParameters)
 
 const elementType = ElementType;
 const uLSLoadExpression = ULSLoadExpression;
-const designType = DesignType
+const designType = DesignType;
+const steelType = SteelType;
 
 
 const designTypes = [
+  { id: 0, label: 'Select ...' },
   { id: 1, label: 'UK NA', image: 'src/assets/img/UK-icon.png' },
   { id: 2, label: 'Irish NA', image: 'src/assets/img/irish-icon.png' },
-  { id: 3, label: 'IR NA', image: 'src/assets/img/IR-icon.png' },
-  { id: 4, label: 'User Defined', image: 'src/assets/img/user-defined.png' },
+  { id: 3, label: 'Iran', image: 'src/assets/img/IR-icon.png' },
+  // { id: 4, label: 'User Defined', image: 'src/assets/img/user-defined.png' },
 ];
 
 
@@ -186,6 +190,28 @@ const clearForm = () => {
             </sub-panel>
           </template>
         </panel>
+        <panel label="Steel" icon="/src/assets/img/ruler.png" size="col-lg-12">
+          <template v-slot:body>
+            <div class="card-body px-4 py-2">
+                  <div class="form-check fs-16">
+                    <input class="form-check-input" type="radio" name="steelType" id="S275"
+                      :value="steelType.S235" v-model="orderDto.steelType">
+                    <label class="form-check-label fs-16" for="S275">
+                      ST-37 (s 235)
+                    </label>
+                  </div>
+                  <div class="form-check fs-16">
+                    <input class="form-check-input" type="radio" name="steelType" id="S355"
+                      :value="steelType.S355" v-model="orderDto.steelType">
+                    <label class="form-check-label fs-16" for="S355">
+                      ST-38 (s 355)
+                    </label>
+                  </div>
+                </div>
+
+          </template>
+        </panel>
+        
         <panel label="Deflection Limits( span / limit)" icon="/src/assets/img/ruler.png" size="col-lg-12">
           <template v-slot:body>
             <div class="card-body px-2 py-2 mx-5">

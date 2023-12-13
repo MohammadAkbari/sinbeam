@@ -3,6 +3,7 @@ import type Link from "../models/link";
 
 export default class WebSectionDto  {
     id: string;
+    key: string;
 
     webDepth:number;
     webThickness:number;

@@ -42,7 +42,7 @@ document.addEventListener('click', close)
             <span class="dropdown-option-label fs-14 fw-500">{{ selectedOption?.label }}</span>
             <span class="dropdown-caret-icon"></span>
         </div>
-        <ul class="dropdown-menu-body" v-show="isDropdownOpen" style="width: 100%;">
+        <ul class="dropdown-menu-body" v-show="isDropdownOpen" style="width: 100%;">            
             <li v-for="(option, index) in props.options" :key="index" @click="selectOption(option)">
                 <img :src="option?.image" class="dropdown-option-image">
                 <span class="dropdown-option-label fs-14 fw-500">{{ option?.label }}</span>

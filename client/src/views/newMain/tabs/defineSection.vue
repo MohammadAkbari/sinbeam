@@ -60,7 +60,6 @@ const pageSize = 15 ,recordCount=ref(0) ,currentPage=ref(1)
 
 
 
-
 const displayWebSections = computed(()=>{
     recordCount.value = webSections.value.length;
     return webSections.value.filter((u, i) => i >= (currentPage.value-1) * pageSize).filter((u, i) => i < pageSize);
@@ -158,9 +157,9 @@ const clearForm = () => {
                                     <div class="col-lg-4 p-0 py-1">
                                         <label for="exampleFormControlInput1"
                                             style="background-color: #FBFBFB ;height: 36px; width: 200px;"
-                                            class="form-label mb-0 d-flex justify-content-center input-label py-2 fs-16">{{webSectionDto.id}}</label>
+                                            class="form-label mb-0 d-flex justify-content-center input-label py-2 fs-16">{{webSectionDto.key}}</label>
                                     </div>
-                                    <div class="col-lg-8 py-1">
+                                    <!-- <div class="col-lg-8 py-1">
                                         <div class="form-check d-flex justify-content-center py-2">
                                             <input class="form-check-input fs-16" type="checkbox" value=""
                                                 id="flexCheckDefault">
@@ -168,9 +167,9 @@ const clearForm = () => {
                                                 Default checkbox
                                             </label>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <div class="row px-5">
+                                <!-- <div class="row px-5">
                                     <div class="col-lg-4 p-0 py-1">
                                         <label for="exampleFormControlInput1" style="height: 36px; width: 200px;"
                                             class="form-label mb-0 d-flex input-label px-3 py-2">Web depth, right</label>
@@ -185,11 +184,11 @@ const clearForm = () => {
 
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row px-5">
                                     <div class="col-lg-4 p-0 py-1">
                                         <label for="exampleFormControlInput1" style="height: 36px; width: 200px;"
-                                            class="form-label mb-0 d-flex input-label px-3 py-2">Web depth, left</label>
+                                            class="form-label mb-0 d-flex input-label px-3 py-2">Web depth</label>
                                     </div>
                                     <div class="col-lg-8 py-1">
                                         <div class="form-check ">
@@ -377,12 +376,10 @@ const clearForm = () => {
                     <div class="accordion-body">
                         <table class="properties table table-striped table-bordered">
                             <tbody v-if="webSectionDto.properties && webSectionDto.properties?.length > 9">
-                                <tr>
-                                    <td>{{webSectionDto.properties[0]}}</td>
-                                    <td>{{webSectionDto.properties[1]}}</td>
-                                    <td>{{webSectionDto.properties[2]}}</td>
+                                <tr v-for="(item ,index) in webSectionDto.properties.filter((e,i)=>(i+1) % 3 != 0)" :key="index">
+                                    <td v-for="(item1,index1) in webSectionDto.properties.filter((q,j)=>index>j && index<j+3)" :key="index1">{{item1}}-{{ index1 }}</td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td>{{webSectionDto.properties[3]}}</td>
                                     <td>{{webSectionDto.properties[4]}}</td>
                                     <td>{{webSectionDto.properties[5]}}</td>
@@ -391,7 +388,7 @@ const clearForm = () => {
                                     <td>{{webSectionDto.properties[6]}}</td>
                                     <td>{{webSectionDto.properties[7]}}</td>
                                     <td>{{webSectionDto.properties[8]}}</td>
-                                </tr>
+                                </tr> -->
                                 <!-- <tr>
                                     <td>Weight per m = 57 kg/m</td>
                                     <td>Surface area per m = 2.4 m2/m</td>
@@ -493,10 +490,10 @@ const clearForm = () => {
                                     <th style="height: 48px;background-color:#F6F6F6;">TF</th>
                                     <th style="height: 48px;background-color:#F6F6F6;">2P</th>
                                     <th style="height: 48px;background-color:#F6F6F6;">Iy</th>
+                                    <th style="height: 48px;background-color:#F6F6F6;">Iz</th>
                                     <th style="height: 48px;background-color:#F6F6F6;">Mn</th>
                                     <th style="height: 48px;background-color:#F6F6F6;">Vn</th>
-                                    <th style="height: 48px;background-color:#F6F6F6;">Pn</th>
-                                    <th style="height: 48px;background-color:#F6F6F6;">Iz</th>
+                                    <th style="height: 48px;background-color:#F6F6F6;">Pn</th>                                    
                                 </tr>
                             </thead>
                             <tbody>

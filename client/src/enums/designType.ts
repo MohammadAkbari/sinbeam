@@ -1,13 +1,13 @@
 export enum DesignType {
+    Select = 0,
     UK = 1,
     Irish = 2,
     Iran = 3,
-    UserDefined = 4,
 
+    _0 ='Select ...',
     _1 ='UK NA',
     _2 ='Irish NA',
-    _3 ='IR NA',
-    _4 ='User Defined',
+    _3 ='Iran'
 }
 
 

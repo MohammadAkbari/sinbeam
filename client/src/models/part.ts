@@ -2,5 +2,7 @@
 export default class Part {
     width: number;
     height: number;
-    borderWidth: string;
+
+    scaledWidth: number;
+    scaledHeight: number;
 }
