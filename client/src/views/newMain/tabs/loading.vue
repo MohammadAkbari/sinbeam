@@ -1,17 +1,31 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { inject, ref,onMounted } from 'vue';
+import type ApiServise from '@/core/services/api.service';
+import Link from '@/models/link';
+import constants from '@/shared/globals/newConstants';
+import type LoadingDto from '@/dtos/loadingDto';
 
 const emit = defineEmits(['nextStep', 'clearForm']);
-const loadInput = ref(true as boolean)
+const loadInput = ref(true as boolean);
+const apiServise = inject('apiServise') as ApiServise;
+
+export interface Props {
+  links: Link[]
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  //hasCreated: false
+});
+
+const loadingDto = ref({} as LoadingDto);
 
 
+onMounted(()=>{
+    apiServise.callApi(props.links,constants.loading.getLoading).then((data)=>{
+        loadingDto.value = data;
 
-const designTypes = [
-    { id: 1, label: 'UK NA', image: 'src/assets/img/UK-icon.png' },
-    { id: 1, label: 'Irish NA', image: 'src/assets/img/irish-icon.png' },
-    { id: 1, label: 'IR NA', image: 'src/assets/img/IR-icon.png' },
-];
-
+    });
+})
 
 const nextStep = () => {
     emit("nextStep");
@@ -28,6 +42,7 @@ const clearForm = () => {
 
 <template>
     <div class="col-11">
+        {{loadingDto}}
         <panel label="Loading" icon="/src/assets/img/Loading-icon.png" size="col-lg-12">
             <template v-slot:body>
                 <div class="row px-2 py-3">

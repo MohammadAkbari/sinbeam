@@ -6,7 +6,7 @@ import { reactive, ref, onMounted, inject, computed } from 'vue';
 import helper from '@/shared/common/helper';
 import type WebSection from '@/models/webSection';
 import type WebSectionDto from '@/dtos/webSectionDto';
-import  pager  from "@/shared/newComponents/pager.vue";
+import pager from "@/shared/newComponents/pager.vue";
 
 
 enum Filter {
@@ -56,13 +56,13 @@ let filterList = ref([]);
 
 const webSections = ref([] as Array<WebSection>);
 const webSectionDto = ref({} as WebSectionDto)
-const pageSize = 15 ,recordCount=ref(0) ,currentPage=ref(1) 
+const pageSize = 15, recordCount = ref(0), currentPage = ref(1)
 
 
 
-const displayWebSections = computed(()=>{
+const displayWebSections = computed(() => {
     recordCount.value = webSections.value.length;
-    return webSections.value.filter((u, i) => i >= (currentPage.value-1) * pageSize).filter((u, i) => i < pageSize);
+    return webSections.value.filter((u, i) => i >= (currentPage.value - 1) * pageSize).filter((u, i) => i < pageSize);
 })
 
 const state = reactive({
@@ -113,24 +113,26 @@ const changeFilter = (event, item) => {
 const currentPageChange = (val: number) => {
     debugger
     currentPage.value = val;
-  }
+}
 
-const getResultMode=(item)=>{
+const getResultMode = (item) => {
     console.log(item);
-    apiServise.callApiByLink(item._links[0]).then((data)=>{
+    apiServise.callApiByLink(item._links[0]).then((data) => {
         webSectionDto.value = data;
-        console.log('webSectionDto',webSectionDto.value);
-        
+        console.log('webSectionDto', webSectionDto.value);
+
     })
 
 
-    showNoteModal.value=false;
+    showNoteModal.value = false;
 }
 
 
 
 const nextStep = () => {
-    emit("nextStep");
+    apiServise.callApi(props.links, constants.sections.saveSection).then(data => {
+        emit("nextStep");
+    });
 }
 
 const clearForm = () => {
@@ -157,7 +159,7 @@ const clearForm = () => {
                                     <div class="col-lg-4 p-0 py-1">
                                         <label for="exampleFormControlInput1"
                                             style="background-color: #FBFBFB ;height: 36px; width: 200px;"
-                                            class="form-label mb-0 d-flex justify-content-center input-label py-2 fs-16">{{webSectionDto.key}}</label>
+                                            class="form-label mb-0 d-flex justify-content-center input-label py-2 fs-16">{{ webSectionDto.key }}</label>
                                     </div>
                                     <!-- <div class="col-lg-8 py-1">
                                         <div class="form-check d-flex justify-content-center py-2">
@@ -194,7 +196,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">{{webSectionDto.webDepth}}</span>
+                                                <span class="justify-content-start">{{ webSectionDto.webDepth }}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
 
@@ -210,7 +212,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">{{webSectionDto.webThickness}}</span>
+                                                <span class="justify-content-start">{{ webSectionDto.webThickness }}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
 
@@ -226,7 +228,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">{{webSectionDto.webSteel}}</span>
+                                                <span class="justify-content-start">{{ webSectionDto.webSteel }}</span>
                                             </div>
 
                                         </div>
@@ -246,7 +248,8 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">{{webSectionDto.topFlangeThickness}}</span>
+                                                <span
+                                                    class="justify-content-start">{{ webSectionDto.topFlangeThickness }}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
                                         </div>
@@ -261,7 +264,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">{{webSectionDto.topFlangeWidth}}</span>
+                                                <span class="justify-content-start">{{ webSectionDto.topFlangeWidth }}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
 
@@ -277,7 +280,7 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">{{webSectionDto.topFlangeSteel}}</span>
+                                                <span class="justify-content-start">{{ webSectionDto.topFlangeSteel }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -296,7 +299,8 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">{{webSectionDto.bottomFlangeThickness}}</span>
+                                                <span
+                                                    class="justify-content-start">{{ webSectionDto.bottomFlangeThickness }}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
                                         </div>
@@ -311,7 +315,8 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">{{webSectionDto.bottomFlangeWidth}}</span>
+                                                <span
+                                                    class="justify-content-start">{{ webSectionDto.bottomFlangeWidth }}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
                                         </div>
@@ -326,7 +331,8 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">{{webSectionDto.bottomFlangeSteel}}</span>
+                                                <span
+                                                    class="justify-content-start">{{ webSectionDto.bottomFlangeSteel }}</span>
                                                 <!-- <span class="justify-content-end">mm</span> -->
                                             </div>
                                         </div>
@@ -339,7 +345,9 @@ const clearForm = () => {
                         <sub-panel label="View">
                             <template v-slot:body>
                                 <div class="d-flex justify-content-center">
-                                    <iron :top="webSectionDto.design?.topFlange" :bottom="webSectionDto.design?.bottomFlange" :center="webSectionDto.design?.web"></iron>
+                                    <iron :top="webSectionDto.design?.topFlange"
+                                        :bottom="webSectionDto.design?.bottomFlange" :center="webSectionDto.design?.web">
+                                    </iron>
                                 </div>
 
                             </template>
@@ -376,9 +384,9 @@ const clearForm = () => {
                     <div class="accordion-body">
                         <table class="properties table table-striped table-bordered">
                             <tbody v-if="webSectionDto.properties">
-                                <tr v-for="(item ,index) in helper.chunks(webSectionDto.properties,3)" :key="index">
-                                    <td v-for="(item1,index1) in item" :key="index1">{{item1}}</td>
-                                </tr>                               
+                                <tr v-for="(item, index) in helper.chunks(webSectionDto.properties, 3)" :key="index">
+                                    <td v-for="(item1, index1) in item" :key="index1">{{ item1 }}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -460,45 +468,48 @@ const clearForm = () => {
         <hr>
         <div class="row">
             <div class="row px-4 py-3" style="overflow-y: scroll;  max-height: 450px;">
-                        <table class="filter table table-bordered text-center" style="margin-bottom: 0px;">
-                            <thead>
-                                <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
-                                    <th style="height: 48px;width:12%;background-color:#F6F6F6;">Section ID</th>
-                                    <th style="height: 48px;background-color:#F6F6F6;">Weight</th>
-                                    <th style="height: 48px;background-color:#F6F6F6;">Hw</th>
-                                    <th style="height: 48px;background-color:#F6F6F6;">TW</th>
-                                    <th style="height: 48px;background-color:#F6F6F6;">BF</th>
-                                    <th style="height: 48px;background-color:#F6F6F6;">TF</th>
-                                    <th style="height: 48px;background-color:#F6F6F6;">2P</th>
-                                    <th style="height: 48px;background-color:#F6F6F6;">Iy</th>
-                                    <th style="height: 48px;background-color:#F6F6F6;">Iz</th>
-                                    <th style="height: 48px;background-color:#F6F6F6;">Mn</th>
-                                    <th style="height: 48px;background-color:#F6F6F6;">Vn</th>
-                                    <th style="height: 48px;background-color:#F6F6F6;">Pn</th>                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                              
-                                <tr class="fs-14 fw-500 py-0" v-for="(item,index) in displayWebSections" :key="index" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
-                                    <td style="height: 48px; !important;color: #125CCB;text-decoration: underline;cursor: pointer;" @click="getResultMode(item)">{{ item.key }}</td>
-                                    <td style="height: 48px; !important">{{ item.weight }}</td>
-                                    <td style="height: 48px; !important">{{ item.webHeight }}</td>
-                                    <td style="height: 48px; !important">{{ item.webThickness }}</td>
-                                    <td style="height: 48px; !important">{{ item.flangeWidth }}</td>
-                                    <td style="height: 48px; !important">{{ item.flangeThickness }}</td>
-                                    <td style="height: 48px; !important">{{ item.sectionPerimeter }}</td>
-                                    <td style="height: 48px; !important">{{ item.momentOfInertiaIy }}</td>
-                                    <td style="height: 48px; !important">{{ item.momentOfInertiaIz }}</td>
-                                    <td style="height: 48px; !important">{{ item.bendingCapacity }}</td>
-                                    <td style="height: 48px; !important">{{ item.shearCapacity }}</td>
-                                    <td style="height: 48px; !important">{{ item.axialCapacity }}</td>
-                                    
-                                </tr>
-                            </tbody>
-                        </table>          
-                        <pager  v-if="recordCount > pageSize" :pageSize="pageSize" :recordCount="recordCount"  :currentPage="currentPage-1"  @currentPageChange="currentPageChange($event)"></pager>              
-                    </div>
-                    
+                <table class="filter table table-bordered text-center" style="margin-bottom: 0px;">
+                    <thead>
+                        <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
+                            <th style="height: 48px;width:12%;background-color:#F6F6F6;">Section ID</th>
+                            <th style="height: 48px;background-color:#F6F6F6;">Weight</th>
+                            <th style="height: 48px;background-color:#F6F6F6;">Hw</th>
+                            <th style="height: 48px;background-color:#F6F6F6;">TW</th>
+                            <th style="height: 48px;background-color:#F6F6F6;">BF</th>
+                            <th style="height: 48px;background-color:#F6F6F6;">TF</th>
+                            <th style="height: 48px;background-color:#F6F6F6;">2P</th>
+                            <th style="height: 48px;background-color:#F6F6F6;">Iy</th>
+                            <th style="height: 48px;background-color:#F6F6F6;">Iz</th>
+                            <th style="height: 48px;background-color:#F6F6F6;">Mn</th>
+                            <th style="height: 48px;background-color:#F6F6F6;">Vn</th>
+                            <th style="height: 48px;background-color:#F6F6F6;">Pn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr class="fs-14 fw-500 py-0" v-for="(item, index) in displayWebSections" :key="index"
+                            style="height: 48px;color: #5C5C5C;vertical-align: middle;">
+                            <td style="height: 48px; !important;color: #125CCB;text-decoration: underline;cursor: pointer;"
+                                @click="getResultMode(item)">{{ item.key }}</td>
+                            <td style="height: 48px; !important">{{ item.weight }}</td>
+                            <td style="height: 48px; !important">{{ item.webHeight }}</td>
+                            <td style="height: 48px; !important">{{ item.webThickness }}</td>
+                            <td style="height: 48px; !important">{{ item.flangeWidth }}</td>
+                            <td style="height: 48px; !important">{{ item.flangeThickness }}</td>
+                            <td style="height: 48px; !important">{{ item.sectionPerimeter }}</td>
+                            <td style="height: 48px; !important">{{ item.momentOfInertiaIy }}</td>
+                            <td style="height: 48px; !important">{{ item.momentOfInertiaIz }}</td>
+                            <td style="height: 48px; !important">{{ item.bendingCapacity }}</td>
+                            <td style="height: 48px; !important">{{ item.shearCapacity }}</td>
+                            <td style="height: 48px; !important">{{ item.axialCapacity }}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <pager v-if="recordCount > pageSize" :pageSize="pageSize" :recordCount="recordCount"
+                    :currentPage="currentPage - 1" @currentPageChange="currentPageChange($event)"></pager>
+            </div>
+
         </div>
     </vue-modal>
 </template>
@@ -515,15 +526,7 @@ const clearForm = () => {
     font-weight: 400;
 }
 
-.filter th{
+.filter th {
     width: 8%;
 }
-
-
-
-
-
-
-
-
 </style>

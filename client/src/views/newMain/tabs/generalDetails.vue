@@ -29,7 +29,7 @@ const showNoteModal = ref(false as boolean)
 const orderDto = reactive(
   {
     elementType: ElementType.Column,
-    designType: DesignType.UserDefined,
+    designType: DesignType.Select,
     uLSLoadExpression: ULSLoadExpression.Expression610a,
     deflectionLimit: {} as DeflectionLimit,
     designParameters: {} as DesignParameters,
