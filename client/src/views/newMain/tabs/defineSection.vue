@@ -118,9 +118,8 @@ const currentPageChange = (val: number) => {
 const getResultMode = (item) => {
     console.log(item);
     apiServise.callApiByLink(item._links[0]).then((data) => {
-        webSectionDto.value = data;
-        console.log('webSectionDto', webSectionDto.value);
-
+        webSectionDto.value = data;       
+        emit('saveLinks', data._links);
     })
 
 
@@ -131,6 +130,8 @@ const getResultMode = (item) => {
 
 const nextStep = () => {
     apiServise.callApi(props.links, constants.sections.saveSection).then(data => {
+     
+        
         emit("nextStep");
     });
 }

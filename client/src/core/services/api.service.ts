@@ -45,7 +45,7 @@ export default class ApiService {
       }
     } catch (e) {
       debugger
-      console.log(e);
+      console.log('error',e);
     }
   }
 
@@ -63,7 +63,7 @@ export default class ApiService {
       }
     } catch (e) {
       debugger
-      console.log(e);
+      console.log('error',e);
     }
   }
 
