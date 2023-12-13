@@ -1,57 +1,44 @@
 
 <script setup lang="ts">
+import type Part from '@/models/Part';
 import { onMounted, ref } from 'vue';
 
 
 export interface Props {
-    options?: Array<any>;
+    top?: Part;
+    bottom?: Part;
+    center?: Part;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    options: Array<any>
+    top : Part =>({borderWidth:'',height:50,width:150}),
+    bottom :Part =>({borderWidth:'',height:50,width:150}),
+    center :Part =>({borderWidth:'',height:500,width:50}),
 });
-
-let isDropdownOpen = ref(false as boolean);
-
-let selectedOption = props.options[0];
-
-const selectOption = (option) => {
-    selectedOption = option;
-    isDropdownOpen.value = false;
-};
-
-
-const topStyle = ref('' as string);
-const centerStyle = ref('' as string);
-const bottomStyle = ref('' as string);
-
-const topWidth =ref(450 as number);
-const bottomWidth =ref(300 as number);
-
-
-
-onMounted(() => {
-    topStyle.value = `'width:${topWidth.value}px; height:35px'`
-    centerStyle.value = 'width:50px; height:600px;'
-    bottomStyle.value = `'width:${bottomWidth.value}px; height:35px'`
-})
 
 </script>
 
 <template>
     <div class="row" style="display: block;">
 
-        <div class="row" :style="`width: ${topWidth}px;margin:0 auto;`">
-            <h2><i class="arrow left"></i><span class="fs-16 fw-400">{{topWidth}} mm</span><i class="arrow right"></i></h2>
-            <div :style="`height:35px; background-color: #b4b5b5; border: 1px solid #000000;`"></div>
+        <div :style="`width: ${props.top.width}px;margin:0 auto;padding: 0px;`">
+            <h2><i class="arrow left"></i><span class="fs-16 fw-400">{{props.top.width}} mm</span><i class="arrow right"></i></h2>
+            <div :style="`height:${props.top.height}px; background-color: #b4b5b5; border: 1px solid #000000;`"></div>
         </div>
         
-        <div class="row">
-            <div class="centerDiv" :style=" `${centerStyle}`"></div>
+        <div :style="`width: ${50}px;margin:0 auto;padding: 0px;position:relative;`">      
+             
+         
+            
+            <div class="centerDiv" :style="`height:${props.center.height}px`"></div>
+            <div :style="`width:${props.center.height}px;transform: rotate(90deg); position:absolute; right: 0px; top:${(props.center.height/2)-20}px`">
+                <h2><i class="arrow left"></i><span class="fs-16 fw-400">{{props.center.height}} mm</span><i class="arrow right"></i></h2>
+            </div>
+    
         </div>
-        <div class="row" :style="`width: ${bottomWidth}px;margin:0 auto;`" >
-            <div :style="`height:35px;background-color: #b4b4b4; border: 1px solid #000000;`"></div>
-            <h2><i class="arrow left"></i><span class="fs-16 fw-400">{{bottomWidth}} mm</span><i class="arrow right"></i></h2>
+        <div  :style="`width: ${props.bottom.width}px;margin:0 auto;padding: 0px;`" >
+            <div :style="`height:${props.bottom.height}px;background-color: #b4b4b4; border: 1px solid #000000;`"></div>
+            <h2><i class="arrow left"></i><span class="fs-16 fw-400">{{props.bottom.width}} mm</span><i class="arrow right"></i></h2>
         </div>
       
 
@@ -92,6 +79,17 @@ h2 span {
 .left {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
+  left: 0;
+}
+
+.top {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  left: 0;
+}
+.bottom {
+  transform: rotate(225deg);
+  -webkit-transform: rotate(225deg);
   left: 0;
 }
 

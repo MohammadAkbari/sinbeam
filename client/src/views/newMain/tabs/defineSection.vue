@@ -340,8 +340,7 @@ const clearForm = () => {
                         <sub-panel label="View">
                             <template v-slot:body>
                                 <div class="d-flex justify-content-center">
-                                    <!-- <img src="/src/assets/img/temp.png" alt=""> -->
-                                    <iron></iron>
+                                    <iron :top="webSectionDto.design?.topFlange" :bottom="webSectionDto.design?.bottomFlange" :center="webSectionDto.design?.web"></iron>
                                 </div>
 
                             </template>
