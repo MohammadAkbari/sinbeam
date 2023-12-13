@@ -26,10 +26,7 @@ const props = withDefaults(defineProps<Props>(), {
             <div :style="`height:${props.top.scaledHeight}px; background-color: #b4b5b5; border: 1px solid #000000;`"></div>
         </div>
         
-        <div :style="`width: ${50}px;margin:0 auto;padding: 0px;position:relative;`">      
-             
-         
-            
+        <div :style="`width: ${50}px;margin:0 auto;padding: 0px;position:relative;`">             
             <div class="centerDiv" :style="`height:${props.center.scaledHeight}px`"></div>
             <div :style="`width:${props.center.scaledHeight}px;transform: rotate(90deg); position:absolute; right: 0px; top:${(props.center.scaledHeight/2)-20}px`">
                 <h2><i class="arrow left"></i><span class="fs-16 fw-400">{{props.center.height}} mm</span><i class="arrow right"></i></h2>

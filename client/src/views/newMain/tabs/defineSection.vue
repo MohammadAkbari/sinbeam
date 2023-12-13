@@ -375,30 +375,11 @@ const clearForm = () => {
                     data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <table class="properties table table-striped table-bordered">
-                            <tbody v-if="webSectionDto.properties && webSectionDto.properties?.length > 9">
-                                <tr v-for="(item ,index) in webSectionDto.properties.filter((e,i)=>(i+1) % 3 != 0)" :key="index">
-                                    <td v-for="(item1,index1) in webSectionDto.properties.filter((q,j)=>index>j && index<j+3)" :key="index1">{{item1}}-{{ index1 }}</td>
-                                </tr>
-                                <!-- <tr>
-                                    <td>{{webSectionDto.properties[3]}}</td>
-                                    <td>{{webSectionDto.properties[4]}}</td>
-                                    <td>{{webSectionDto.properties[5]}}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{webSectionDto.properties[6]}}</td>
-                                    <td>{{webSectionDto.properties[7]}}</td>
-                                    <td>{{webSectionDto.properties[8]}}</td>
-                                </tr> -->
-                                <!-- <tr>
-                                    <td>Weight per m = 57 kg/m</td>
-                                    <td>Surface area per m = 2.4 m2/m</td>
-                                    <td>Surface area per T = 42.3 m2/T</td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: center;" colspan="3">Ratio A/AQ = 1.15</td>
-                                </tr> -->
+                            <tbody v-if="webSectionDto.properties">
+                                <tr v-for="(item ,index) in helper.chunks(webSectionDto.properties,3)" :key="index">
+                                    <td v-for="(item1,index1) in item" :key="index1">{{item1}}</td>
+                                </tr>                               
                             </tbody>
-
                         </table>
                     </div>
                 </div>
