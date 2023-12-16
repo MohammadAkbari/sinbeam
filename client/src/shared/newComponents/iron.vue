@@ -9,6 +9,7 @@ export interface Props {
     bottom?: Part;
     center?: Part;
 }
+const x = 30;
 
 const props = withDefaults(defineProps<Props>(), {
     // top : Part =>({borderWidth:'',height:50,width:150}),
@@ -23,7 +24,16 @@ const props = withDefaults(defineProps<Props>(), {
 
         <div :style="`width: ${props.top.width}px;margin:0 auto;padding: 0px;`">
             <h2><i class="arrow left"></i><span class="fs-16 fw-400">{{props.top.width}} mm</span><i class="arrow right"></i></h2>
-            <div :style="`height:${props.top.scaledHeight}px; background-color: #b4b5b5; border: 1px solid #000000;`"></div>
+            <div class="position-relative" :style="`height:${props.top.scaledHeight}px; background-color: #b4b5b5; border: 1px solid #000000;`">
+                <div class="position-absolute" :style="`width: 10px; border-top: 1px solid black; top: -1px; height: 1px;right: -26px;transform: rotate(45deg)`"></div>     
+                <div class="position-absolute" :style="`width: 10px; border-top: 1px solid black; top: ${props.top.scaledHeight-2}px; height: 1px;right: -26px;transform: rotate(45deg)`"></div>  
+                <div class="position-absolute" :style="`width: 10px; border-left: 1px solid black; top: -5px; height: ${props.top.scaledHeight+9}px;right: -31px;`"></div>     
+                
+                <div class="position-absolute" :style="`width: ${x-10}px; border-top: 1px solid black; border-bottom: 1px solid black; top: -1px; height: ${props.top.scaledHeight}px;right: -${x-5}px;`"></div>     
+                <span class="position-absolute fs-12" :style="`right: -60px; top: ${(props.bottom.scaledHeight/2)-10}px; transform: rotate(90deg);`">{{ props.top.scaledHeight }} mm</span>
+            </div>
+          
+            
         </div>
         
         <div :style="`width: ${50}px;margin:0 auto;padding: 0px;position:relative;`">             
@@ -33,8 +43,15 @@ const props = withDefaults(defineProps<Props>(), {
             </div>
     
         </div>
-        <div  :style="`width: ${props.bottom.width}px;margin:0 auto;padding: 0px;`" >
-            <div :style="`height:${props.bottom.scaledHeight}px;background-color: #b4b4b4; border: 1px solid #000000;`"></div>
+        <div class="position-relative" :style="`width: ${props.bottom.width}px;margin:0 auto;padding: 0px;`" >
+            <div :style="`height:${props.bottom.scaledHeight}px;background-color: #b4b4b4; border: 1px solid #000000;`">
+                <div class="position-absolute" :style="`width: 10px; border-top: 1px solid black; top: -1px; height: 1px;right: -26px;transform: rotate(45deg)`"></div>     
+                <div class="position-absolute" :style="`width: 10px; border-top: 1px solid black; top: ${props.top.scaledHeight-2}px; height: 1px;right: -26px;transform: rotate(45deg)`"></div>  
+                <div class="position-absolute" :style="`width: 10px; border-left: 1px solid black; top: -5px; height: ${props.bottom.scaledHeight+9}px;right: -31px;`"></div>     
+                
+                <div class="position-absolute" :style="`width: ${x-10}px; border-top: 1px solid black; border-bottom: 1px solid black; top: -1px; height: ${props.bottom.scaledHeight}px;right: -${x-5}px;`"></div>     
+                <span class="position-absolute fs-12" :style="`right: -60px; top: ${(props.bottom.scaledHeight/2)-10}px; transform: rotate(90deg);`">{{ props.bottom.scaledHeight }} mm</span>
+            </div>
             <h2><i class="arrow left"></i><span class="fs-16 fw-400">{{props.bottom.width}} mm</span><i class="arrow right"></i></h2>
         </div>
       
