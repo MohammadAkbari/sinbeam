@@ -1,4 +1,3 @@
-import type { LoadType } from "@/enums/loadType";
 
 export default class LoadParameters {
     udl: number;

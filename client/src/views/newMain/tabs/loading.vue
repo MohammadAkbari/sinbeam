@@ -4,9 +4,9 @@ import type ApiServise from '@/core/services/api.service';
 import Link from '@/models/link';
 import constants from '@/shared/globals/newConstants';
 import type LoadingDto from '@/dtos/loadingDto';
+import {LoadType} from '@/enums/loadType';
 
 const emit = defineEmits(['nextStep', 'clearForm']);
-const loadInput = ref(true as boolean);
 const apiServise = inject('apiServise') as ApiServise;
 
 export interface Props {
@@ -18,6 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const loadingDto = ref({} as LoadingDto);
+const loadType = LoadType;
 
 
 onMounted(()=>{
@@ -49,22 +50,22 @@ const clearForm = () => {
                     <div class="d-flex justify-content-start ">
                         <span class="fs-14 fw-500 mx-3" style="opacity: 78%;">Load Input</span>
                         <div class="form-check mx-3">
-                            <input class="form-check-input fs-16" type="radio" name="Element" :value="true"
-                                v-model="loadInput" id="Characteristic">
+                            <input class="form-check-input fs-16" type="radio" name="Element" :value="loadType.CharacteristicLoads"
+                                v-model="loadingDto.loadType" id="Characteristic">
                             <label class="form-check-label fs-16 fw-400" style="opacity: 78%;" for="Characteristic">
                                 Characteristic Loads
                             </label>
                         </div>
                         <div class="form-check mx-3 ">
-                            <input class="form-check-input fs-16" type="radio" name="Element" :value="false"
-                                v-model="loadInput" id="Ultimate">
+                            <input class="form-check-input fs-16" type="radio" name="Element" :value="loadType.UltimateLoads"
+                                v-model="loadingDto.loadType" id="Ultimate">
                             <label class="form-check-label fs-16 fw-400" style="opacity: 78%;" for="Ultimate">
                                 Ultimate Loads
                             </label>
                         </div>
                     </div>
                 </div>
-                <template v-if="loadInput">
+                <template v-if="loadingDto.loadType == loadType.CharacteristicLoads">
                     <div class="row px-4 py-3">
                         <table class="table table-bordered text-center">
                             <thead>

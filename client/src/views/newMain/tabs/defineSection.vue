@@ -130,6 +130,7 @@ const getResultMode = (item) => {
 
 const nextStep = () => {
     apiServise.callApi(props.links, constants.sections.saveSection).then(data => {
+     console.log(data);
      
         
         emit("nextStep");
