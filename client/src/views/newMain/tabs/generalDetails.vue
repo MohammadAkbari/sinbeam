@@ -197,14 +197,14 @@ const clearForm = () => {
                     <input class="form-check-input" type="radio" name="steelType" id="S275"
                       :value="steelType.S235" v-model="orderDto.steelType">
                     <label class="form-check-label fs-16" for="S275">
-                      ST-37 (s 235)
+                      {{ orderDto.designType == designType.Iran ? 's 235' : 'ST-37' }}
                     </label>
                   </div>
                   <div class="form-check fs-16">
                     <input class="form-check-input" type="radio" name="steelType" id="S355"
                       :value="steelType.S355" v-model="orderDto.steelType">
                     <label class="form-check-label fs-16" for="S355">
-                      ST-38 (s 355)
+                      {{ orderDto.designType == designType.Iran ? 's 355' : 'ST-38' }}                    
                     </label>
                   </div>
                 </div>
