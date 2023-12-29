@@ -12,7 +12,8 @@ const newConstants = {
         saveSection: 'save-section'
     },
     loading:{
-        getLoading: 'get-loading'
+        getLoading: 'get-loading',
+        saveLoading: 'save-loading'
     }
 }
 export default newConstants;

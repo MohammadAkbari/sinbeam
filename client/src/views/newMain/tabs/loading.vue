@@ -1,64 +1,94 @@
 <script setup lang="ts">
-import { inject, ref,onMounted } from 'vue';
+import { inject, ref, onMounted } from 'vue';
 import type ApiServise from '@/core/services/api.service';
 import Link from '@/models/link';
 import constants from '@/shared/globals/newConstants';
 import type LoadingDto from '@/dtos/loadingDto';
-import {LoadType} from '@/enums/loadType';
+import { LoadType } from '@/enums/loadType';
+import LoadParameters from '@/models/loadParameters';
+import type UltimatePointLoadDto from '@/dtos/ultimatePointLoadDto';
+import type CharacteristicPointLoadDto from '@/dtos/characteristicPointLoadDto';
 
-const emit = defineEmits(['nextStep', 'clearForm']);
+const emit = defineEmits(['nextStep', 'clearForm','saveLinks']);
 const apiServise = inject('apiServise') as ApiServise;
 
 export interface Props {
-  links: Link[]
+    links: Link[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  //hasCreated: false
+    //hasCreated: false
 });
 
-const loadingDto = ref({} as LoadingDto);
+const loadingDto = ref({ permanentLoads: {}, variableLoads: {}, ultimateLoads: {} } as LoadingDto);
 const loadType = LoadType;
 
+const characteristicPointLoadDto = ref({} as CharacteristicPointLoadDto);
+const ultimatePointLoad = ref({} as UltimatePointLoadDto);
 
-onMounted(()=>{
-    apiServise.callApi(props.links,constants.loading.getLoading).then((data)=>{
-        loadingDto.value = data;
 
+onMounted(() => {
+    apiServise.callApi(props.links, constants.loading.getLoading).then((data: LoadingDto) => {
+        emit('saveLinks', data._links);
+
+        loadingDto.value.loadType = data.loadType;
+        loadingDto.value.selfWeight = data.selfWeight;
+        loadingDto.value.span = data.span;
+        loadingDto.value.permanentLoads = data.permanentLoads ?? {} as LoadParameters;
+        loadingDto.value.ultimateLoads = data.ultimateLoads ?? {} as LoadParameters;
+        loadingDto.value.variableLoads = data.variableLoads ?? {} as LoadParameters;
+        loadingDto.value.ultimatePointLoads = data.ultimatePointLoads ?? [] as UltimatePointLoadDto[];
+        loadingDto.value.characteristicPointLoads = data.characteristicPointLoads ?? [] as CharacteristicPointLoadDto[];
     });
 })
 
-const nextStep = () => {
-    emit("nextStep");
+const addCharacteristicPointLoadDto = () => {
+    loadingDto.value.characteristicPointLoads.unshift({ ...characteristicPointLoadDto.value });
+    characteristicPointLoadDto.value = {} as CharacteristicPointLoadDto;
+}
+
+const removeCharacteristicPointLoadDto = (index) => {
+    loadingDto.value.characteristicPointLoads.splice(index, 1);
+}
+
+const addUltimatePointLoad = () => {
+    loadingDto.value.ultimatePointLoads.unshift({ ...ultimatePointLoad.value });
+    ultimatePointLoad.value = {} as UltimatePointLoadDto;
+}
+
+const removeUltimatePointLoad = (index) => {
+    loadingDto.value.ultimatePointLoads.splice(index, 1);
+}
+
+const nextStep = async () => {
+  const data = await apiServise.callApi(props.links, constants.loading.saveLoading,loadingDto.value );
+  emit("nextStep");
 }
 
 const clearForm = () => {
     emit("clearForm");
 }
 
-
 </script>
-
-
 
 <template>
     <div class="col-11">
-        {{loadingDto}}
+        {{ loadingDto }}
         <panel label="Loading" icon="/src/assets/img/Loading-icon.png" size="col-lg-12">
             <template v-slot:body>
                 <div class="row px-2 py-3">
                     <div class="d-flex justify-content-start ">
                         <span class="fs-14 fw-500 mx-3" style="opacity: 78%;">Load Input</span>
                         <div class="form-check mx-3">
-                            <input class="form-check-input fs-16" type="radio" name="Element" :value="loadType.CharacteristicLoads"
-                                v-model="loadingDto.loadType" id="Characteristic">
+                            <input class="form-check-input fs-16" type="radio" name="Element"
+                                :value="loadType.CharacteristicLoads" v-model="loadingDto.loadType" id="Characteristic">
                             <label class="form-check-label fs-16 fw-400" style="opacity: 78%;" for="Characteristic">
                                 Characteristic Loads
                             </label>
                         </div>
                         <div class="form-check mx-3 ">
-                            <input class="form-check-input fs-16" type="radio" name="Element" :value="loadType.UltimateLoads"
-                                v-model="loadingDto.loadType" id="Ultimate">
+                            <input class="form-check-input fs-16" type="radio" name="Element"
+                                :value="loadType.UltimateLoads" v-model="loadingDto.loadType" id="Ultimate">
                             <label class="form-check-label fs-16 fw-400" style="opacity: 78%;" for="Ultimate">
                                 Ultimate Loads
                             </label>
@@ -85,10 +115,12 @@ const clearForm = () => {
                             <tbody>
                                 <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
                                     <td class="px-4" style="width: 25%; text-align: left;">UDL (kN/m)</td>
-                                    <td><input type="number" name="Parament" id="Parament"></td>
-                                    <td><input type="number" name="Variable" id="Variable"></td>
-                                    <td><input type="number" name="Start" id="Start"></td>
-                                    <td><input type="number" name="End" id="End"></td>
+                                    <td style="width: 20%;"><input type="number" v-model="loadingDto.permanentLoads.udl">
+                                    </td>
+                                    <td style="width: 20%;"><input type="number" v-model="loadingDto.variableLoads.udl">
+                                    </td>
+                                    <td>-</td>
+                                    <td>-</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -106,21 +138,24 @@ const clearForm = () => {
                                     <td>Variable</td>
                                     <td>Start</td>
                                     <td>End</td>
-                                    <td>Add / Remove</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
-                                    <td style="width: 20%;"><input type="number" name="Parament1" id="Parament1"></td>
-                                    <td style="width: 20%;"><input type="number" name="Parament2" id="Parament2"></td>
-                                    <td style="width: 20%;"><input type="number" name="Parament3" id="Parament3"></td>
-                                    <td style="width: 20%;"><input type="number" name="Parament4" id="Parament4"></td>
-                                    <td style="width: 20%;">
+                                    <td style="width: 25%;"><input type="number"
+                                            v-model="loadingDto.permanentLoads.partialUdl"></td>
+                                    <td style="width: 25%;"><input type="number"
+                                            v-model="loadingDto.variableLoads.partialUdl"></td>
+                                    <td style="width: 25%;"><input type="number"
+                                            v-model="loadingDto.permanentLoads.partialUdlStart"></td>
+                                    <td style="width: 25%;"><input type="number"
+                                            v-model="loadingDto.permanentLoads.partialUdlEnd"></td>
+                                    <!-- <td style="width: 20%;">
                                         <button type="button" class="col-6 btn btn-primary px-2 fs-14 fw-500"
                                             style="color: #125CCB; background-color: rgba(18, 92, 203, 0.04); border: 0px;">
                                             Add
                                         </button>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             </tbody>
                         </table>
@@ -139,8 +174,8 @@ const clearForm = () => {
                             <tbody>
                                 <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
                                     <td style="width: 25%;">End Moment left (kNm)</td>
-                                    <td><input type="number" name="Parament6" id="Parament6"></td>
-                                    <td><input type="number" name="Parament7" id="Parament7"></td>
+                                    <td><input type="number" v-model="loadingDto.permanentLoads.endMomentLeft"></td>
+                                    <td><input type="number" v-model="loadingDto.variableLoads.endMomentLeft"></td>
                                     <td style="width: 35%;" rowspan="2">
                                         <img src="/src/assets/img/compression.png" alt="">
                                     </td>
@@ -148,8 +183,8 @@ const clearForm = () => {
                                 </tr>
                                 <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
                                     <td>End Moment right (kNm)</td>
-                                    <td><input type="number" name="Parament6" id="Parament6"></td>
-                                    <td><input type="number" name="Parament7" id="Parament7"></td>
+                                    <td><input type="number" v-model="loadingDto.permanentLoads.endMomentRight"></td>
+                                    <td><input type="number" v-model="loadingDto.variableLoads.endMomentRight"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -168,9 +203,53 @@ const clearForm = () => {
                                 </tr>
                                 <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
                                     <td></td>
-                                    <td><input type="number" name="Parament6" id="Parament6"></td>
-                                    <td><input type="number" name="Parament7" id="Parament7"></td>
+                                    <td><input type="number" v-model="loadingDto.permanentLoads.axialForce"></td>
+                                    <td><input type="number" v-model="loadingDto.variableLoads.axialForce"></td>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row px-4 py-3">
+                        <table class="table table-bordered text-center">
+                            <tbody>
+                                <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
+                                    <td style="width: 25%;background-color:#F6F6F6;">Point Loads (kN)</td>
+                                    <td style="background-color:#F6F6F6;">Position (m)</td>
+                                    <td style="background-color:#F6F6F6;">Parament</td>
+                                    <td style="background-color:#F6F6F6;">Variable</td>
+                                    <td style="background-color:#F6F6F6;">Add / Remove</td>
+                                </tr>
+                                <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
+                                    <td></td>
+                                    <td><input type="number" v-model="characteristicPointLoadDto.position"></td>
+                                    <td><input type="number" v-model="characteristicPointLoadDto.permanentAction"></td>
+                                    <td><input type="number" v-model="characteristicPointLoadDto.variableAction"></td>
+                                    <td style="width: 20%;">
+                                        <button type="button" class="col-6 btn btn-primary px-2 fs-14 fw-500"
+                                            @click="addCharacteristicPointLoadDto()"
+                                            :disabled="!(characteristicPointLoadDto.permanentAction && characteristicPointLoadDto.position && characteristicPointLoadDto.variableAction)"
+                                            style="color: #125CCB; background-color: rgba(18, 92, 203, 0.04); border: 0px;">
+                                            Add
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <tr v-for="(item, index) in loadingDto.characteristicPointLoads" :key="index"
+                                    class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
+                                    <td></td>
+                                    <td>{{ item.position }}</td>
+                                    <td>{{ item.permanentAction }}</td>
+                                    <td>{{ item.variableAction }}</td>
+                                    <td style="width: 20%;">
+                                        <button type="button" class="col-6 btn btn-primary px-2 fs-14 fw-500"
+                                            @click="removeCharacteristicPointLoadDto(index)"
+                                            style="color: #B61C1C; background-color: rgba(203, 18, 18, 0.02); border: 0px;">
+                                            Remove
+                                        </button>
+                                    </td>
+                                </tr>
+
+
                             </tbody>
                         </table>
                     </div>
@@ -193,10 +272,36 @@ const clearForm = () => {
                             </thead>
                             <tbody>
                                 <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
+                                    <td class="px-4" style="width: 25%; text-align: left;">UDL (kN/m)</td>
+                                    <td style="width: 25%;"><input type="number" v-model="loadingDto.ultimateLoads.udl">
+                                    </td>
+                                    <td style="width: 25%;">-</td>
+                                    <td style="width: 25%;">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row px-4 py-3">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                                <tr
+                                    style="text-align:left;background-color:#FBFBFB; height: 36px;vertical-align: middle; opacity: 78%;">
+                                    <td class="px-4 fs-14 fw-500" colspan="5">Partial ULS Loads</td>
+                                </tr>
+                                <tr class="fs-14 fw-500"
+                                    style="background-color:#F6F6F6;height: 48px; color: #5C5C5C;vertical-align: middle;">
+                                    <td></td>
+                                    <td>Ultimate Load</td>
+                                    <td>Start</td>
+                                    <td>End</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
                                     <td class="px-4" style="width: 25%;">UDL (kN/m)</td>
-                                    <td style="width: 35%;"><input type="number" name="Ultimate" id="Ultimate"></td>
-                                    <td>-</td>
-                                    <td>-</td>
+                                    <td><input type="number" v-model="loadingDto.ultimateLoads.partialUdl"></td>
+                                    <td><input type="number" v-model="loadingDto.ultimateLoads.partialUdlStart"></td>
+                                    <td><input type="number" v-model="loadingDto.ultimateLoads.partialUdlEnd"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -207,16 +312,14 @@ const clearForm = () => {
                                 <tr class="fs-14 fw-500"
                                     style="background-color:#F6F6F6;height: 48px; color: #5C5C5C;vertical-align: middle;">
                                     <td></td>
-                                    <td>Parament</td>
-                                    <td>Variable</td>
+                                    <td>Ultimate Load</td>
                                     <td>Compression +ve</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
                                     <td style="width: 25%;">End Moment left (kNm)</td>
-                                    <td><input type="number" name="Parament6" id="Parament6"></td>
-                                    <td><input type="number" name="Parament7" id="Parament7"></td>
+                                    <td><input type="number" v-model="loadingDto.ultimateLoads.endMomentLeft"></td>
                                     <td style="width: 35%;" rowspan="2">
                                         <img src="/src/assets/img/compression.png" alt="">
                                     </td>
@@ -224,8 +327,7 @@ const clearForm = () => {
                                 </tr>
                                 <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
                                     <td>End Moment right (kNm)</td>
-                                    <td><input type="number" name="Parament6" id="Parament6"></td>
-                                    <td><input type="number" name="Parament7" id="Parament7"></td>
+                                    <td><input type="number" v-model="loadingDto.ultimateLoads.endMomentRight"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -235,8 +337,7 @@ const clearForm = () => {
                             <tbody>
                                 <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
                                     <td style="width: 25%;background-color:#F6F6F6;">Axial force (kN)</td>
-                                    <td style="background-color:#F6F6F6;">Parament</td>
-                                    <td style="background-color:#F6F6F6;">Variable</td>
+                                    <td style="background-color:#F6F6F6;">Ultimate Load</td>
                                     <td style="width: 35%;" rowspan="2">
                                         <img src="/src/assets/img/compression-2.png" alt="">
                                     </td>
@@ -244,8 +345,7 @@ const clearForm = () => {
                                 </tr>
                                 <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
                                     <td></td>
-                                    <td><input type="number" name="Parament6" id="Parament6"></td>
-                                    <td><input type="number" name="Parament7" id="Parament7"></td>
+                                    <td><input type="number" v-model="loadingDto.ultimateLoads.axialForce"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -261,31 +361,32 @@ const clearForm = () => {
                                     style="background-color:#F6F6F6;height: 48px; color: #5C5C5C;vertical-align: middle;">
                                     <td>Point loads (kN)</td>
                                     <td>Position (m)</td>
-                                    <td>Parament</td>
-                                    <td>Variable</td>
+                                    <td>Load</td>
                                     <td style="width: 20%;">Add / Remove</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
-                                    <td><input type="number" name="Point" id="Point"></td>
-                                    <td><input type="number" name="Position3" id="Position3"></td>
-                                    <td><input type="number" name="Parament3" id="Parament3"></td>
-                                    <td><input type="number" name="Variable3" id="Variable3"></td>
+                                    <td style="width: 25%;"></td>
+                                    <td><input type="number" v-model="ultimatePointLoad.position"></td>
+                                    <td><input type="number" v-model="ultimatePointLoad.load"></td>
                                     <td>
                                         <button type="button" class="col-6 btn btn-primary px-2 fs-14 fw-500"
+                                            @click="addUltimatePointLoad()"
+                                            :disabled="!(ultimatePointLoad.load && ultimatePointLoad.position)"
                                             style="color: #125CCB; background-color: rgba(18, 92, 203, 0.04); border: 0px;">
                                             Add
                                         </button>
                                     </td>
                                 </tr>
-                                <tr class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
-                                    <td><input type="number" name="Point" id="Point"></td>
-                                    <td><input type="number" name="Position3" id="Position3"></td>
-                                    <td><input type="number" name="Parament3" id="Parament3"></td>
-                                    <td><input type="number" name="Variable3" id="Variable3"></td>
+                                <tr v-for="(item, index) in loadingDto.ultimatePointLoads" :key="index"
+                                    class="fs-14 fw-500 py-0" style="height: 48px;color: #5C5C5C;vertical-align: middle;">
+                                    <td></td>
+                                    <td>{{ item.position }}</td>
+                                    <td>{{ item.load }}</td>
                                     <td>
                                         <button type="button" class="col-6 btn btn-primary px-2 fs-14 fw-500"
+                                            @click="removeUltimatePointLoad(index)"
                                             style="color: #B61C1C; background-color: rgba(203, 18, 18, 0.02); border: 0px;">
                                             Remove
                                         </button>
@@ -297,14 +398,14 @@ const clearForm = () => {
                 </template>
             </template>
         </panel>
-        <sub-panel label="view" v-if="loadInput">
+        <!-- <sub-panel label="view" v-if="loadInput">
             <template v-slot:body>
                 <div class="row">
                     <img src="/src/assets/img/view.png" alt="">
                 </div>
             </template>
-        </sub-panel>
-        <sub-panel label="view" v-else>
+        </sub-panel> -->
+        <sub-panel label="view">
             <template v-slot:body>
                 <div class="row">
                     <img src="/src/assets/img/view-2.png" alt="">
@@ -359,5 +460,4 @@ input[type=number]::-webkit-outer-spin-button {
     height: 80%;
     color-scheme: light !important;
 
-}
-</style>
+}</style>
