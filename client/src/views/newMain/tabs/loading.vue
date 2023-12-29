@@ -73,7 +73,6 @@ const clearForm = () => {
 
 <template>
     <div class="col-11">
-        {{ loadingDto }}
         <panel label="Loading" icon="/src/assets/img/Loading-icon.png" size="col-lg-12">
             <template v-slot:body>
                 <div class="row px-2 py-3">
