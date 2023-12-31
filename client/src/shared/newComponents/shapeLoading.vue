@@ -59,7 +59,6 @@ const ultimatePoints = computed(() => {
 </script>
 
 <template>
-
     <div v-if="true">
         <div class="mx-5 position-relative"> <!-- arrow-->
             <div v-for="(item, index) in ultimatePoints" :key="index" class="position-absolute"
@@ -105,19 +104,21 @@ const ultimatePoints = computed(() => {
             </div>
 
             <div class="position-relative"> <!-- close icons -->
-                <span class="fa fa-2x fa-close position-absolute" style="color: #125CCB; top:0.56rem;left:-0.8rem"></span>               
-                <span class="fa fa-2x fa-close position-absolute" style="color: #125CCB; top:0.56rem;right:-0.8rem"></span>                
+                <span class="fa fa-2x fa-close position-absolute" style="color: #125CCB; top:0.56rem;left:-0.8rem"></span>
+                <span class="fa fa-2x fa-close position-absolute" style="color: #125CCB; top:0.56rem;right:-0.8rem"></span>
                 <span class="fa fa-2x fa-close position-absolute" style="color: #125CCB; bottom:5.68rem;left:-0.8rem"></span>
                 <span class="fa fa-2x fa-close position-absolute" style="color: #125CCB; bottom:5.68rem;right:-0.8rem"></span>
             </div>
 
 
-
+           
 
 
         </div>
 
-
+        <div class="mx-5 py-4">
+                <h2><i class="arrow left"></i><span class="fs-16 fw-400">{{ props.loadingDto.span }} mm</span><i class="arrow right"></i></h2>
+        </div>
 
 
 
@@ -177,5 +178,6 @@ h2 span {
     background: linear-gradient(to left, #b4b4b4, #b4b4b4 50%, #eee 75%, #b4b4b4 50%);
     border-left: 1px solid #000000;
     border-right: 1px solid #000000;
-}</style>
+}
+</style>
 
