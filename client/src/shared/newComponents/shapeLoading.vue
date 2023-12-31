@@ -60,13 +60,7 @@ const ultimatePoints = computed(() => {
 
 <template>
     <div v-if="true">
-        <div class="mx-5 position-relative"> <!-- arrow-->
-            <div v-for="(item, index) in ultimatePoints" :key="index" class="position-absolute"
-                :style="`left: ${item}%;top:-20px;padding-right:10px`">
-                <img src="@/assets/img/arrow-bottom.png" class="position-absolute" style="left: -8px;">
-            </div>
-
-        </div>
+       
 
 
         <div class="mx-5">
@@ -75,6 +69,13 @@ const ultimatePoints = computed(() => {
             </div><!-- udl-->
             <div v-if="props.loadingDto.loadType == loadTypeCharacteristicLoads ? props.loadingDto.permanentLoads.udl : props.loadingDto.ultimateLoads.udl"
                 class="my-1" style="height: 15px; background-color: #DEEBFF; opacity: 78%;"></div> <!-- udl-->
+        </div>
+        <div class="mx-5 position-relative"> <!-- arrow-->
+            <div v-for="(item, index) in ultimatePoints" :key="index" class="position-absolute"
+                :style="`left: ${item}%;top:-39px;padding-right:10px`">
+                <img src="@/assets/img/arrow-bottom.png" class="position-absolute" style="left: -8px;">
+            </div>
+
         </div>
         <div class="mx-5" style="margin:0 auto;border: 1px solid black; height: 100px;">
             <div> <!-- row line -->
