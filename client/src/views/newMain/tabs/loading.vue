@@ -226,7 +226,7 @@ const clearForm = () => {
                                     <td style="width: 20%;">
                                         <button type="button" class="col-6 btn btn-primary px-2 fs-14 fw-500"
                                             @click="addCharacteristicPointLoadDto()"
-                                            :disabled="!(characteristicPointLoadDto.permanentAction && characteristicPointLoadDto.position && characteristicPointLoadDto.variableAction)"
+                                            :disabled="!(characteristicPointLoadDto.permanentAction?.toString() && characteristicPointLoadDto.position?.toString() && characteristicPointLoadDto.variableAction?.toString())"
                                             style="color: #125CCB; background-color: rgba(18, 92, 203, 0.04); border: 0px;">
                                             Add
                                         </button>
@@ -372,7 +372,7 @@ const clearForm = () => {
                                     <td>
                                         <button type="button" class="col-6 btn btn-primary px-2 fs-14 fw-500"
                                             @click="addUltimatePointLoad()"
-                                            :disabled="!(ultimatePointLoad.load && ultimatePointLoad.position)"
+                                            :disabled="!(ultimatePointLoad.load?.toString() && ultimatePointLoad.position?.toString())"
                                             style="color: #125CCB; background-color: rgba(18, 92, 203, 0.04); border: 0px;">
                                             Add
                                         </button>
@@ -407,7 +407,8 @@ const clearForm = () => {
         <sub-panel label="view">
             <template v-slot:body>
                 <div class="row">
-                    <img src="/src/assets/img/view-2.png" alt="">
+                    <shape-loading :loadingDto="loadingDto"></shape-loading>
+                    <!-- <img src="/src/assets/img/view-2.png" alt=""> -->
                 </div>
             </template>
         </sub-panel>

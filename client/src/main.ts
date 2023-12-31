@@ -10,6 +10,7 @@ import dropdownWithImg from '@/shared/newComponents/dropdownWithImg.vue';
 import dropdownRange from '@/shared/newComponents/dropdownRange.vue';
 import rangeSlider from '@/shared/newComponents/rangeSlider.vue';
 import iron from '@/shared/newComponents/iron.vue';
+import shapeLoading from '@/shared/newComponents/shapeLoading.vue';
 import ApiService from '@/core/services/api.service';
 import ClickOutside from '@/shared/common/outside';
 
@@ -56,6 +57,9 @@ app.component('vue-modal', modal);
 app.component('range-slider', rangeSlider);
 app.component('vue-simple-range-slider', vueSimpleRangeSlider);
 app.component('iron', iron);
+app.component('shape-loading', shapeLoading);
+
+
 
 app.use(createPinia());
 app.use(router);
