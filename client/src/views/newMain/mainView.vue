@@ -90,7 +90,7 @@ const tabComponent = computed(() => {
     case +NewTabItems.DefineSection:
       return defineAsyncComponent(() => import('./tabs/defineSection.vue'));
     case +NewTabItems.Loading:
-      return defineAsyncComponent(() => import('./tabs/loading.vue'));
+      return defineAsyncComponent(() => import('./tabs/loading/loading.vue'));
     case NewTabItems.Analysis:
       return defineAsyncComponent(() => import('./tabs/analysis.vue'));  
     case NewTabItems.Verifications:

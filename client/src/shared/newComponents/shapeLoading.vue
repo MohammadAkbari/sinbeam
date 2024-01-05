@@ -81,7 +81,7 @@ const ultimatePoints = computed(() => {
         <div class="mx-5 position-relative"> <!-- arrow-->
             <div v-for="(item, index) in ultimatePoints" :key="index" class="position-absolute"
                 :style="`left: ${item}%;top:-39px;padding-right:10px`">
-                <img src="@/assets/img/arrow-bottom.png" class="position-absolute" style="left: -8px;">
+                <img src="@/assets/img/arrow-bottom.png" class="position-absolute" style="left: -8px; top:15px">
             </div>
 
         </div>

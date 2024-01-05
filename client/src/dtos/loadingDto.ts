@@ -1,8 +1,9 @@
-import LoadParameters from "../models/permanentLoads";
-import Link from "../models/link";
-import { LoadType } from "../enums/loadType";
-import UltimatePointLoadDto from "./ultimatePointLoadDto";
-import CharacteristicPointLoadDto from "./characteristicPointLoadDto";
+import type LoadParameters from "../models/permanentLoads";
+import type Link from "../models/link";
+import type { LoadType } from "../enums/loadType";
+import type { CombinationType } from "../enums/combinationType";
+import type UltimatePointLoadDto from "./ultimatePointLoadDto";
+import type CharacteristicPointLoadDto from "./characteristicPointLoadDto";
 
 
 export default class LoadingDto {
@@ -14,7 +15,7 @@ export default class LoadingDto {
         this.ultimatePointLoads = [] as UltimatePointLoadDto[];
         this.characteristicPointLoads = [] as CharacteristicPointLoadDto[];
     }
-    
+
     selfWeight: number;
 
     loadType: LoadType;
@@ -25,11 +26,10 @@ export default class LoadingDto {
 
     ultimatePointLoads: Array<UltimatePointLoadDto>
     characteristicPointLoads: Array<CharacteristicPointLoadDto>
+    span: number
 
-    _links: Array<Link>
 
+    combinationType: CombinationType;
 
-    //////
-
-    span :number
+    _links: Array<Link>;
 }
