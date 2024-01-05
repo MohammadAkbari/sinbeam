@@ -11,11 +11,20 @@ export interface Props {
     // bottom?: Part;
     // center?: Part;
 }
-const x = 30;
 
 const loadTypeCharacteristicLoads = LoadType.CharacteristicLoads;
 
 const props = withDefaults(defineProps<Props>(), {});
+
+const colCount = computed(()=>{
+    const array = [];
+    for(let i =0;i <= props.loadingDto.span; i++){
+        if(i%5 == 0)
+            array.push(i);
+    }
+
+    return  array
+})
 
 const leftWidth = computed(() => {
     if (props.loadingDto.loadType == loadTypeCharacteristicLoads) {
@@ -56,6 +65,8 @@ const ultimatePoints = computed(() => {
     }
 });
 
+
+
 </script>
 
 <template>
@@ -77,32 +88,33 @@ const ultimatePoints = computed(() => {
             </div>
 
         </div>
-        <div class="mx-5" style="margin:0 auto;border: 1px solid black; height: 100px;">
+        <div class="mx-5 my-4" style="margin:0 auto;border: 1px solid black; height: 100px;">
             <div> <!-- row line -->
                 <div class="position-relative" style="margin: 0 auto;">
-                    <span style="top: -8px; left: -36px; color: #9C9C9C;" class="position-absolute fs-12 fw-500">%80</span>
+                    <span style="top: -8px; left: -30px; color: #9C9C9C;" class="position-absolute fs-12 fw-500">80</span>
                     <hr style="margin-top: 19px !important; margin-bottom:0 !important">
                 </div>
                 <div class="position-relative">
-                    <span style="top: -8px; left: -36px; color: #9C9C9C;" class="position-absolute fs-12 fw-500">%60</span>
+                    <span style="top: -8px; left: -30px; color: #9C9C9C;" class="position-absolute fs-12 fw-500">60</span>
                     <hr style="margin-top: 19px !important; margin-bottom:0 !important">
                 </div>
                 <div class="position-relative">
-                    <span style="top: -8px; left: -36px; color: #9C9C9C;" class="position-absolute fs-12 fw-500">%40</span>
+                    <span style="top: -8px; left: -30px; color: #9C9C9C;" class="position-absolute fs-12 fw-500">40</span>
                     <hr style="margin-top: 19px !important; margin-bottom:0 !important">
                 </div>
                 <div class="position-relative">
-                    <span style="top: -8px; left: -36px; color: #9C9C9C;" class="position-absolute fs-12 fw-500">%20</span>
+                    <span style="top: -8px; left: -30px; color: #9C9C9C;" class="position-absolute fs-12 fw-500">20</span>
                     <hr style="margin-top: 19px !important; margin-bottom:0 !important">
                 </div>
                 <div class="position-relative">
-                    <span style="top: -88px; left: -40px; color: #9C9C9C;"
-                        class="position-absolute fs-12 fw-500">%100</span>
+                    <span style="top: -88px; left: -33px; color: #9C9C9C;"
+                        class="position-absolute fs-12 fw-500">100</span>
                 </div>
                 <div class="position-relative">
-                    <span style="top: 10px; left: -33px; color: #9C9C9C;" class="position-absolute fs-12 fw-500">%0</span>
+                    <span style="top: 10px; left: -27px; color: #9C9C9C;" class="position-absolute fs-12 fw-500">0</span>
                 </div>
             </div>
+        
 
             <div class="position-relative"> <!-- close icons -->
                 <span class="fa fa-2x fa-close position-absolute" style="color: #125CCB; top:0.56rem;left:-0.8rem"></span>
@@ -111,16 +123,17 @@ const ultimatePoints = computed(() => {
                 <span class="fa fa-2x fa-close position-absolute" style="color: #125CCB; bottom:5.68rem;right:-0.8rem"></span>
             </div>
 
-
-           
-
-
+            <div class="position-relative"> <!--col line-->
+                <template v-for="(item , index) in colCount" :key="index">
+                    <div v-if="item != 0 && (item) != props.loadingDto.span" class="position-absolute" :style="`height: 99px; border-left: 1px solid #9C9C9C; left: ${(100 /props.loadingDto.span)*item}%; top: -80px;`"></div>
+                    <span class="position-absolute fs-12 fw-500" :style="`left: ${((100 /props.loadingDto.span)*item)}%; top: 25px;color: #9C9C9C;`">{{item}}</span>
+                </template>                
+            </div>
         </div>
 
-        <div class="mx-5 py-4">
+        <!-- <div class="mx-5 py-4">
                 <h2><i class="arrow left"></i><span class="fs-16 fw-400">{{ props.loadingDto.span }} mm</span><i class="arrow right"></i></h2>
-        </div>
-
+        </div> -->
 
 
     </div>
