@@ -153,9 +153,9 @@ const isActiveApply = computed(()=>{
                         </div>
                     </div>
 
-                    <div class="col-3  position-relative">
+                    <div class="col-3 position-relative">
                         <div class="mb-3 py-2">
-                            <button type="button" class="col-12 btn btn-primary  my-4 py-2 px-2 fs-14 fw-400 position-absolute" @click="addItem" :disabled="!isActiveApply"
+                            <button type="button" class="col-11 btn btn-primary my-4 py-2 fs-14 fw-400 position-absolute" @click="addItem" :disabled="!isActiveApply"
                                     style="background-color: #125CCB; bottom: 0px;">Apply</button>                          
                         </div>
                     </div>
