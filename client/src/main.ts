@@ -16,6 +16,9 @@ import ApiService from '@/core/services/api.service';
 import ClickOutside from '@/shared/common/outside';
 
 
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 
 
 
@@ -61,7 +64,7 @@ app.component('vue-simple-range-slider', vueSimpleRangeSlider);
 app.component('iron', iron);
 app.component('shape-loading', shapeLoading);
 
-
+app.use(VueSweetalert2);
 
 app.use(createPinia());
 app.use(router);

@@ -50,7 +50,7 @@ onMounted(() => {
 })
 
 const nextStep = async () => {
-  const data = await apiServise.callApi(props.links, constants.loading.saveLoading,loadingDto.value );
+  const data = await apiServise.callApi(props.links, constants.loading.saveLoading,loadingDto.value.designType == DesignType.Iran ? iranLoadingDto.value : loadingDto.value );
   emit("nextStep");
 }
 
