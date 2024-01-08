@@ -64,6 +64,7 @@ const getDate = () => {
 
     apiServise.callApi(props.links, constants.analysis.getAnalysis, model).then((data: AnalysisResultDto) => {
 
+        deflectionDataLabels.length = 0;
         analysisResultDto.value.bending = data.bending;
         analysisResultDto.value.deflection = data.deflection;
         analysisResultDto.value.shear = data.shear;
@@ -125,6 +126,7 @@ const clearForm = () => {
                         <span class="fs-14 fw-500 mx-4" style="opacity: 78%;">Combination:</span>
                         <div class="form-check mx-4" v-for="(item, index) in combinationTypeList" :key="index">
                             <input class="form-check-input fs-16" type="radio" name="Combination" :value="item.id"
+                                v-model="combinationTypeSelected"
                                 :id="`Characteristic-${item.title}`"
                                 @click="changeCombinationType($event)">
                             <label class="form-check-label fs-16 fw-400" style="opacity: 78%;"
