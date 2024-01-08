@@ -22,7 +22,7 @@ export default class ApiService {
           const postData = await axios.post(link.href, model);
           return postData.data;
         case 'get':
-          const url = link.href + (model == null ? '' : helper.objectIntoQueryStringParameters(model))
+          const url = link.href.split('?')[0] + (model == null ? '' : helper.objectIntoQueryStringParameters(model))
           const getData = await axios.get(url);
           return getData.data;
       }

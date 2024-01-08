@@ -14,6 +14,9 @@ const newConstants = {
     loading:{
         getLoading: 'get-loading',
         saveLoading: 'save-loading'
+    },
+    analysis:{
+        getAnalysis: 'get-analysis'
     }
 }
 export default newConstants;

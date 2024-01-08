@@ -32,6 +32,8 @@ const initChart = () => {
   const root = am5.Root.new(lineChartZoomDiv.value);
   root.setThemes([am5themes_Animated.new(root)]);
 
+  root._logo.dispose();
+
   const chart = root.container.children.push(am5xy.XYChart.new(root, {
     panX: false,
     panY: false,
@@ -50,6 +52,7 @@ const initChart = () => {
 
   xRenderer.labels.template.setAll({
     fontSize: 10,
+    fill:am5.color('#9C9C9C')
     // fontFamily:'IRANSans'
   });
 
@@ -76,6 +79,7 @@ const initChart = () => {
   const yRenderer = am5xy.AxisRendererY.new(root, { minGridDistance: 30, inversed: props.inversed });
   yRenderer.labels.template.setAll({
     fontSize: 10,
+    fill:am5.color('#9C9C9C')
     // fontFamily:'IRANSans'
   });
 
@@ -97,7 +101,7 @@ const initChart = () => {
       valueXField: "title",
       tooltip: am5.Tooltip.new(root, {
         pointerOrientation: "horizontal",
-        labelText: "[bold]{name}[/]\n x : {valueX} \n y : {valueY}"
+        labelText: "[bold]{name}[/]\n x : {valueX} \n y : {valueY}"        
       })
     }));
 
@@ -128,6 +132,9 @@ const initChart = () => {
     chart.appear(1000, 100);
   });
 
+
+ 
+
   let legend = chart.children.push(
       am5.Legend.new(root, {
         centerX: am5.p50,
@@ -150,7 +157,7 @@ const initChart = () => {
 </script>
 
 <template>
-  <div class="lineChart position-relative" ref="lineChartZoomDiv" dir="ltr" style="width: 80%;height:300px">
+  <div class="lineChart position-relative" ref="lineChartZoomDiv" dir="ltr" style="width: 95%;height:370px">
   </div>
 </template>
 
