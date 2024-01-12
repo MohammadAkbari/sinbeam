@@ -30,7 +30,7 @@ const orderDto = reactive(
   {
     elementType: ElementType.Column,
     designType: DesignType.Select,
-    uLSLoadExpression: ULSLoadExpression.Expression610a,
+    ulsLoadExpression: ULSLoadExpression.Expression610a,
     deflectionLimit: {} as DeflectionLimit,
     designParameters: {} as DesignParameters,
     steelType: SteelType.S235
@@ -65,7 +65,7 @@ onMounted(() => {
       orderDto.designType = data.designType
       orderDto.designParameters = data.designParameters
       orderDto.deflectionLimit = data.deflectionLimit
-      orderDto.uLSLoadExpression = data.uLSLoadExpression
+      orderDto.ulsLoadExpression = data.ulsLoadExpression
       orderDto.steelType = data.steelType
     });
   }
@@ -165,14 +165,14 @@ const clearForm = () => {
                 <div class="card-body px-2 py-2" v-if="orderDto.designType != designType.Iran">
                   <div class="form-check fs-16">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
-                      :value="uLSLoadExpression.Expression610a" v-model="orderDto.uLSLoadExpression">
+                      :value="uLSLoadExpression.Expression610a" v-model="orderDto.ulsLoadExpression">
                     <label class="form-check-label fs-16" for="flexRadioDefault2">
                       Expression 6.10
                     </label>
                   </div>
                   <div class="form-check fs-16">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
-                      :value="uLSLoadExpression.Expression610aAnd610b" v-model="orderDto.uLSLoadExpression">
+                      :value="uLSLoadExpression.Expression610aAnd610b" v-model="orderDto.ulsLoadExpression">
                     <label class="form-check-label fs-16" for="flexRadioDefault1">
                       Expression 6.10a and 6.10b
                     </label>
@@ -197,14 +197,14 @@ const clearForm = () => {
                     <input class="form-check-input" type="radio" name="steelType" id="S275"
                       :value="steelType.S235" v-model="orderDto.steelType">
                     <label class="form-check-label fs-16" for="S275">
-                      {{ orderDto.designType == designType.Iran ? 's 235' : 'ST-37' }}
+                      {{ orderDto.designType != designType.Iran ? 's 235' : 'ST-37' }}
                     </label>
                   </div>
                   <div class="form-check fs-16">
                     <input class="form-check-input" type="radio" name="steelType" id="S355"
                       :value="steelType.S355" v-model="orderDto.steelType">
                     <label class="form-check-label fs-16" for="S355">
-                      {{ orderDto.designType == designType.Iran ? 's 355' : 'ST-38' }}                    
+                      {{ orderDto.designType != designType.Iran ? 's 355' : 'ST-38' }}                    
                     </label>
                   </div>
                 </div>

@@ -73,11 +73,11 @@ const state = reactive({
 let filterItems = [];
 
 onMounted(() => {
-    apiServise.callApi(props.links, constants.sections.getSection).then((data) => {
-        console.log(data);
-        emit('saveLinks', data._links);
+    apiServise.callApi(props.links, constants.sections.getSection).then((data1) => {
+        console.log(data1);
+        emit('saveLinks', data1._links);
 
-        apiServise.callApi(props.links, constants.sections.getSectionsFilters).then((data) => {
+        apiServise.callApi(data1._links, constants.sections.getSectionsFilters).then((data) => {
             filterItems = Object.entries(data);
 
             filterList.value = helper.convertEnumToListItem(Filter).map((item) => {
@@ -86,6 +86,14 @@ onMounted(() => {
             });
         });;
     });
+
+    if (props.links.some(e => e.rel == constants.sections.getSelectedLibraryt)) {
+        apiServise.callApi(props.links, constants.sections.getSelectedLibraryt).then((data) => {
+            webSectionDto.value = data;
+            emit('saveLinks', data._links);
+        })
+    }
+
 })
 
 const changeFilter = (event, item) => {
@@ -116,9 +124,14 @@ const currentPageChange = (val: number) => {
 }
 
 const getResultMode = (item) => {
-    console.log(item);
+
+    let link = item._links[0];
+    link.rel = constants.sections.getSelectedLibraryt;
+
+    emit('saveLinks', [link]);
+
     apiServise.callApiByLink(item._links[0]).then((data) => {
-        webSectionDto.value = data;       
+        webSectionDto.value = data;
         emit('saveLinks', data._links);
     })
 
@@ -130,9 +143,9 @@ const getResultMode = (item) => {
 
 const nextStep = () => {
     apiServise.callApi(props.links, constants.sections.saveSection).then(data => {
-     console.log(data);
-     
-        
+        console.log(data);
+
+
         emit("nextStep");
     });
 }
@@ -161,7 +174,8 @@ const clearForm = () => {
                                     <div class="col-lg-4 p-0 py-1">
                                         <label for="exampleFormControlInput1"
                                             style="background-color: #FBFBFB ;height: 36px; width: 200px;"
-                                            class="form-label mb-0 d-flex justify-content-center input-label py-2 fs-16">{{ webSectionDto.key }}</label>
+                                            class="form-label mb-0 d-flex justify-content-center input-label py-2 fs-16">{{
+                                                webSectionDto.key }}</label>
                                     </div>
                                     <!-- <div class="col-lg-8 py-1">
                                         <div class="form-check d-flex justify-content-center py-2">
@@ -250,8 +264,8 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span
-                                                    class="justify-content-start">{{ webSectionDto.topFlangeThickness }}</span>
+                                                <span class="justify-content-start">{{ webSectionDto.topFlangeThickness
+                                                }}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
                                         </div>
@@ -266,7 +280,8 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">{{ webSectionDto.topFlangeWidth }}</span>
+                                                <span class="justify-content-start">{{ webSectionDto.topFlangeWidth
+                                                }}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
 
@@ -282,7 +297,8 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span class="justify-content-start">{{ webSectionDto.topFlangeSteel }}</span>
+                                                <span class="justify-content-start">{{ webSectionDto.topFlangeSteel
+                                                }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -301,8 +317,8 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span
-                                                    class="justify-content-start">{{ webSectionDto.bottomFlangeThickness }}</span>
+                                                <span class="justify-content-start">{{ webSectionDto.bottomFlangeThickness
+                                                }}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
                                         </div>
@@ -317,8 +333,8 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span
-                                                    class="justify-content-start">{{ webSectionDto.bottomFlangeWidth }}</span>
+                                                <span class="justify-content-start">{{ webSectionDto.bottomFlangeWidth
+                                                }}</span>
                                                 <span class="justify-content-end">mm</span>
                                             </div>
                                         </div>
@@ -333,8 +349,8 @@ const clearForm = () => {
                                         <div class="form-check ">
                                             <div class="form-label mb-0 input-label d-flex justify-content-between px-3"
                                                 style="background-color: #F5F5F5;height: 36px; width: 200px; padding-top: 8px;">
-                                                <span
-                                                    class="justify-content-start">{{ webSectionDto.bottomFlangeSteel }}</span>
+                                                <span class="justify-content-start">{{ webSectionDto.bottomFlangeSteel
+                                                }}</span>
                                                 <!-- <span class="justify-content-end">mm</span> -->
                                             </div>
                                         </div>
@@ -530,5 +546,4 @@ const clearForm = () => {
 
 .filter th {
     width: 8%;
-}
-</style>
+}</style>

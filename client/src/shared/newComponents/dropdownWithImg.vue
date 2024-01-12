@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 const emit = defineEmits(['changed', 'update:modelValue']);
 
@@ -18,7 +18,14 @@ const el = ref();
 
 let isDropdownOpen = ref(false as boolean);
 
-let selectedOption = props.options[0];
+let selectedOption = props.options.find(e=>e.id == props.modelValue)
+
+onMounted(()=>{
+    watch(()=>props.modelValue,()=>{
+        selectedOption = props.options.find(e=>e.id == props.modelValue)
+    })
+    
+})
 
 const selectOption = (option) => {
     selectedOption = option;

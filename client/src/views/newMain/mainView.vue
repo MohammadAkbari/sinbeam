@@ -76,8 +76,12 @@ const clearForm = () => {
 
 
 const saveLinks = (newLinks) => {
-  newLinks && links.value.push(...(newLinks.filter(e => !links.value.some(q => q.rel == e.rel))));
+if(newLinks){
+  let newList = links.value.filter(e=>!newLinks.some(q=>q.rel == e.rel));
+  links.value = [...newList,...newLinks];
   console.log(links.value)
+}
+  // links.value.push(...(newLinks.filter(e => !links.value.some(q => q.rel == e.rel))));
 }
 
 

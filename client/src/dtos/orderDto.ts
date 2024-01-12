@@ -19,7 +19,7 @@ export default class OrderDto  {
 
     designParameters:DesignParameters;
     deflectionLimit:DeflectionLimit;
-    uLSLoadExpression:ULSLoadExpression;
+    ulsLoadExpression:ULSLoadExpression;
 
     steelType:SteelType;
 }

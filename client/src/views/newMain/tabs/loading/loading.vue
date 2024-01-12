@@ -31,26 +31,43 @@ const loadingDto = ref({ permanentLoads: {}, variableLoads: {}, ultimateLoads: {
 const iranLoadingDto = ref({ loadingItems: [] } as IranLoadingDto);
 
 const designType = DesignType;
+const designTypeIran = ref(designType.Iran as DesignType);
 
 onMounted(() => {
-    apiServise.callApi(props.links, constants.loading.getLoading).then((data: LoadingDto) => {
+debugger
+
+    apiServise.callApi(props.links, constants.loading.getLoading).then((data: any) => {
         emit('saveLinks', data._links);
 
-        loadingDto.value.loadType = data.loadType;
-        loadingDto.value.designType = data.designType;
-        loadingDto.value.selfWeight = data.selfWeight;
-        loadingDto.value.span = data.span;
-        loadingDto.value.permanentLoads = data.permanentLoads ?? {} as LoadParameters;
-        loadingDto.value.ultimateLoads = data.ultimateLoads ?? {} as LoadParameters;
-        loadingDto.value.variableLoads = data.variableLoads ?? {} as LoadParameters;
-        loadingDto.value.ultimatePointLoads = data.ultimatePointLoads ?? [] as UltimatePointLoadDto[];
-        loadingDto.value.characteristicPointLoads = data.characteristicPointLoads ?? [] as CharacteristicPointLoadDto[];
-        loadingDto.value.combinationType = data.combinationType;
+        designTypeIran.value =  data.designType;
+
+        if(data.designType==designType.Iran){
+            iranLoadingDto.value.loadType = data.loadType;
+            iranLoadingDto.value.designType = data.designType;
+            iranLoadingDto.value.selfWeight = data.selfWeight;
+            iranLoadingDto.value.span = data.span;
+            iranLoadingDto.value.loadingItems = data.loadingItems ?? [] as IranLoadingItemDto[];
+            iranLoadingDto.value.combinationType = data.combinationType;
+        } else{
+            loadingDto.value.loadType = data.loadType;
+            loadingDto.value.designType = data.designType;
+            loadingDto.value.selfWeight = data.selfWeight;
+            loadingDto.value.span = data.span;
+            loadingDto.value.permanentLoads = data.permanentLoads ?? {} as LoadParameters;
+            loadingDto.value.ultimateLoads = data.ultimateLoads ?? {} as LoadParameters;
+            loadingDto.value.variableLoads = data.variableLoads ?? {} as LoadParameters;
+            loadingDto.value.ultimatePointLoads = data.ultimatePointLoads ?? [] as UltimatePointLoadDto[];
+            loadingDto.value.characteristicPointLoads = data.characteristicPointLoads ?? [] as CharacteristicPointLoadDto[];
+            loadingDto.value.combinationType = data.combinationType;
+        }
+
+       
     });
 })
 
 const nextStep = async () => {
-  const data = await apiServise.callApi(props.links, constants.loading.saveLoading,loadingDto.value.designType == DesignType.Iran ? iranLoadingDto.value : loadingDto.value );
+    debugger
+  const data = await apiServise.callApi(props.links, constants.loading.saveLoading, designTypeIran.value == DesignType.Iran ? iranLoadingDto.value : loadingDto.value );
   emit("nextStep");
 }
 
@@ -62,7 +79,7 @@ const clearForm = () => {
 
 <template>
     <div class="col-11">
-        <trmplate v-if="loadingDto.designType == designType.Iran">
+        <trmplate v-if="designTypeIran == designType.Iran">
             <iran-loading :loadingDto="iranLoadingDto" ></iran-loading>
         </trmplate>
         <trmplate v-else>
