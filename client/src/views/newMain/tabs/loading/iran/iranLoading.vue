@@ -14,6 +14,7 @@ import type IranLoadingItemDto from '@/dtos/iranLoadingItemDto';
 import helper from '@/shared/common/helper';
 import { Unit } from '@/enums/unit';
 import Swal from "sweetalert2";
+import loadingicon from "@/assets/img/Loading-icon.png";
 
 
 const emit = defineEmits(['nextStep', 'clearForm', 'saveLinks']);
@@ -102,7 +103,7 @@ const isActiveApply = computed(()=>{
 </script>
 
 <template>
-    <panel label="Loading" icon="/src/assets/img/Loading-icon.png" size="col-lg-12">
+    <panel label="Loading" :icon="loadingicon" size="col-lg-12">
         <template v-slot:body>
             <div class="px-4 py-2">
                 <div class="row my-2"><span class="fs-14 fw-50" style="color: #3F3F3F;">Type</span></div>

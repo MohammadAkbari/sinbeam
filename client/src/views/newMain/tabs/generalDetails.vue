@@ -10,6 +10,12 @@ import type DeflectionLimit from '@/models/deflectionLimit';
 import type DesignParameters from '@/models/designParameters';
 import { ULSLoadExpression } from '@/enums/uLSLoadExpression';
 import { SteelType } from '@/enums/steelType';
+import ukicon from '@/assets/img/UK-icon.png'
+import irishicon from '@/assets/img/irish-icon.png'
+import iricon from '@/assets/img/IR-icon.png'
+import generalInformation from "@/assets/img/generalInformation.png"
+import localisation from "@/assets/img/localisation.png"
+import ruler from "@/assets/img/ruler.png"
 
 
 export interface Props {
@@ -46,10 +52,9 @@ const steelType = SteelType;
 
 const designTypes = [
   { id: 0, label: 'Select ...' },
-  { id: 1, label: 'UK NA', image: 'src/assets/img/UK-icon.png' },
-  { id: 2, label: 'Irish NA', image: 'src/assets/img/irish-icon.png' },
-  { id: 3, label: 'Iran', image: 'src/assets/img/IR-icon.png' },
-  // { id: 4, label: 'User Defined', image: 'src/assets/img/user-defined.png' },
+  { id: 1, label: 'UK NA', image: ukicon },
+  { id: 2, label: 'Irish NA', image: irishicon },
+  { id: 3, label: 'Iran', image: iricon },
 ];
 
 
@@ -97,7 +102,7 @@ const clearForm = () => {
   <div class="col-11">
     <div class="row">
       <div class="col-lg-6">
-        <panel label="General Information" icon="/src/assets/img/generalInformation.png" size="col-lg-12">
+        <panel label="General Information" :icon="generalInformation" size="col-lg-12">
           <template v-slot:body>
             <div class="mx-4">
               <div class="mb-3 py-2">
@@ -147,7 +152,7 @@ const clearForm = () => {
         </panel>
       </div>
       <div class="col-lg-6">
-        <panel label="Location" icon="/src/assets/img/localisation.png" size="col-lg-12" style="padding-bottom: 2px;">
+        <panel label="Location" :icon="localisation" size="col-lg-12" style="padding-bottom: 2px;">
           <template v-slot:body>
             <sub-panel label="Design to">
               <template v-slot:body>
@@ -190,7 +195,7 @@ const clearForm = () => {
             </sub-panel>
           </template>
         </panel>
-        <panel label="Steel" icon="/src/assets/img/ruler.png" size="col-lg-12">
+        <panel label="Steel" :icon="ruler" size="col-lg-12">
           <template v-slot:body>
             <div class="card-body px-4 py-2">
                   <div class="form-check fs-16">
@@ -212,7 +217,7 @@ const clearForm = () => {
           </template>
         </panel>
         
-        <panel label="Deflection Limits( span / limit)" icon="/src/assets/img/ruler.png" size="col-lg-12">
+        <panel label="Deflection Limits( span / limit)" :icon="ruler" size="col-lg-12">
           <template v-slot:body>
             <div class="card-body px-2 py-2 mx-5">
               <div class="row mb-1 pt-1 d-flex">

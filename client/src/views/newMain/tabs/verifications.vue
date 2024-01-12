@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import restraints from "@/assets/img/restraints.png";
+import verifications from "@/assets/img/verifications.png";
+import view3 from "@/assets/img/view-3.png";
+import infocircle from "@/assets/img/info-circle.png";
+import view4 from "@/assets/img/view-4.png";
+import includeheader from "@/assets/img/include-header.png";
+import includebody from "@/assets/img/include-body.png";
+
 
 const emit = defineEmits(['nextStep', 'clearForm']);
 
@@ -16,7 +24,7 @@ const clearForm = () => {
 </script>
 <template>
     <div class="col-11">
-        <panel label="Restraints" icon="/src/assets/img/restraints.png" size="col-lg-12">
+        <panel label="Restraints" :icon="restraints" size="col-lg-12">
             <template v-slot:body>
                 <sub-panel label="View">
                     <template v-slot:body>
@@ -162,7 +170,7 @@ const clearForm = () => {
                             </div>
                             <div class="col-8 d-flex align-items-center justify-content-center">
 
-                                <img style="width: 100%;" src="/src/assets/img/view-3.png" alt="">
+                                <img style="width: 100%;" :src="view3" alt="">
 
                             </div>
                         </div>
@@ -171,7 +179,7 @@ const clearForm = () => {
                 </sub-panel>
             </template>
         </panel>
-        <panel label="Verifications" icon="/src/assets/img/verifications.png" size="col-lg-12">
+        <panel label="Verifications" :icon="verifications" size="col-lg-12">
             <template v-slot:body>
                 <sub-panel label="Top Flange Verification">
                     <template v-slot:body>
@@ -198,7 +206,7 @@ const clearForm = () => {
                                         <td>82</td>
                                         <td>1.67</td>
                                         <td>
-                                            <img src="/src/assets/img/info-circle.png" alt="">
+                                            <img :src="infocircle" alt="">
                                         </td>
                                     </tr>
                                     <tr class="fs-14 fw-500 py-0"
@@ -209,7 +217,7 @@ const clearForm = () => {
                                         <td>525</td>
                                         <td>0.26</td>
                                         <td>
-                                            <img src="/src/assets/img/info-circle.png" alt="">
+                                            <img :src="infocircle" alt="">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -401,7 +409,7 @@ const clearForm = () => {
                 </sub-panel>
                 <sub-panel label="View">
                     <template v-slot:body>
-                        <img style="width: 100%;" src="/src/assets/img/view-4.png" alt="">
+                        <img style="width: 100%;" :src="view4" alt="">
 
                     </template>
                 </sub-panel>
@@ -430,7 +438,7 @@ const clearForm = () => {
                                         <td>82</td>
                                         <td>1.67</td>
                                         <td>
-                                            <img src="/src/assets/img/info-circle.png" alt="">
+                                            <img :src="infocircle" alt="">
                                         </td>
                                     </tr>
                                     <tr class="fs-14 fw-500 py-0"
@@ -441,7 +449,7 @@ const clearForm = () => {
                                         <td>525</td>
                                         <td>0.26</td>
                                         <td>
-                                            <img src="/src/assets/img/info-circle.png" alt="">
+                                            <img :src="infocircle" alt="">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -632,7 +640,7 @@ const clearForm = () => {
                 </sub-panel>
                 <sub-panel label="View">
                     <template v-slot:body>
-                        <img style="width: 100%;" src="/src/assets/img/view-4.png" alt="">
+                        <img style="width: 100%;" :src="view4" alt="">
 
                     </template>
                 </sub-panel>
@@ -655,8 +663,8 @@ const clearForm = () => {
                         </div>
 
                         <div>
-                            <img class="px-5" style="width: 100%;" src="/src/assets/img/include-header.png" alt="">
-                            <img class="px-5" style="width: 100%;" src="/src/assets/img/include-body.png" alt="">
+                            <img class="px-5" style="width: 100%;" :src="includeheader" alt="">
+                            <img class="px-5" style="width: 100%;" :src="includebody" alt="">
                         </div>
                         
 

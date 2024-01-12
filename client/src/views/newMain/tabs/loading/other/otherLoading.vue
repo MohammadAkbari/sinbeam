@@ -7,6 +7,11 @@ import { LoadType } from '@/enums/loadType';
 import type UltimatePointLoadDto from '@/dtos/ultimatePointLoadDto';
 import type CharacteristicPointLoadDto from '@/dtos/characteristicPointLoadDto';
 
+import compression from "@/assets/img/compression.png"
+import compression2 from "@/assets/img/compression-2.png"
+import loadingicon from "@/assets/img/Loading-icon.png";
+
+
 const emit = defineEmits(['nextStep', 'clearForm', 'saveLinks']);
 const apiServise = inject('apiServise') as ApiServise;
 
@@ -51,7 +56,7 @@ const removeUltimatePointLoad = (index) => {
 </script>
 
 <template>
-    <panel label="Loading" icon="/src/assets/img/Loading-icon.png" size="col-lg-12">
+    <panel label="Loading" :icon="loadingicon" size="col-lg-12">
         <template v-slot:body>
             <div class="row px-2 py-3">
                 <div class="d-flex justify-content-start ">
@@ -154,7 +159,7 @@ const removeUltimatePointLoad = (index) => {
                                 <td><input type="number" v-model="loadingDto.permanentLoads.endMomentLeft"></td>
                                 <td><input type="number" v-model="loadingDto.variableLoads.endMomentLeft"></td>
                                 <td style="width: 35%;" rowspan="2">
-                                    <img src="/src/assets/img/compression.png" alt="">
+                                    <img :src="compression" alt="">
                                 </td>
 
                             </tr>
@@ -174,7 +179,7 @@ const removeUltimatePointLoad = (index) => {
                                 <td style="background-color:#F6F6F6;">Parament</td>
                                 <td style="background-color:#F6F6F6;">Variable</td>
                                 <td style="width: 35%;" rowspan="2">
-                                    <img src="/src/assets/img/compression-2.png" alt="">
+                                    <img :src="compression2" alt="">
                                 </td>
 
                             </tr>
@@ -298,7 +303,7 @@ const removeUltimatePointLoad = (index) => {
                                 <td style="width: 25%;">End Moment left (kNm)</td>
                                 <td><input type="number" v-model="loadingDto.ultimateLoads.endMomentLeft"></td>
                                 <td style="width: 35%;" rowspan="2">
-                                    <img src="/src/assets/img/compression.png" alt="">
+                                    <img :src="compression" alt="">
                                 </td>
 
                             </tr>
@@ -316,7 +321,7 @@ const removeUltimatePointLoad = (index) => {
                                 <td style="width: 25%;background-color:#F6F6F6;">Axial force (kN)</td>
                                 <td style="background-color:#F6F6F6;">Ultimate Load</td>
                                 <td style="width: 35%;" rowspan="2">
-                                    <img src="/src/assets/img/compression-2.png" alt="">
+                                    <img :src="compression2" alt="">
                                 </td>
 
                             </tr>

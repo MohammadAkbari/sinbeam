@@ -11,6 +11,7 @@ import lineChart from '@/shared/components/lineChart.vue';
 import type LoadingDto from '@/dtos/loadingDto';
 import helper from '@/shared/common/helper';
 import { CombinationType } from '@/enums/combinationType';
+import analysis from "@/assets/img/analysis.png"
 
 
 const emit = defineEmits(['nextStep', 'clearForm', 'saveLinks']);
@@ -119,7 +120,7 @@ const clearForm = () => {
 
 <template>
     <div class="col-11">
-        <panel label="Analysis" icon="/src/assets/img/analysis.png" size="col-lg-12">
+        <panel label="Analysis" :icon="analysis" size="col-lg-12">
             <template v-slot:body>
                 <div class="row px-2 py-3" v-if="designType == designTypeEnum.Iran">
                     <div class="d-flex justify-content-start ">

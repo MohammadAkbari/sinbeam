@@ -7,6 +7,11 @@ import helper from '@/shared/common/helper';
 import type WebSection from '@/models/webSection';
 import type WebSectionDto from '@/dtos/webSectionDto';
 import pager from "@/shared/newComponents/pager.vue";
+import infocircl from "@/assets/img/info-circle.png";
+import temp2 from "@/assets/img/temp-2.png";
+import temp3 from "@/assets/img/temp-3.png";
+import profilesection from "@/assets/img/profile-section.png";
+import choosefromlibrary from "@/assets/img/choose-from-library.png";
 
 
 enum Filter {
@@ -159,13 +164,13 @@ const clearForm = () => {
 
 <template>
     <div class="col-11">
-        <panel label="Profile Section" icon="/src/assets/img/profile-section.png" size="col-lg-12">
+        <panel label="Profile Section" :icon="profilesection" size="col-lg-12">
             <template v-slot:body>
                 <div class="row">
                     <div class="col-6">
                         <button type="button" class="col-12 btn btn-primary px-2 fs-14 fw-400" @click="showNoteModal = true"
                             style="background-color: #125CCB;">
-                            <img src="/src/assets/img/choose-from-library.png" alt="">
+                            <img :src="choosefromlibrary" alt="">
                             Choose from Library
                         </button>
                         <sub-panel label="Corrugated Web">
@@ -377,10 +382,10 @@ const clearForm = () => {
                     <sub-panel label="3D View">
                         <template v-slot:body>
                             <div class="d-flex justify-content-center">
-                                <img src="/src/assets/img/temp-2.png" alt="">
+                                <img :src="temp2" alt="">
                             </div>
                             <div class="d-flex justify-content-center">
-                                <img src="/src/assets/img/temp-3.png" alt="">
+                                <img :src="temp3" alt="">
                             </div>
                         </template>
                     </sub-panel>
@@ -424,61 +429,12 @@ const clearForm = () => {
         @closeModal="showNoteModal = !showNoteModal" width="95%" height="800px">
         <div class="row">
             <div class="col-3 px-5" v-for="(item) in filterList" :key="item.id">
-                <img src="/src/assets/img/info-circle.png" alt="">
+                <img :src="infocircl" alt="">
                 <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">{{ item.title }}</label>
                 <dropdown-range style="width: 100%" :min="item.min" :max="item.max"
                     @change="changeFilter($event, item)"></dropdown-range>
             </div>
-            <!-- <div class="col-3 px-5">
-                <img src="/src/assets/img/info-circle.png" alt="">
-                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Web height (mm)</label>
-                <dropdown-range style="width: 100%"></dropdown-range>
-            </div>
-            <div class="col-3 px-5">
-                <img src="/src/assets/img/info-circle.png" alt="">
-                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Web thickness (mm)</label>
-                <dropdown-range style="width: 100%"></dropdown-range>
-            </div>
-            <div class="col-3 px-5">
-                <img src="/src/assets/img/info-circle.png" alt="">
-                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Flange width (mm)</label>
-                <dropdown-range style="width: 100%"></dropdown-range>
-            </div>       
-            <div class="col-3 px-5">
-                <img src="/src/assets/img/info-circle.png" alt="">
-                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Flange thickness (mm)</label>
-                <dropdown-range style="width: 100%"></dropdown-range>
-            </div>
-            <div class="col-3 px-5">
-                <img src="/src/assets/img/info-circle.png" alt="">
-                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Section perimeter (m2/m)</label>
-                <dropdown-range style="width: 100%"></dropdown-range>
-            </div>
-            <div class="col-3 px-5">
-                <img src="/src/assets/img/info-circle.png" alt="">
-                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Moment of inertia Iy (cm4)</label>
-                <dropdown-range style="width: 100%"></dropdown-range>
-            </div>
-            <div class="col-3 px-5">
-                <img src="/src/assets/img/info-circle.png" alt="">
-                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Moment of inertia Iz (cm4)</label>
-                <dropdown-range style="width: 100%"></dropdown-range>
-            </div>        
-            <div class="col-3 px-5">
-                <img src="/src/assets/img/info-circle.png" alt="">
-                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Bending capacity</label>
-                <dropdown-range style="width: 100%"></dropdown-range>
-            </div>
-            <div class="col-3 px-5">
-                <img src="/src/assets/img/info-circle.png" alt="">
-                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Shear capacity</label>
-                <dropdown-range style="width: 100%"></dropdown-range>
-            </div>
-            <div class="col-3 px-5">
-                <img src="/src/assets/img/info-circle.png" alt="">
-                <label class="fs-14 fw-500 py-2 px-2" for="" style="color: #3F3F3F;">Axial capacity</label>
-                <dropdown-range style="width: 100%"></dropdown-range>
-            </div> -->
+          
             <div class="col-3 px-5">
 
             </div>

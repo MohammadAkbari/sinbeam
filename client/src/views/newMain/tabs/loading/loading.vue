@@ -90,7 +90,6 @@ const clearForm = () => {
             <template v-slot:body>
                 <div class="row">
                     <shape-loading :loadingDto="loadingDto"></shape-loading>
-                    <!-- <img src="/src/assets/img/view-2.png" alt=""> -->
                 </div>
             </template>
         </sub-panel>
