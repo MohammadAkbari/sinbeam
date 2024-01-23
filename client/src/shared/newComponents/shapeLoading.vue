@@ -1,6 +1,7 @@
 
 <script setup lang="ts">
 import type LoadingDto from '@/dtos/loadingDto';
+import type RestraintDto from '@/dtos/restraintDto';
 import { LoadType } from '@/enums/loadType';
 import { computed, onMounted, ref } from 'vue';
 
@@ -8,12 +9,14 @@ const isNullOrUndefinedOrEmpty = (val) => val == null || val == undefined || val
 
 export interface Props {
     loadingDto?: LoadingDto;
+    restraintDto?: RestraintDto
     // bottom?: Part;
     // center?: Part;
 }
 const loadTypeCharacteristicLoads = LoadType.CharacteristicLoads;
 
-const props = withDefaults(defineProps<Props>(), {});
+const props = withDefaults(defineProps<Props>(), {
+});
 
 const colCount = computed(() => {
     const array = [];
@@ -111,13 +114,23 @@ const ultimatePoints = computed(() => {
                 </div>
             </div>
 
-            <div class="position-relative"> <!-- close icons -->
-                <span class="fa fa-2x fa-close position-absolute" style="color: #125CCB; top:0.56rem;left:-0.8rem"></span>
-                <span class="fa fa-2x fa-close position-absolute" style="color: #125CCB; top:0.56rem;right:-0.8rem"></span>
-                <span class="fa fa-2x fa-close position-absolute"
-                    style="color: #125CCB; bottom:5.68rem;left:-0.8rem"></span>
-                <span class="fa fa-2x fa-close position-absolute"
-                    style="color: #125CCB; bottom:5.68rem;right:-0.8rem"></span>
+            <div class="position-relative" v-if="props.restraintDto"> <!-- close icons -->
+                <template v-for="(item ,index) in props.restraintDto.topFlangeRestraints">
+                    <span class="fa fa-2x fa-close position-absolute" :style="`color: #125CCB; bottom:5.68rem;left:calc(${(item/props.loadingDto.span)*100}% - 9px)`"></span>
+                </template>
+
+                <template v-for="(item ,index) in props.restraintDto.bottomFlangeRestraints">
+                    <span class="fa fa-2x fa-close position-absolute" :style="`color: #125CCB; top:0.56rem;left:calc(${(item/props.loadingDto.span)*100}% - 9px)`"></span>
+                </template>
+                
+
+            </div>
+            <div class="position-relative" v-else> <!-- close icons -->
+                <span class="fa fa-2x fa-close position-absolute" style="color: #125CCB; bottom:5.68rem;left:calc(0% - 9px)"></span>
+                <span class="fa fa-2x fa-close position-absolute" style="color: #125CCB; bottom:5.68rem;left:calc(100% - 9px)"></span>
+
+                <span class="fa fa-2x fa-close position-absolute" style="color: #125CCB; top:0.56rem;left:calc(100% - 9px)"></span>                
+                <span class="fa fa-2x fa-close position-absolute" style="color: #125CCB; top:0.56rem;left:calc(0% - 9px)"></span>
             </div>
 
             <div class="position-relative"> <!--col line-->
