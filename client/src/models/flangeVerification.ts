@@ -4,4 +4,5 @@ export default class FlangeVerification  {
     maximumUtilization: number;
     verificationItems: Array<VerificationItem> = [];
     captions: Array<string> = [];
+    keyValues:any
 }

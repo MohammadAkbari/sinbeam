@@ -9,13 +9,17 @@ const isNullOrUndefinedOrEmpty = (val) => val == null || val == undefined || val
 
 export interface Props {
     loadingDto?: LoadingDto;
-    restraintDto?: RestraintDto
+    restraintDto?: RestraintDto;
+    showBottomFlange?:boolean;
+    showTopFlange?:boolean;
     // bottom?: Part;
     // center?: Part;
 }
 const loadTypeCharacteristicLoads = LoadType.CharacteristicLoads;
 
 const props = withDefaults(defineProps<Props>(), {
+    showBottomFlange:false,
+    showTopFlange:false
 });
 
 const colCount = computed(() => {
@@ -115,11 +119,11 @@ const ultimatePoints = computed(() => {
             </div>
 
             <div class="position-relative" v-if="props.restraintDto"> <!-- close icons -->
-                <template v-for="(item ,index) in props.restraintDto.topFlangeRestraints">
+                <template v-for="(item ,index) in props.restraintDto.topFlangeRestraints" v-if="props.showTopFlange">
                     <span class="fa fa-2x fa-close position-absolute" :style="`color: #125CCB; bottom:5.68rem;left:calc(${(item/props.loadingDto.span)*100}% - 9px)`"></span>
                 </template>
 
-                <template v-for="(item ,index) in props.restraintDto.bottomFlangeRestraints">
+                <template v-for="(item ,index) in props.restraintDto.bottomFlangeRestraints" v-if="props.showBottomFlange">
                     <span class="fa fa-2x fa-close position-absolute" :style="`color: #125CCB; top:0.56rem;left:calc(${(item/props.loadingDto.span)*100}% - 9px)`"></span>
                 </template>
                 
