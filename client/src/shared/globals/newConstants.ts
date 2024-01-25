@@ -16,7 +16,8 @@ const newConstants = {
         saveLoading: 'save-loading'
     },
     analysis: {
-        getAnalysis: 'get-analysis'
+        getAnalysis: 'get-analysis',
+        saveAnalysis: 'save-analysis'
     },
     verification: {
         getRestraints: 'get-restraints',

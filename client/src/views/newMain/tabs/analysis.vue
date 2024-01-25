@@ -105,7 +105,17 @@ const changeCombinationType = (event) => {
     getDate();
 }
 
+const saveCombination = () =>{
+    apiServise.callApi(props.links, constants.analysis.saveAnalysis, {combination: combinationTypeSelected}).then((data)=>{
+        console.log(data);
+    });
+}
+
 const nextStep = () => {
+    if(designType.value == designTypeEnum.Iran){
+        saveCombination();
+
+    }
     emit("nextStep");
 }
 
