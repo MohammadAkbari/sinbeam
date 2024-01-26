@@ -88,6 +88,8 @@ const getDate = () => {
 
         reRenderBendingData.value++;
 
+        emit("saveLinks",data._links);
+
     });
 
 }
@@ -101,12 +103,12 @@ const removeDupliate = (data: Point[]): Point[] => {
 }
 
 const changeCombinationType = (event) => {
-    combinationTypeSelected.value = +event.target.value;    
+    combinationTypeSelected.value = +event.target.value;        
     getDate();
 }
 
 const saveCombination = () =>{
-    apiServise.callApi(props.links, constants.analysis.saveAnalysis, {combination: combinationTypeSelected}).then((data)=>{
+    apiServise.callApi(props.links, constants.analysis.saveCombination, {combination: combinationTypeSelected}).then((data)=>{
         console.log(data);
     });
 }
@@ -114,7 +116,6 @@ const saveCombination = () =>{
 const nextStep = () => {
     if(designType.value == designTypeEnum.Iran){
         saveCombination();
-
     }
     emit("nextStep");
 }
