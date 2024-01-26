@@ -108,7 +108,7 @@ const changeCombinationType = (event) => {
 }
 
 const saveCombination = () =>{
-    apiServise.callApi(props.links, constants.analysis.saveCombination, {combination: combinationTypeSelected}).then((data)=>{
+    apiServise.callApi(props.links, constants.analysis.saveCombination, {combination: combinationTypeSelected.value}).then((data)=>{
         console.log(data);
     });
 }
