@@ -1,4 +1,5 @@
 import Link from "../models/link";
+import { CombinationType } from '@/enums/combinationType';
 
 export default class RestraintDto {
 
@@ -12,6 +13,8 @@ export default class RestraintDto {
 
     fullRestraintTopFlange: boolean;
     fullRestraintBottomFlange: boolean;
+
+    combination: CombinationType;
 
     _links: Array<Link>;
 }

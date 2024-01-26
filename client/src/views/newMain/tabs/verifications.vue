@@ -22,6 +22,7 @@ import helper from '@/shared/common/helper';
 import type FlangeVerification from '@/models/flangeVerification';
 
 import  flangeVerifications from "./components/flangeVerifications.vue";
+import { CombinationType } from '@/enums/combinationType';
 
 const emit = defineEmits(['nextStep', 'clearForm', 'saveLinks']);
 const apiServise = inject('apiServise') as ApiServise;
@@ -36,7 +37,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const loadingDto = ref({ permanentLoads: {}, variableLoads: {}, ultimateLoads: {} } as LoadingDto);
 
-const designType = DesignType;
+const designTypeEnum = DesignType;
 
 const loadInput = ref(true as boolean);
 
@@ -63,6 +64,9 @@ const chartCaption = ref("" as string)
 const topFlangeVerification = ref({ verificationItems: [], captions: [] } as FlangeVerification);
 const bottomFlangeVerification = ref({ verificationItems: [], captions: [] } as FlangeVerification);
 
+const combinationTypeList = helper.convertEnumToListItem(CombinationType);
+
+const combinationTypeSelected = ref(CombinationType.C1 as CombinationType);
 
 onMounted(() => {
     debugger
@@ -101,6 +105,9 @@ const getData = () => {
         restraintDto.value.fullRestraintBottomFlange = data.fullRestraintBottomFlange;
         restraintDto.value.fullRestraintTopFlange = data.fullRestraintTopFlange;
         restraintDto.value.topFlangeRestraints = data.topFlangeRestraints ?? [];
+
+        restraintDto.value.combination = data.combination;
+
         reRender.value++;
 
         emit('saveLinks', data._links);
@@ -211,6 +218,24 @@ const clearForm = () => {
             <template v-slot:body>
                 <sub-panel label="View">
                     <template v-slot:body>
+
+
+                        <div class="row px-2 py-3" v-if="loadingDto.designType == designTypeEnum.Iran">
+                    <div class="d-flex justify-content-start ">
+                        <span class="fs-14 fw-500 mx-4" style="opacity: 78%;">Combination:</span>
+                        <div class="form-check mx-4" v-for="(item, index) in combinationTypeList" :key="index">
+                            <input class="form-check-input fs-16" type="radio" name="Combination" :value="item.id"
+                                v-model="restraintDto.combination" disabled
+                                :id="`Characteristic-${item.title}`">
+                            <label class="form-check-label fs-16 fw-400" style="opacity: 78%;"
+                                :for="`Characteristic-${item.title}`">
+                                {{ item.title }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
                         <div class="row">
                             <div class="col-4">
                                 <div class="row py-2">

@@ -4,6 +4,7 @@ import type { LoadType } from "../enums/loadType";
 import type { CombinationType } from "../enums/combinationType";
 import type UltimatePointLoadDto from "./ultimatePointLoadDto";
 import type CharacteristicPointLoadDto from "./characteristicPointLoadDto";
+import { DesignType } from "../enums/designType";
 
 
 export default class LoadingDto {
@@ -19,6 +20,7 @@ export default class LoadingDto {
     selfWeight: number;
 
     loadType: LoadType;
+    designType: DesignType;
     permanentLoads = {} as LoadParameters;
     variableLoads = {} as LoadParameters;
     ultimateLoads = {} as LoadParameters;
