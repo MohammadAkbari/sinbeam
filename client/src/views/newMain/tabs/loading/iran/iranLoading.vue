@@ -59,7 +59,7 @@ const getTitle = (x, z) => {
 const iranLoadingItemDto = ref({unit:Unit.KN} as IranLoadingItemDto); 
 
 const addItem = () => {
-
+debugger
     if(zTypeItem.value != ZType.PointLoad){
         var item = loadingDto.value.loadingItems.find(e=>e.xType == xTypeItem.value && e.zType == zTypeItem.value);
 
@@ -67,6 +67,9 @@ const addItem = () => {
             Swal.fire("Duplicate Row!!!");
             return;
         }           
+    }else if( !(+loadingDto.value.span >= +iranLoadingItemDto.value.point && +iranLoadingItemDto.value.point >= 0)){
+        Swal.fire("invalue point!!!");
+        return;
     }
 
     iranLoadingItemDto.value.xType = xTypeItem.value;
@@ -99,7 +102,7 @@ const isActiveApply = computed(()=>{
     }
 
     else if(zType.PointLoad == zTypeItem.value){
-        return !!iranLoadingItemDto.value.point && !! iranLoadingItemDto.value.value
+        return (!!iranLoadingItemDto.value.point || iranLoadingItemDto.value.point == 0) && !! iranLoadingItemDto.value.value 
     }
     else{
         return false;
@@ -179,23 +182,23 @@ const isActiveApply = computed(()=>{
                                     </tr>
                                     <tr class="fs-14 fw-600"
                                         v-if="[zType.Distribute, zType.AxialForce].includes(zTypeIndex)"
-                                        style="background-color:#F6F6F6;height: 48px; color: #5C5C5C;vertical-align: middle;">
-                                        <td>Unit</td>
+                                        style="background-color:#F6F6F6;height: 48px; color: #5C5C5C;vertical-align: middle;">                                      
                                         <td>Value</td>
+                                        <td>Unit</td>
                                         <td>Remove</td>
                                     </tr>
                                     <tr class="fs-14 fw-500" v-if="[zType.EndMoment].includes(zTypeIndex)"
-                                        style="background-color:#F6F6F6;height: 48px; color: #5C5C5C;vertical-align: middle;">
-                                        <td>Unit</td>
+                                        style="background-color:#F6F6F6;height: 48px; color: #5C5C5C;vertical-align: middle;">                                        
                                         <td>Left Value</td>
                                         <td>Right Value</td>
+                                        <td>Unit</td>
                                         <td>Remove</td>
                                     </tr>
                                     <tr class="fs-14 fw-500" v-if="[zType.PointLoad].includes(zTypeIndex)"
                                         style="background-color:#F6F6F6;height: 48px; color: #5C5C5C;vertical-align: middle;">
-                                        <td>Unit</td>
-                                        <td>Point</td>
                                         <td>Value</td>
+                                        <td>Point</td>                                       
+                                        <td>Unit</td>
                                         <td>Remove</td>
                                     </tr>
                                 </thead>
@@ -204,9 +207,9 @@ const isActiveApply = computed(()=>{
                                         v-for="(item, index) in loadingDto.loadingItems?.filter(e => e.xType == (xTypeIndex) && e.zType == (zTypeIndex))">
                                         <tr class="fs-14 fw-500 py-0"
                                             v-if="[zType.Distribute, zType.AxialForce].includes(zTypeIndex)"
-                                            style="height: 48px;color: #5C5C5C;vertical-align: middle;">
-                                            <td>{{ Unit[item.unit] }}</td>
+                                            style="height: 48px;color: #5C5C5C;vertical-align: middle;">                                          
                                             <td>{{ item.value }}</td>
+                                            <td>{{ Unit[item.unit] }}</td>
                                             <td style="width: 20%;">
                                                 <button type="button" class="col-6 btn btn-primary px-2 fs-14 fw-500"
                                                     @click="removeItem(item.row)"
@@ -216,10 +219,10 @@ const isActiveApply = computed(()=>{
                                             </td>
                                         </tr>
                                         <tr class="fs-14 fw-500 py-0" v-if="[zType.EndMoment].includes(zTypeIndex)"
-                                            style="height: 48px;color: #5C5C5C;vertical-align: middle;">
-                                            <td>{{  Unit[item.unit] }}</td>
+                                            style="height: 48px;color: #5C5C5C;vertical-align: middle;">                                         
                                             <td>{{ item.leftValue }}</td>
                                             <td>{{ item.rightValue }}</td>
+                                            <td>{{  Unit[item.unit] }}</td>
                                             <td style="width: 20%;">
                                                 <button type="button" class="col-6 btn btn-primary px-2 fs-14 fw-500"
                                                     @click="removeItem(item.row)"
@@ -230,9 +233,10 @@ const isActiveApply = computed(()=>{
                                         </tr>
                                         <tr class="fs-14 fw-500 py-0" v-if="[zType.PointLoad].includes(zTypeIndex)"
                                             style="height: 48px;color: #5C5C5C;vertical-align: middle;">
-                                            <td>{{  Unit[item.unit] }}</td>
+                                         
                                             <td>{{ item.value }}</td>
                                             <td>{{ item.point }}</td>
+                                            <td>{{  Unit[item.unit] }}</td>
                                             <td style="width: 20%;">
                                                 <button type="button" class="col-6 btn btn-primary px-2 fs-14 fw-500"
                                                     @click="removeItem(item.row)"
