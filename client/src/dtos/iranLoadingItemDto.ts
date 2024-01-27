@@ -5,6 +5,7 @@ import { Unit } from "../enums/unit";
 import { DesignType } from "../enums/designType";
 
 export default class IranLoadingItemDto {
+    row: number;
 
     xType: XType;
     zType: ZType;

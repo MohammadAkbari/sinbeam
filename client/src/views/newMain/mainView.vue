@@ -117,9 +117,9 @@ const tabComponent = computed(() => {
           <div class="d-flex align-items-center pb-2">
             <!-- <img class="sin-logo me-2" src="@/assets/img/Logo-text.png" alt=""> -->
             <img class="sin-logo me-2" src="@/assets/img/logo.png" />
-            <span class="pt-1 text-black fs-18" style="font-weight: 500; opacity: 0.87;">SinDesigner LOGO</span>
+            <!-- <span class="pt-1 text-black fs-18" style="font-weight: 500; opacity: 0.87;">SinDesigner</span> -->
           </div>
-          <span class="fs-16" style="color: #9B9B9B;font-weight: 400;">SINdesigner version 1.0.0</span>
+          <span class="fs-16" style="color: #9B9B9B;font-weight: 400;">version 1.0.0</span>
         </a>
         <ul class="nav nav-pills flex-column mb-auto ">
           <li v-for="(item, index) in list" :key="index" @click="changeTab(item.value)">
@@ -151,7 +151,7 @@ const tabComponent = computed(() => {
                     <img class="mt-2" style="width: 42px; height: 42px;" src="@/assets/img/user.png" />
                     <div class="d-flex flex-column px-2 justify-content-center">
                       <span class="fs-14" style="font-weight: 500;">profile panel</span>
-                      <span class="fs-10"> 25% is xompleted</span>
+                      <span class="fs-10"> 25% is completed</span>
                     </div>
                   </div>
                   <div class="d-flex fs-10">

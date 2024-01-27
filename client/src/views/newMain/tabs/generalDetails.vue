@@ -102,7 +102,7 @@ const clearForm = () => {
   <div class="col-11">
     <div class="row">
       <div class="col-lg-6">
-        <panel label="General Information" :icon="generalInformation" size="col-lg-12">
+        <panel label="Project Information" :icon="generalInformation" size="col-lg-12">
           <template v-slot:body>
             <div class="mx-4">
               <div class="mb-3 py-2">
@@ -128,8 +128,7 @@ const clearForm = () => {
               </div>
               <div class="py-2">
                 <div class="mb-1 pt-1">
-                  <label for="span" class="form-label mb-1 input-label">Column Height/Rater Span
-                    (m)</label>
+                  <label for="span" class="form-label mb-1 input-label">Element Length (m)</label>
                   <input type="number" class="form-control fs-16" id="span" v-model="orderDto.span">
                 </div>
 
@@ -152,7 +151,7 @@ const clearForm = () => {
         </panel>
       </div>
       <div class="col-lg-6">
-        <panel label="Location" :icon="localisation" size="col-lg-12" style="padding-bottom: 2px;">
+        <panel label="Design Code" :icon="localisation" size="col-lg-12" style="padding-bottom: 2px;">
           <template v-slot:body>
             <sub-panel label="Design to">
               <template v-slot:body>
@@ -165,7 +164,7 @@ const clearForm = () => {
                 </div>
               </template>
             </sub-panel>
-            <sub-panel label="Location">
+            <sub-panel label="Criteria">
               <template v-slot:body>
                 <div class="card-body px-2 py-2" v-if="orderDto.designType != designType.Iran">
                   <div class="form-check fs-16">
@@ -209,7 +208,7 @@ const clearForm = () => {
                     <input class="form-check-input" type="radio" name="steelType" id="S355"
                       :value="steelType.S355" v-model="orderDto.steelType">
                     <label class="form-check-label fs-16" for="S355">
-                      {{ orderDto.designType != designType.Iran ? 's 355' : 'ST-38' }}                    
+                      {{ orderDto.designType != designType.Iran ? 's 355' : 'ST-52' }}                    
                     </label>
                   </div>
                 </div>
@@ -217,7 +216,7 @@ const clearForm = () => {
           </template>
         </panel>
         
-        <panel label="Deflection Limits( span / limit)" :icon="ruler" size="col-lg-12">
+        <panel label="Deflection Limits(span / limit)" :icon="ruler" size="col-lg-12">
           <template v-slot:body>
             <div class="card-body px-2 py-2 mx-5">
               <div class="row mb-1 pt-1 d-flex">

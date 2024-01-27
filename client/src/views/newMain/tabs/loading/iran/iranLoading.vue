@@ -73,12 +73,18 @@ const addItem = () => {
     iranLoadingItemDto.value.zType = zTypeItem.value;
 
     loadingDto.value.loadingItems.push({ ...iranLoadingItemDto.value });
+    loadingDto.value.loadingItems.forEach((item,index)=>item.row = index)
     reRender.value++;
     iranLoadingItemDto.value = {unit:Unit.KN} as IranLoadingItemDto;
 }
 
 const removeItem = (index:number) => {  
+
+    console.log(index);
+    
+
     loadingDto.value.loadingItems.splice(index, 1);
+    loadingDto.value.loadingItems.forEach((item,index)=>item.row = index)
     reRender.value++;
 }
 
@@ -203,7 +209,7 @@ const isActiveApply = computed(()=>{
                                             <td>{{ item.value }}</td>
                                             <td style="width: 20%;">
                                                 <button type="button" class="col-6 btn btn-primary px-2 fs-14 fw-500"
-                                                    @click="removeItem(index)"
+                                                    @click="removeItem(item.row)"
                                                     style="color: #B61C1C; background-color: rgba(203, 18, 18, 0.02); border: 0px;">
                                                     Remove
                                                 </button>
@@ -216,7 +222,7 @@ const isActiveApply = computed(()=>{
                                             <td>{{ item.rightValue }}</td>
                                             <td style="width: 20%;">
                                                 <button type="button" class="col-6 btn btn-primary px-2 fs-14 fw-500"
-                                                    @click="removeItem(index)"
+                                                    @click="removeItem(item.row)"
                                                     style="color: #B61C1C; background-color: rgba(203, 18, 18, 0.02); border: 0px;">
                                                     Remove
                                                 </button>
@@ -229,7 +235,7 @@ const isActiveApply = computed(()=>{
                                             <td>{{ item.point }}</td>
                                             <td style="width: 20%;">
                                                 <button type="button" class="col-6 btn btn-primary px-2 fs-14 fw-500"
-                                                    @click="removeItem(index)"
+                                                    @click="removeItem(item.row)"
                                                     style="color: #B61C1C; background-color: rgba(203, 18, 18, 0.02); border: 0px;">
                                                     Remove
                                                 </button>
