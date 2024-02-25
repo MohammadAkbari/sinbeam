@@ -59,8 +59,8 @@ const goSection = (sectionRef) => {
 
             <div class="row mt-5">
                 <div class="d-flex justify-content-center">
-                    <span class="fs-28 fw-600" style="color:#125CCB ;">Sin Designer</span>
-                    <span class="fs-28 fw-600" style="opacity: 78%;line-height: 41px;"> It is a comprehensive software for
+                    <span class="fs-28 fw-600" style="color:#125CCB ;">Sin Designer&nbsp;</span>
+                    <span class="fs-28 fw-600" style="opacity: 78%;line-height: 41px;">It is a comprehensive software for
                         structural engineers</span>
                 </div>
                 <span class="d-flex justify-content-center fs-24 fw-400 mt-3" style="color: #545454;">
