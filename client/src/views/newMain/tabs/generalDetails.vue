@@ -16,15 +16,19 @@ import iricon from '@/assets/img/IR-icon.png'
 import generalInformation from "@/assets/img/generalInformation.png"
 import localisation from "@/assets/img/localisation.png"
 import ruler from "@/assets/img/ruler.png"
+import { routerKey, useRouter } from 'vue-router';
 
 
 export interface Props {
-  links: Link[]
+  links: Link[],
+  id: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
   //hasCreated: false
 });
+
+
 
 
 const apiServise = inject('apiServise') as ApiServise;
@@ -59,6 +63,7 @@ const designTypes = [
 
 
 onMounted(() => {
+  debugger
   if (props.links.some(e => e.rel == constants.generalDetails.getOrder)) {
     apiServise.callApi(props.links, constants.generalDetails.getOrder).then((data) => {
       console.log(data);
@@ -80,14 +85,20 @@ const saveDesignParameters = () => {
   orderDto.designParameters = designParameters;
   showNoteModal.value = false;
 }
-
-const nextStep = async () => {
+async function nextStep(){
   debugger
-  const type = props.links.some(e => e.rel == constants.generalDetails.saveOrder) ? constants.generalDetails.saveOrder : constants.generalDetails.createOrder;
+  const type = props.id ? constants.generalDetails.saveOrder : constants.generalDetails.createOrder;
   const data = await apiServise.callApi(props.links, type, orderDto);
+
+
   emit('saveLinks', data._links);
-  emit("nextStep");
+  emit("nextStep",data.id);
 }
+
+
+// const nextStep = async () => {
+ 
+// }
 
 const clearForm = () => {
   emit("clearForm");
