@@ -72,6 +72,8 @@ const id = computed(() => useRoute().params.id);
 const flag=ref(false);
 
 onMounted(async () => {
+  flag.value=false;
+
 const data = await apiServise.get(config + (id.value ? `?id=${id.value}` : ''));
 
 if (id.value) {
