@@ -26,15 +26,14 @@ const props = withDefaults(defineProps<Props>(), {
     //hasCreated: false
 });
 
-const design = ref({bottomFlange:{isValid:true,utilization:12.23},web:{isValid:true,utilization:12.23},topFlange:{isValid:false,utilization:12.23}} as Design);
+// const design = ref({bottomFlange:{isValid:true,utilization:12.23},web:{isValid:true,utilization:12.23},topFlange:{isValid:false,utilization:12.23}} as Design);
+const design = ref({} as Design);
 
 
 onMounted(() => {
-    debugger
-
-    // apiServise.callApi(props.links, constants.design.getDesign).then((data: Design) => {
-    //     design.value = data;
-    // });
+    apiServise.callApi(props.links, constants.design.getDesign).then((data: Design) => {
+        design.value = data;
+    });
 });
 
 const clearForm = () => {

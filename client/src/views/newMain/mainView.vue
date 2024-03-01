@@ -71,10 +71,19 @@ const links = ref([] as Link[]);
 const id = computed(() => useRoute().params.id);
 
 onMounted(async () => {
+
+  debugger
   const data = await apiServise.get(config + (id.value ? `?id=${id.value}` : ''));
 
   if (id.value) {
     topSeletedTab.value = list.find(e => e.value == data.step);
+
+    const currentRouteName = router.currentRoute.value.name;
+    const tab = list.find(e=>e.route == currentRouteName);
+
+    if(tab.value > topSeletedTab.value.value){
+      router.push({ name: topSeletedTab.value.route, params: { id: +id.value } });
+    }
   }
 
   saveLinks(data._links);
