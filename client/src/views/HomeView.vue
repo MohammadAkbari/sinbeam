@@ -25,23 +25,23 @@ const goSection = (sectionRef) => {
             <div class="d-flex justify-content-start" style="height: 72px;">
                 <div class="sin-rounded w-100 h-100 d-flex align-items-center px-5 justify-content-between">
                     <div class="d-flex fs-12">
-                        <div class="d-flex align-items-center  justify-content-star">
-                            <img class="mt-1" style="" src="@/assets/img/logo.png" @click="goSection(section0)" />
-                            <span class="fs-16 px-2 fw-500" style="opacity: 87%;">SinDesigner</span>
+                        <div class="d-flex align-items-center  justify-content-star" style="cursor: pointer" @click="goSection(section0)">
+                            <img class="mt-1" style="" src="@/assets/img/logo.png" />
+                            <span class="fs-16 px-2 fw-500" style="opacity: 87%;" >SinDesigner</span>
                         </div>
                      
                         
                         <div class="d-flex align-items-center px-5 justify-content-start">
-                            <div class="fs-18 fw-500 mx-5" style="opacity: 87%;" @click="goSection(section1)">
+                            <div class="fs-18 fw-500 mx-5" style="opacity: 87%;cursor: pointer" @click="goSection(section1)">
                                 What Is SinDesigner?
                             </div>
-                            <div class="fs-18 fw-500 mx-5" style="opacity: 87%;" @click="goSection(section2)">
+                            <div class="fs-18 fw-500 mx-5" style="opacity: 87%;cursor: pointer" @click="goSection(section2)">
                                 Key Features
                             </div>
-                            <div class="fs-18 fw-500 mx-5" style="opacity: 87%;" @click="goSection(section3)">
+                            <div class="fs-18 fw-500 mx-5" style="opacity: 87%;cursor: pointer" @click="goSection(section3)">
                                 Capabilities
                             </div>
-                            <div class="fs-18 fw-500 mx-5" style="opacity: 87%;" @click="goSection(section4)">
+                            <div class="fs-18 fw-500 mx-5" style="opacity: 87%;cursor: pointer" @click="goSection(section4)">
                                 About US
                             </div>
                         </div>
