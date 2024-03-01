@@ -91,7 +91,9 @@ onMounted(async () => {
 
 const router = useRouter()
 
-const nextStep = (currentId) => {
+const nextStep = (currentId=null) => {
+
+  debugger
   const step = +seletedTab.value.value;
   const tab = list.find(e => e.value == step + 1);
 
@@ -101,7 +103,7 @@ const nextStep = (currentId) => {
     }
   }
 
-  router.push({ name: tab.route, params: { id: +id.value == 0 ? currentId : id.value } });
+  router.push({ name: tab.route, params: { id: (currentId ?? id.value) } });
 }
 
 
