@@ -11,7 +11,8 @@ import lineChart from '@/shared/components/lineChart.vue';
 import type LoadingDto from '@/dtos/loadingDto';
 import helper from '@/shared/common/helper';
 import { CombinationType } from '@/enums/combinationType';
-import analysis from "@/assets/img/analysis.png"
+import designImg from "@/assets/img/design.png"
+
 
 
 const emit = defineEmits(['nextStep', 'clearForm', 'saveLinks']);
@@ -47,7 +48,7 @@ const clearForm = () => {
 
 <template>
     <div class="col-11">
-        <panel label="Design" :icon="design" size="col-lg-12">
+        <panel label="Design" :icon="designImg" size="col-lg-12">
             <template v-slot:body>
                 <sub-panel label="Verification Summary">
                     <template v-slot:body>
