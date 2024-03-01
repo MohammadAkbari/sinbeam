@@ -85,20 +85,19 @@ const saveDesignParameters = () => {
   orderDto.designParameters = designParameters;
   showNoteModal.value = false;
 }
-async function nextStep(){
-  debugger
+
+
+const nextStep = async () => {
   const type = props.id ? constants.generalDetails.saveOrder : constants.generalDetails.createOrder;
   const data = await apiServise.callApi(props.links, type, orderDto);
 
 
+  console.log(data);
+  
+
   emit('saveLinks', data._links);
   emit("nextStep",data.id);
 }
-
-
-// const nextStep = async () => {
- 
-// }
 
 const clearForm = () => {
   emit("clearForm");

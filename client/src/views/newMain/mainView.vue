@@ -3,15 +3,13 @@
 import { Step } from '@/enums/step';
 import { computed } from '@vue/reactivity';
 // import TabItems from '@/enums/tabItems.ts';
-import { defineAsyncComponent, inject, onMounted, provide, ref } from 'vue';
+import { defineAsyncComponent, inject, onMounted, provide, ref} from 'vue';
 import ApiService from '@/core/services/api.service';
 import type Link from '@/models/link';
 import config from '@/shared/globals/config';
 import Swal from "sweetalert2";
 import type ApiServise from '@/core/services/api.service';
 import { RouterView, useRoute, useRouter } from 'vue-router';
-
-
 
 const apiServise = inject('apiServise') as ApiServise;
 
@@ -70,24 +68,30 @@ const reRenderTab = ref(1 as Step);
 const links = ref([] as Link[]);
 const id = computed(() => useRoute().params.id);
 
+
+const flag=ref(false);
+
 onMounted(async () => {
+const data = await apiServise.get(config + (id.value ? `?id=${id.value}` : ''));
 
-  debugger
-  const data = await apiServise.get(config + (id.value ? `?id=${id.value}` : ''));
+if (id.value) {
+  topSeletedTab.value = list.find(e => e.value == data.step);
 
-  if (id.value) {
-    topSeletedTab.value = list.find(e => e.value == data.step);
+  const currentRouteName = router.currentRoute.value.name;
+  const tab = list.find(e=>e.route == currentRouteName);
 
-    const currentRouteName = router.currentRoute.value.name;
-    const tab = list.find(e=>e.route == currentRouteName);
-
-    if(tab.value > topSeletedTab.value.value){
-      router.push({ name: topSeletedTab.value.route, params: { id: +id.value } });
-    }
+  if(tab.value > topSeletedTab.value.value){
+    router.push({ name: topSeletedTab.value.route, params: { id: +id.value } });
   }
 
-  saveLinks(data._links);
+  flag.value=true;
+
+}
+
+saveLinks(data._links);
 })
+
+
 
 const router = useRouter()
 
@@ -122,6 +126,10 @@ const saveLinks = (newLinks) => {
 provide('apiServise', new ApiService)
 
 const tabComponent = computed(() => {
+  
+  if(!flag)
+    return '';
+
   switch (+seletedTab.value.value) {
     case +Step.GeneralDetails:
       return defineAsyncComponent(() => import('./tabs/generalDetails.vue'));
