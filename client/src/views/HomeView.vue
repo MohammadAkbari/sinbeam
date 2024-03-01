@@ -25,8 +25,13 @@ const goSection = (sectionRef) => {
             <div class="d-flex justify-content-start" style="height: 72px;">
                 <div class="sin-rounded w-100 h-100 d-flex align-items-center px-5 justify-content-between">
                     <div class="d-flex fs-12">
-                        <img class="mt-1" style="width: 187px; " src="@/assets/img/Logo-text.png" @click="goSection(section0)" />
-                        <div class="d-flex  align-items-center px-5 justify-content-start">
+                        <div class="d-flex align-items-center  justify-content-star">
+                            <img class="mt-1" style="" src="@/assets/img/logo.png" @click="goSection(section0)" />
+                            <span class="fs-16 px-2 fw-500" style="opacity: 87%;">SinDesigner</span>
+                        </div>
+                     
+                        
+                        <div class="d-flex align-items-center px-5 justify-content-start">
                             <div class="fs-18 fw-500 mx-5" style="opacity: 87%;" @click="goSection(section1)">
                                 What Is SinDesigner?
                             </div>
@@ -89,7 +94,7 @@ const goSection = (sectionRef) => {
                 style="position: absolute;height: 73px;width: 265px;top: 268px;right:149px; border-radius:6px;z-index: 999"
                 alt="">
             <img src="../assets/img/home/home-6.png"
-                style="position: absolute;height: 262px;width: 315px;top: 472px;right:0px; border-radius:6px;z-index: 999"
+                style="position: absolute;height: 262px;width: 220px;top: 472px;right:0px; border-radius:6px;z-index: 999"
                 alt="">
 
             <img src="../assets/img/home/back-1.png" style="position: absolute; top: 13px;right:5px; border-radius:6px;"
