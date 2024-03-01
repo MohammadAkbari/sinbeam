@@ -92,8 +92,6 @@ onMounted(async () => {
 const router = useRouter()
 
 const nextStep = (currentId=null) => {
-
-  debugger
   const step = +seletedTab.value.value;
   const tab = list.find(e => e.value == step + 1);
 
