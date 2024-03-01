@@ -51,16 +51,14 @@ const changeTab = (tab) => {
 
   if (topSeletedTab.value.value >= tab.value) {
     router.push({ name: tab.route, params: { id: +id.value } });
+    seletedTab.value=tab;
   } else {
     Swal.fire('not accessible')
   }
 
 }
 
-const seletedTab = computed(() => {
-  const currentRouteName = router.currentRoute.value.name;
-  return list.find(e => e.route == currentRouteName);
-});
+const seletedTab = ref(list[0]); 
 
 const topSeletedTab = ref(list[0]);
 const reRenderTab = ref(1 as Step);
@@ -82,8 +80,13 @@ if (id.value) {
   const currentRouteName = router.currentRoute.value.name;
   const tab = list.find(e=>e.route == currentRouteName);
 
+  seletedTab.value = tab;
+
+  console.log(123);
+
   if(tab.value > topSeletedTab.value.value){
     router.push({ name: topSeletedTab.value.route, params: { id: +id.value } });
+    seletedTab.value=topSeletedTab.value;
   }
 
   flag.value=true;
@@ -108,6 +111,7 @@ const nextStep = (currentId=null) => {
   }
 
   router.push({ name: tab.route, params: { id: (currentId ?? id.value) } });
+  seletedTab.value = tab;
 }
 
 
