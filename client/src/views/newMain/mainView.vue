@@ -51,51 +51,48 @@ const list = [
 
 const changeTab = (tab) => {
 
-  if(topSeletedTab.value.value>= tab.value){
-    router.push({ name: tab.route })
-  }else{
+  if (topSeletedTab.value.value >= tab.value) {
+    router.push({ name: tab.route, params: { id: +id.value } });
+  } else {
     Swal.fire('not accessible')
   }
 
 }
 
-const seletedTab =  computed(()=>{ 
+const seletedTab = computed(() => {
   const currentRouteName = router.currentRoute.value.name;
-  return list.find(e=>e.route == currentRouteName);
+  return list.find(e => e.route == currentRouteName);
 });
 
-const topSeletedTab =ref(list[0]);
+const topSeletedTab = ref(list[0]);
 const reRenderTab = ref(1 as Step);
 
-
-
 const links = ref([] as Link[]);
-
-const id = computed(()=>useRoute().params.id);
-
+const id = computed(() => useRoute().params.id);
 
 onMounted(async () => {
-
   const data = await apiServise.get(config + (id.value ? `?id=${id.value}` : ''));
+
+  if (id.value) {
+    topSeletedTab.value = list.find(e => e.value == data.step);
+  }
+
   saveLinks(data._links);
 })
 
 const router = useRouter()
 
 const nextStep = (currentId) => {
+  const step = +seletedTab.value.value;
+  const tab = list.find(e => e.value == step + 1);
 
-  debugger
-
-  const step = +seletedTab.value.value; 
-  const tab = list.find(e => e.value == step+1);
-
-  if (tab){
-    if(topSeletedTab.value.value < tab.value){
+  if (tab) {
+    if (topSeletedTab.value.value < tab.value) {
       topSeletedTab.value = tab;
     }
   }
 
-  router.push({ name: tab.route,params:{id: +id.value == 0 ? currentId : id.value} });
+  router.push({ name: tab.route, params: { id: +id.value == 0 ? currentId : id.value } });
 }
 
 
@@ -153,7 +150,8 @@ const tabComponent = computed(() => {
             <li v-for="(item, index) in list" :key="index" @click="changeTab(item)">
               <span
                 :class="`sin-nav-item ${item.value == seletedTab.value ? 'active' : ''} ${item.value < seletedTab.value ? 'done' : ''}`">
-                <span class="fs-16" :style="`font-weight: ${item.value == seletedTab.value ? '600' : '400'}`">{{ item.title
+                <span class="fs-16" :style="`font-weight: ${item.value == seletedTab.value ? '600' : '400'}`">{{
+                  item.title
                 }}</span>
               </span>
             </li>
@@ -200,10 +198,8 @@ const tabComponent = computed(() => {
         </div>
         <div class="row ps-1 h-100">
           <transition>
-            <component :is="tabComponent"              
-              :id="id"
-              :links='links' :key="reRenderTab"
-              @saveLinks="saveLinks" @nextStep="nextStep" @clearForm="clearForm">
+            <component :is="tabComponent" :id="id" :links='links' :key="reRenderTab" @saveLinks="saveLinks"
+              @nextStep="nextStep" @clearForm="clearForm">
             </component>
           </transition>
         </div>

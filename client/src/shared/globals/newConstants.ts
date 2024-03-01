@@ -27,6 +27,9 @@ const newConstants = {
         saveRestraint:'save-restraint',
         setWebLocalBuckle:'set-web-local-buckle',
         unsetWebLocalBuckle:'unset-web-local-buckle'
+    },
+    design: {
+        getDesign: 'get-design'
     }
 }
 export default newConstants;
