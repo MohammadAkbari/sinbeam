@@ -184,7 +184,7 @@ const addFlang = (isTop: boolean) => {
 
 }
 
-const cahngeFullRestraintFlangee = () => {
+const changeFullRestraintFlangee = () => {
     saveRestraint();
 }
 
@@ -241,7 +241,7 @@ const clearForm = () => {
                                 <div class="row py-2">
                                     <div class="form-check d-flex justify-content-start mx-4">
                                         <input class="form-check-input fs-16" type="checkbox"
-                                            @change="cahngeFullRestraintFlangee"
+                                            @change="changeFullRestraintFlangee"
                                             v-model="restraintDto.fullRestraintTopFlange" id="fullRestraintTopFlange">
                                         <label class="form-check-label input-label px-2 fw-400 fs-16"
                                             for="fullRestraintTopFlange">
@@ -307,7 +307,7 @@ const clearForm = () => {
                                 <div class="row py-2">
                                     <div class="form-check d-flex justify-content-start py-2 mx-4">
                                         <input class="form-check-input fs-16" type="checkbox"
-                                            @change="cahngeFullRestraintFlangee"
+                                            @change="changeFullRestraintFlangee"
                                             v-model="restraintDto.fullRestraintBottomFlange" id="fullRestraintBottomFlange">
                                         <label class="form-check-label input-label px-2 fw-400 fs-16"
                                             for="fullRestraintBottomFlange">

@@ -30,6 +30,9 @@ const newConstants = {
     },
     design: {
         getDesign: 'get-design'
+    },
+    question:{
+        askQuestion:'ask-question'
     }
 }
 export default newConstants;

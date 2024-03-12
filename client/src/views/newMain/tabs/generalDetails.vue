@@ -63,7 +63,6 @@ const designTypes = [
 
 
 onMounted(() => {
-  debugger
   if (props.links.some(e => e.rel == constants.generalDetails.getOrder)) {
     apiServise.callApi(props.links, constants.generalDetails.getOrder).then((data) => {
       console.log(data);
