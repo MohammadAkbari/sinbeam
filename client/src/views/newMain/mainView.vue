@@ -57,7 +57,7 @@ const list = [
 const changeTab = (tab) => {
 
   if (topSeletedTab.value.value >= tab.value) {
-    router.push({ name: tab.route, params: { id: +id.value } });
+    router.push({ name: tab.route, params: { id: +route?.params?.id } });
     seletedTab.value = tab;
   } else {
     Swal.fire('not accessible')
@@ -71,7 +71,6 @@ const topSeletedTab = ref(list[0]);
 const reRenderTab = ref(1 as Step);
 
 const links = ref([] as Link[]);
-const id = computed(() => useRoute()?.params?.id);
 
 
 const flag = ref(false);
@@ -83,9 +82,9 @@ const questionDto = ref({} as QuestionDto);
 onMounted(async () => {
   flag.value = false;
 
-  const data = await apiServise.get(config + (id.value ? `?id=${id.value}` : ''));
+  const data = await apiServise.get(config + (route?.params?.id ? `?id=${route?.params?.id}` : ''));
 
-  if (id.value) {
+  if (route?.params?.id) {
     topSeletedTab.value = list.find(e => e.value == data.step);
 
     const currentRouteName = router.currentRoute.value.name;
@@ -96,7 +95,7 @@ onMounted(async () => {
     console.log(123);
 
     if (tab.value > topSeletedTab.value.value) {
-      router.push({ name: topSeletedTab.value.route, params: { id: +id.value } });
+      router.push({ name: topSeletedTab.value.route, params: { id: route?.params?.id } });
       seletedTab.value = topSeletedTab.value;
     }
 
@@ -111,6 +110,8 @@ onMounted(async () => {
 
 const router = useRouter()
 
+const route=useRoute()
+
 const nextStep = (currentId = null) => {
   const step = +seletedTab.value.value;
   const tab = list.find(e => e.value == step + 1);
@@ -121,7 +122,7 @@ const nextStep = (currentId = null) => {
     }
   }
 
-  router.push({ name: tab.route, params: { id: (currentId ?? id.value) } });
+  router.push({ name: tab.route, params: { id: (currentId ?? route?.params?.id) } });
   seletedTab.value = tab;
 }
 
@@ -257,7 +258,7 @@ const tabComponent = computed(() => {
         </div>
         <div class="row ps-1 h-100">
           <transition>
-            <component :is="tabComponent" :id="id" :links='links' :key="reRenderTab" @saveLinks="saveLinks"
+            <component :is="tabComponent" :links='links' :key="reRenderTab" @saveLinks="saveLinks"
               @nextStep="nextStep" @clearForm="clearForm">
             </component>
           </transition>

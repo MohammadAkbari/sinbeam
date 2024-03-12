@@ -16,12 +16,11 @@ import iricon from '@/assets/img/IR-icon.png'
 import generalInformation from "@/assets/img/generalInformation.png"
 import localisation from "@/assets/img/localisation.png"
 import ruler from "@/assets/img/ruler.png"
-import { routerKey, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 
 
 export interface Props {
-  links: Link[],
-  id: number
+  links: Link[]  
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -86,16 +85,28 @@ const saveDesignParameters = () => {
 }
 
 
+const route=useRoute()
+
 const nextStep = async () => {
-  const type = props.id ? constants.generalDetails.saveOrder : constants.generalDetails.createOrder;
+debugger
+
+  const type = route?.params?.id ? constants.generalDetails.saveOrder : constants.generalDetails.createOrder;
   const data = await apiServise.callApi(props.links, type, orderDto);
 
 
   console.log(data);
+
+  if(data?._links){
+    emit('saveLinks', data._links);
+  }
+
+    
+    emit("nextStep",data?.id ? route?.params?.id :  data.id);
   
 
-  emit('saveLinks', data._links);
-  emit("nextStep",data.id);
+  
+
+
 }
 
 const clearForm = () => {
