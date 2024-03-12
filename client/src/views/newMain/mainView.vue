@@ -71,7 +71,7 @@ const topSeletedTab = ref(list[0]);
 const reRenderTab = ref(1 as Step);
 
 const links = ref([] as Link[]);
-const id = computed(() => useRoute().params.id);
+const id = computed(() => useRoute()?.params?.id);
 
 
 const flag = ref(false);
