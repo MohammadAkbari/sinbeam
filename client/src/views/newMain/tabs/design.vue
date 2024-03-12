@@ -12,6 +12,8 @@ import type LoadingDto from '@/dtos/loadingDto';
 import helper from '@/shared/common/helper';
 import { CombinationType } from '@/enums/combinationType';
 import designImg from "@/assets/img/design.png"
+import type RequestDto from "@/models/requestDto"
+import Swal from "sweetalert2";
 
 
 
@@ -39,6 +41,26 @@ onMounted(() => {
 
 const clearForm = () => {
     emit("clearForm");
+}
+
+const showModal = ref(false)
+const requestDto = ref({} as RequestDto);
+
+
+const saveRequeste=()=>{
+    if(!requestDto.value.countryId){
+        Swal.fire('Please Enter The Country')
+        return;
+    }
+    if(!requestDto.value.email){
+        Swal.fire('Please Enter The Email')
+        return;
+    }
+    if(!requestDto.value.phoneNumber){
+        Swal.fire('Please Enter The PhoneNumber')
+        return;
+    }
+    //
 }
 
 
@@ -77,7 +99,39 @@ const clearForm = () => {
         <div class="row d-flex justify-content-end py-5">
             <button type="button" class="btn px-2 fs-16 fw-500 mx-2" @click="clearForm"
                 style="background-color: #F4F4F4; width: 196px; height: 42px; color: #125CCB;">Clear All</button>
+            <button type="button" class="btn btn-primary px-2 fs-16 fw-500  mx-2" @click="showModal=true"
+                style="background-color: #125CCB; width: 196px; height: 42px;">Next</button>
         </div>
+        <vue-modal btnClassList="btn btn-success" :isShowModal="showModal" headerTitle="Ask Me"
+          @closeModal="showModal = !showModal" width="500px">
+          <hr class="mt-0">
+          <div class="row">
+            <div class="col-12" style="padding:0px 40px;">
+              <div class="mb-1 py-2 ">
+                <label for="email" class="form-label mb-1 input-label">Email</label>
+                <input type="email" class="form-control fs-16" id="email"  v-model="requestDto.email">
+              </div>
+            </div>
+            <div class="col-12" style="padding:0px 40px;">
+              <div class="mb-1 py-2 ">
+                <label for="phoneNumber" class="form-label mb-1 input-label">phoneNumber</label>
+                <input type="number" class="form-control fs-16" id="phoneNumber"   v-model="requestDto.phoneNumber">
+              </div>
+            </div>
+            <div class="col-12" style="padding:0px 40px;">
+              <div class="mb-1 py-2 ">
+                <label for="countryId" class="form-label mb-1 input-label">countryId</label>
+                <input type="number" class="form-control fs-16" id="countryId"   v-model="requestDto.countryId">
+                </div>
+            </div>
+            <div class="col-12 mt-5" style="padding:0px 40px;">
+              <div class="mb-1 py-2 ">
+                <button type="button" class="col-6 btn btn-secondary px-4 fs-14 fw-400" @click="showModal = false">Cancel</button>
+                <button type="button" class="col-6 btn btn-success px-2 fs-14 fw-400"  @click="saveRequeste">Save</button>                
+              </div>
+            </div>
+          </div>
+        </vue-modal>
     </div>
 </template>
 
