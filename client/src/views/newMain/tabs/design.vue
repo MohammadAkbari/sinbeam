@@ -81,6 +81,7 @@ const saveRequeste = async () => {
     requestDto.value.phoneNumber=requestDto.value.phoneNumber+'';
     const data = await apiServise.callApi(props.links, constants.order.createRequest,requestDto.value);
     showModal.value = false
+    Swal.fire('Your order was successfully submitted')
     //
 }
 
@@ -127,15 +128,15 @@ const saveRequeste = async () => {
             <button type="button" class="btn px-2 fs-16 fw-500 mx-2" @click="clearForm"
                 style="background-color: #F4F4F4; width: 196px; height: 42px; color: #125CCB;">Clear All</button>
             <button type="button" class="btn btn-primary px-2 fs-16 fw-500  mx-2" @click="showModal = true"
-                style="background-color: #125CCB; width: 196px; height: 42px;">Next</button>
+                style="background-color: #125CCB; width: 196px; height: 42px;">Report</button>
         </div>
-        <vue-modal btnClassList="btn btn-success" :isShowModal="showModal" headerTitle="contact Us"
+        <vue-modal btnClassList="btn btn-success" :isShowModal="showModal" headerTitle="Report"
             @closeModal="showModal = !showModal" width="500px">
             <hr class="mt-0">
             <div class="row">
                 <div class="col-12" style="padding:0px 40px;">
                     <div class="">
-                        <label for="countryId" class="form-label mb-1 input-label">countryId</label>
+                        <label for="countryId" class="form-label mb-1 input-label">Country</label>
                         <dropdown class="col-12 fs-16" :options="countries" v-model="requestDto.countryId" text="name" ></dropdown>
                     </div>
                 </div>
@@ -147,16 +148,17 @@ const saveRequeste = async () => {
                 </div>
                 <div class="col-12" style="padding:0px 40px;">
                     <div class="mb-1 py-2 ">
-                        <label for="phoneNumber" class="form-label mb-1 input-label">phoneNumber</label>
+                        <label for="phoneNumber" class="form-label mb-1 input-label">Phone Number</label>
                         <input type="text" class="form-control fs-16" id="phoneNumber"
                             v-model.trim="requestDto.phoneNumber">
                     </div>
                 </div>
                 <div class="col-12 mt-5" style="padding:0px 40px;">
                     <div class="mb-1 py-2 ">
-                        <button type="button" class="col-6 btn btn-secondary px-4 fs-14 fw-400"
+                        <button type="button" class="col-5 btn btn-secondary px-4 fs-14 fw-400"
                             @click="showModal = false">Cancel</button>
-                        <button type="button" class="col-6 btn btn-success px-2 fs-14 fw-400"
+                        <div class="col-2"></div>
+                        <button type="button" class="col-5 btn btn-primary px-2 fs-14 fw-400"
                             @click="saveRequeste">Save</button>
                     </div>
                 </div>
