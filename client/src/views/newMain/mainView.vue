@@ -225,24 +225,24 @@ const tabComponent = computed(() => {
         <div class="w-100 py-2">
           <div class="row">
             <div class="col-lg-2">
-              <a href="#" class="d-flex justify-content-center" style="height: 72px;">
+              <router-link :to="{name:'home'}" class="d-flex justify-content-center" style="height: 72px;">
                 <div class="bg-box-primary sin-rounded w-100 h-100 fs-12 d-flex align-items-center px-2 shadow-sm"
                   style="margin: 0 auto;">
                   <img src="@/assets/img/home-text.png" alt="" style="margin: 0 auto;">
                 </div>
-              </a>
+              </router-link>
             </div>
             <div class="col-lg-10 ps-0">
               <div class="d-flex justify-content-start" style="height: 72px;">
                 <div
                   class="bg-box-primary sin-rounded w-100 h-100 d-flex align-items-center px-2 justify-content-between shadow-sm">
-                  <div class="d-flex fs-12">
+                  <!-- <div class="d-flex fs-12">
                     <img class="mt-2" style="width: 42px; height: 42px;" src="@/assets/img/user.png" />
                     <div class="d-flex flex-column px-2 justify-content-center">
                       <span class="fs-14" style="font-weight: 500;">profile panel</span>
                       <span class="fs-10"> 25% is completed</span>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="d-flex fs-10">
                     <a href="#" class="px-2 mx-2 py-1 bg-box-primary sin-rounded justify-content-center"
                       style="height: 35px; background-color: #f4f4f4;">

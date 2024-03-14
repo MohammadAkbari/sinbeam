@@ -16,6 +16,9 @@ import type RequestDto from "@/models/requestDto"
 import type Country from "@/models/country"
 import Swal from "sweetalert2";
 import {useCounterStore} from '@/stores/counter';
+import { useRoute, useRouter } from 'vue-router';
+
+const router = useRouter()
 
 const store = useCounterStore();
 
@@ -57,7 +60,7 @@ onMounted(async () => {
 });
 
 const clearForm = () => {
-    emit("clearForm");
+    router.push({name:'main'});
 }
 
 const showModal = ref(false)
