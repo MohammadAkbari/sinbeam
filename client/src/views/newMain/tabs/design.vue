@@ -60,7 +60,7 @@ onMounted(async () => {
 });
 
 const clearForm = () => {
-    router.push({name:'main'});
+    router.push({name:'main'}).then(() => { router.go(0) });
 }
 
 const showModal = ref(false)

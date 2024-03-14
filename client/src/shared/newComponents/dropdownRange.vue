@@ -1,7 +1,7 @@
-
 <script setup lang="ts">
 
 import { reactive, ref, watch } from 'vue';
+import Swal from "sweetalert2";
 
 
 export interface Props {
@@ -10,8 +10,8 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    min:0,
-    max:0
+    min: 0,
+    max: 0
 });
 
 const emit = defineEmits(['change']);
@@ -24,56 +24,84 @@ const state = reactive({
     value: [props.min, props.max]
 });
 
-const mainState = [ +props.min, +props.max];
+const mainState = [+props.min, +props.max];
 
-const saveValue=()=>{
+const saveValue = () => {
     debugger
-    emit('change',state.value)
+    emit('change', state.value)
     outSideClickHandler();
 }
 
-watch(()=>state,()=>{
+watch(() => state, () => {
     inputMaxValue.value = state.value[1]
     inputMinValue.value = state.value[0]
 
-},{deep:true,immediate:true})
+}, { deep: true, immediate: true })
 
-const openDropdown = ()=>{
+const openDropdown = () => {
     isDropdownOpen.value = true
     state.value = mainState;
 }
-const outSideClickHandler = ()=> {
+const outSideClickHandler = () => {
     isDropdownOpen.value = false;
 }
 
 const reRender = ref(0);
 
+const changeMinValue = () => {
+
+    if (inputMinValue.value <= inputMaxValue.value && inputMinValue.value >= props.min && inputMinValue.value <= props.max) {
+        state.value[0] = +inputMinValue.value;
+        reRender.value++
+    }
+    else {
+        inputMinValue.value =state.value[0] 
+        Swal.fire('inValid Min Value')
+    }
+
+}
+
+const changeMaxValue = () => {
+
+    if (inputMinValue.value <= inputMaxValue.value && inputMaxValue.value >= props.min && inputMaxValue.value <= props.max) {
+
+        state.value[1] = +inputMaxValue.value;
+        reRender.value++
+    } else {
+        inputMaxValue.value=state.value[1];
+        Swal.fire('inValid Min Value')
+    }
+
+}
+
+
 </script>
 
 <template>
     <div class="dropdown" v-click-outside="outSideClickHandler">
-        <div class="dropdown-toggle-local" @click="openDropdown" style="background-color: #EFEFEF;">           
+        <div class="dropdown-toggle-local" @click="openDropdown" style="background-color: #EFEFEF;">
             <span class="dropdown-option-label fs-14 fw-500">{{ mainState[0] }} - {{ mainState[1] }}</span>
             <span class="dropdown-caret-icon"></span>
         </div>
         <div class="dropdown-menu-body" v-if="isDropdownOpen">
             <div class="row mx-2" style="margin-left: 2px ">
-                <range-slider v-model:maxValue="state.value[1]" v-model:minValue="state.value[0]" :key="reRender" :min="props.min" :max="props.max" />
+                <range-slider v-model:maxValue="state.value[1]" v-model:minValue="state.value[0]" :key="reRender"
+                    :min="props.min" :max="props.max" />
             </div>
-           
+
             <div class="row px-3">
                 <div class="col-6">
                     <div class="mb-3 py-2">
                         <label for="exampleFormControlInput1" class="form-label mb-1 input-label">Min</label>
-                        <input type="text" class="form-control fs-16" id="exampleFormControlInput1" v-model="inputMinValue"
-                            @blur="state.value[0]= +inputMinValue;reRender++">
+                        <input type="text" class="form-control fs-16" id="exampleFormControlInput1"
+                            v-model="inputMinValue" @blur="changeMinValue">
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="mb-3 py-2">
                         <label for="exampleFormControlInput1" class="form-label mb-1 input-label">Max</label>
-                        <input type="text" class="form-control fs-16" id="exampleFormControlInput1" v-model="inputMaxValue"
-                            @blur="state.value[1]= +inputMaxValue;reRender++">
+                        <input type="text" class="form-control fs-16" id="exampleFormControlInput1"
+                            v-model="inputMaxValue" @blur="changeMaxValue">
                     </div>
                 </div>
             </div>
