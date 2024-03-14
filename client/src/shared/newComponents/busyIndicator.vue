@@ -9,8 +9,9 @@
 </template>
 
 <script setup lang="ts">
-import {useCounterStore} from '@/stores/counter';
 import { computed } from "vue";
+import {useCounterStore} from '@/stores/counter';
+
 
 const store = useCounterStore();
 const isShow = computed(() => store.isShowBusyIndicator );
