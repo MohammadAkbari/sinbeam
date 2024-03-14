@@ -49,7 +49,7 @@ onMounted(async () => {
     console.log(data._links);
     
 
-    countries.value = await apiServise.callApi(props.links, constants.countries.getCountries);
+    countries.value = await apiServise.callApi(data._links, constants.countries.getCountries);
     
     requestDto.value.countryId = countries.value[0].id;
     store.isShowBusyIndicator = false;
