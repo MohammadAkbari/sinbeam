@@ -156,13 +156,11 @@ const saveRequeste = async () => {
                             v-model.trim="requestDto.phoneNumber">
                     </div>
                 </div>
+
                 <div class="col-12 mt-5" style="padding:0px 40px;">
-                    <div class="mb-1 py-2 row">
-                        <button type="button" class="col-5 btn btn-secondary px-4 fs-14 fw-400"
-                            @click="showModal = false">Cancel</button>
-                        <div class="col-2"></div>
-                        <button type="button" class="col-5 btn btn-primary px-2 fs-14 fw-400"
-                            @click="saveRequeste">Save</button>
+                    <div class="mb-1 py-2 d-flex justify-content-end">
+                        <button type="button" class="btn btn-secondary px-4 fs-14 fw-400 mx-1" @click="showModal = false">Close</button>                
+                        <button type="button" class="btn btn-primary px-4 fs-14 fw-400"  @click="saveRequeste">Save</button>                
                     </div>
                 </div>
             </div>

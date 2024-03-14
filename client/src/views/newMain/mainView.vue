@@ -236,13 +236,13 @@ const tabComponent = computed(() => {
               <div class="d-flex justify-content-start" style="height: 72px;">
                 <div
                   class="bg-box-primary sin-rounded w-100 h-100 d-flex align-items-center px-2 justify-content-between shadow-sm">
-                  <!-- <div class="d-flex fs-12">
-                    <img class="mt-2" style="width: 42px; height: 42px;" src="@/assets/img/user.png" />
+                  <div class="d-flex fs-12">
+                    <!-- <img class="mt-2" style="width: 42px; height: 42px;" src="@/assets/img/user.png" />
                     <div class="d-flex flex-column px-2 justify-content-center">
                       <span class="fs-14" style="font-weight: 500;">profile panel</span>
                       <span class="fs-10"> 25% is completed</span>
-                    </div>
-                  </div> -->
+                    </div> -->
+                  </div>
                   <div class="d-flex fs-10">
                     <a href="#" class="px-2 mx-2 py-1 bg-box-primary sin-rounded justify-content-center"
                       style="height: 35px; background-color: #f4f4f4;">
@@ -282,11 +282,10 @@ const tabComponent = computed(() => {
                 <textarea type="message" :class="`form-control fs-16 ${isValidMessage ? '' :'border-danger'}`" id="message" placeholder="message" rows="3" required  v-model="questionDto.message"></textarea>
               </div>
             </div>
-            <div class="col-12 mt-5" style="padding:0px 40px;">
-              <div class="mb-1 py-2 row">
-                <button type="button" class="col-5 btn btn-secondary px-4 fs-14 fw-400" @click="showAskMe = false">Cancel</button>
-                <div class="col-2"></div>
-                <button type="button" class="col-5 btn btn-primary px-2 fs-14 fw-400"  @click="saveAskMe">Save</button>                
+            <div class="mt-5" style="padding:0px 40px;">
+              <div class="mb-1 py-2 d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary px-4 fs-14 fw-400 mx-1" @click="showAskMe = false">Close</button>                
+                <button type="button" class="btn btn-primary px-4 fs-14 fw-400"  @click="saveAskMe">Save</button>                
               </div>
             </div>
           </div>
