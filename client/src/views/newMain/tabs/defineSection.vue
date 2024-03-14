@@ -12,6 +12,9 @@ import temp2 from "@/assets/img/temp-2.png";
 import temp3 from "@/assets/img/temp-3.png";
 import profilesection from "@/assets/img/profile-section.png";
 import choosefromlibrary from "@/assets/img/choose-from-library.png";
+import {useCounterStore} from '@/stores/counter';
+
+const store = useCounterStore();
 
 
 enum Filter {
@@ -78,6 +81,8 @@ const state = reactive({
 let filterItems = [];
 
 onMounted(() => {
+    store.isShowBusyIndicator =true;
+
     apiServise.callApi(props.links, constants.sections.getSection).then((data1) => {
         console.log(data1);
         emit('saveLinks', data1._links);
@@ -89,7 +94,8 @@ onMounted(() => {
                 const filter = filterItems.find(e => e[0].toLocaleLowerCase() == Filter[item.id].toLocaleLowerCase())
                 return { ...item, ...(filter[1]), minValue: filter[1].min, maxValue: filter[1].max }
             });
-        });;
+            store.isShowBusyIndicator  = false;
+        });
     });
 
     if (props.links.some(e => e.rel == constants.sections.getSelectedLibraryt)) {

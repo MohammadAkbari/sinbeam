@@ -42,8 +42,6 @@ import "bootstrap/dist/js/bootstrap.js";
 import VueUniversalModal from 'vue-universal-modal';
 import 'vue-universal-modal/dist/index.css';
 
-import vueSimpleRangeSlider from 'vue-simple-range-slider';
-import 'vue-simple-range-slider/css';
 
 
 
@@ -60,7 +58,6 @@ app.component('dropdown', dropdown);
 app.component('sub-panel', subPanel);
 app.component('vue-modal', modal);
 app.component('range-slider', rangeSlider);
-app.component('vue-simple-range-slider', vueSimpleRangeSlider);
 app.component('iron', iron);
 app.component('shape-loading', shapeLoading);
 

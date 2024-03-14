@@ -12,6 +12,9 @@ import type LoadingDto from '@/dtos/loadingDto';
 import helper from '@/shared/common/helper';
 import { CombinationType } from '@/enums/combinationType';
 import analysis from "@/assets/img/analysis.png"
+import {useCounterStore} from '@/stores/counter';
+
+const store = useCounterStore();
 
 
 const emit = defineEmits(['nextStep', 'clearForm', 'saveLinks']);
@@ -45,10 +48,10 @@ const combinationTypeList = helper.convertEnumToListItem(CombinationType);
 const combinationTypeSelected = ref(CombinationType.C1 as CombinationType);
 
 onMounted(() => {
-
+    store.isShowBusyIndicator =true;
     apiServise.callApi(props.links, constants.loading.getLoading).then((data: LoadingDto) => {
         designType.value = data.designType;
-
+       
         getDate();
     });
 });
@@ -89,6 +92,8 @@ const getDate = () => {
         reRenderBendingData.value++;
 
         emit("saveLinks",data._links);
+
+        store.isShowBusyIndicator = false;
 
     });
 

@@ -7,10 +7,15 @@ const emit = defineEmits(['changed', 'update:modelValue']);
 export interface Props {
     options?: Array<any>;
     modelValue: number;
+    field:string;
+    text:string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    options: Array<any>
+    options: Array<any>,
+    field:'id',
+    text:'title'
+
 });
 
 
@@ -20,10 +25,12 @@ let isDropdownOpen = ref(false as boolean);
 
 let selectedOption = props.options[0];
 
+const textFilter = ref('');
+
 const selectOption = (option) => {
     selectedOption = option;
     isDropdownOpen.value = false;
-    emit('update:modelValue', option.id)
+    emit('update:modelValue', option[props.field])
     emit('changed', option)
 };
 
@@ -33,17 +40,28 @@ const outSideClickHandler = (e)=> {
 
 document.addEventListener('click', close)
 
+
+const filter = (text)=>{
+    console.log(text.target.value);
+    
+}
+
+
 </script>
 
 <template>
     <div class="dropdown" v-click-outside="outSideClickHandler">
         <div class="dropdown-toggle-local" @click="isDropdownOpen = !isDropdownOpen" style="background-color: #EFEFEF;">          
-            <span class="dropdown-option-label fs-14 fw-500">{{ selectedOption?.title }}</span>
+            <span class="dropdown-option-label fs-14 fw-500">{{ selectedOption[props.text] }}</span>
             <span class="dropdown-caret-icon"></span>
         </div>
-        <ul class="dropdown-menu-body" v-show="isDropdownOpen" style="width: 100%;">            
-            <li v-for="(option, index) in props.options" :key="index" @click="selectOption(option)">               
-                <span class="dropdown-option-label fs-14 fw-500">{{ option?.title }}</span>
+        <ul class="dropdown-menu-body" v-show="isDropdownOpen" style="width: 100%; z-index: 99999;">  
+            <li class="py-0">
+                <input type="text" class="form-control my-0 fs-16" id="countryId" v-model="textFilter" @keyup="filter">
+                <hr class="my-1">
+            </li>  
+            <li v-for="(option, index) in props.options.filter(e=>e[props.text]?.toLocaleLowerCase()?.includes(textFilter?.toLocaleLowerCase()))" :key="index" @click="selectOption(option)">               
+                <span class="dropdown-option-label fs-14 fw-500">{{ option[props.text] }}</span>
             </li>
         </ul>
     </div>

@@ -23,6 +23,9 @@ import type FlangeVerification from '@/models/flangeVerification';
 
 import  flangeVerifications from "./components/flangeVerifications.vue";
 import { CombinationType } from '@/enums/combinationType';
+import {useCounterStore} from '@/stores/counter';
+
+const store = useCounterStore();
 
 const emit = defineEmits(['nextStep', 'clearForm', 'saveLinks']);
 const apiServise = inject('apiServise') as ApiServise;
@@ -69,7 +72,7 @@ const combinationTypeList = helper.convertEnumToListItem(CombinationType);
 const combinationTypeSelected = ref(CombinationType.C1 as CombinationType);
 
 onMounted(() => {
-    debugger
+    store.isShowBusyIndicator =true;
     apiServise.callApi(props.links, constants.loading.getLoading).then((data: any) => {
         emit('saveLinks', data._links);
 
@@ -109,6 +112,8 @@ const getData = () => {
         restraintDto.value.combination = data.combination;
 
         reRender.value++;
+
+        store.isShowBusyIndicator = false;
 
         emit('saveLinks', data._links);
     });
@@ -184,7 +189,7 @@ const addFlang = (isTop: boolean) => {
 
 }
 
-const cahngeFullRestraintFlangee = () => {
+const changeFullRestraintFlangee = () => {
     saveRestraint();
 }
 
@@ -241,7 +246,7 @@ const clearForm = () => {
                                 <div class="row py-2">
                                     <div class="form-check d-flex justify-content-start mx-4">
                                         <input class="form-check-input fs-16" type="checkbox"
-                                            @change="cahngeFullRestraintFlangee"
+                                            @change="changeFullRestraintFlangee"
                                             v-model="restraintDto.fullRestraintTopFlange" id="fullRestraintTopFlange">
                                         <label class="form-check-label input-label px-2 fw-400 fs-16"
                                             for="fullRestraintTopFlange">
@@ -307,7 +312,7 @@ const clearForm = () => {
                                 <div class="row py-2">
                                     <div class="form-check d-flex justify-content-start py-2 mx-4">
                                         <input class="form-check-input fs-16" type="checkbox"
-                                            @change="cahngeFullRestraintFlangee"
+                                            @change="changeFullRestraintFlangee"
                                             v-model="restraintDto.fullRestraintBottomFlange" id="fullRestraintBottomFlange">
                                         <label class="form-check-label input-label px-2 fw-400 fs-16"
                                             for="fullRestraintBottomFlange">

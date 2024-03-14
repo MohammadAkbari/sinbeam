@@ -1,7 +1,7 @@
 
 <script setup lang="ts">
 
-import { reactive, ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
 
 
 export interface Props {
@@ -17,24 +17,30 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(['change']);
 
 let isDropdownOpen = ref(false as boolean);
+let inputMinValue = ref(props.min);
+let inputMaxValue = ref(props.max);
 
 const state = reactive({
     value: [props.min, props.max]
 });
 
-const mainState = reactive({
-    value: [props.min, props.max]
-});
+const mainState = [ +props.min, +props.max];
 
 const saveValue=()=>{
-    mainState.value = state.value;
-    emit('change',mainState.value)
+    debugger
+    emit('change',state.value)
     outSideClickHandler();
 }
 
+watch(()=>state,()=>{
+    inputMaxValue.value = state.value[1]
+    inputMinValue.value = state.value[0]
+
+},{deep:true,immediate:true})
+
 const openDropdown = ()=>{
     isDropdownOpen.value = true
-    state.value = mainState.value;
+    state.value = mainState;
 }
 const outSideClickHandler = ()=> {
     isDropdownOpen.value = false;
@@ -47,24 +53,27 @@ const reRender = ref(0);
 <template>
     <div class="dropdown" v-click-outside="outSideClickHandler">
         <div class="dropdown-toggle-local" @click="openDropdown" style="background-color: #EFEFEF;">           
-            <span class="dropdown-option-label fs-14 fw-500">{{ mainState.value[0] }} - {{ mainState.value[1] }}</span>
+            <span class="dropdown-option-label fs-14 fw-500">{{ mainState[0] }} - {{ mainState[1] }}</span>
             <span class="dropdown-caret-icon"></span>
         </div>
         <div class="dropdown-menu-body" v-if="isDropdownOpen">
-            <range-slider v-model="state.value" :key="reRender" :min="props.min" :max="props.max" />
+            <div class="row mx-2" style="margin-left: 2px ">
+                <range-slider v-model:maxValue="state.value[1]" v-model:minValue="state.value[0]" :key="reRender" :min="props.min" :max="props.max" />
+            </div>
+           
             <div class="row px-3">
                 <div class="col-6">
                     <div class="mb-3 py-2">
                         <label for="exampleFormControlInput1" class="form-label mb-1 input-label">Min</label>
-                        <input type="text" class="form-control fs-16" id="exampleFormControlInput1" v-model="state.value[0]"
-                            @change="reRender++">
+                        <input type="text" class="form-control fs-16" id="exampleFormControlInput1" v-model="inputMinValue"
+                            @blur="state.value[0]= +inputMinValue;reRender++">
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="mb-3 py-2">
                         <label for="exampleFormControlInput1" class="form-label mb-1 input-label">Max</label>
-                        <input type="text" class="form-control fs-16" id="exampleFormControlInput1" v-model="state.value[1]"
-                            @change="reRender++">
+                        <input type="text" class="form-control fs-16" id="exampleFormControlInput1" v-model="inputMaxValue"
+                            @blur="state.value[1]= +inputMaxValue;reRender++">
                     </div>
                 </div>
             </div>
