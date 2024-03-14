@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import type { array } from '@amcharts/amcharts5';
-import { computed } from '@vue/reactivity';
-import { reactive } from 'vue';
 import MultiRangeSlider from "multi-range-slider-vue";
 import "multi-range-slider-vue/MultiRangeSliderBlack.css";
 import "multi-range-slider-vue/MultiRangeSliderBarOnly.css";

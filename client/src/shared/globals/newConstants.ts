@@ -33,6 +33,12 @@ const newConstants = {
     },
     question:{
         askQuestion:'ask-question'
+    },
+    countries:{
+        getCountries:'get-countries'
+    },
+    order:{
+        createRequest:'create-request'
     }
 }
 export default newConstants;

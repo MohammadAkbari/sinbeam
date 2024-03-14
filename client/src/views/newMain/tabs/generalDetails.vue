@@ -17,6 +17,9 @@ import generalInformation from "@/assets/img/generalInformation.png"
 import localisation from "@/assets/img/localisation.png"
 import ruler from "@/assets/img/ruler.png"
 import { useRoute } from 'vue-router';
+import {useCounterStore} from '@/stores/counter';
+
+const store = useCounterStore();
 
 
 export interface Props {
@@ -63,8 +66,11 @@ const designTypes = [
 
 onMounted(() => {
   if (props.links.some(e => e.rel == constants.generalDetails.getOrder)) {
+
+    store.isShowBusyIndicator = true;
+
     apiServise.callApi(props.links, constants.generalDetails.getOrder).then((data) => {
-      console.log(data);
+      store.isShowBusyIndicator = false;
       orderDto.projectName = data.projectName
       orderDto.designer = data.designer
       orderDto.note = data.note
@@ -101,7 +107,7 @@ debugger
   }
 
     
-    emit("nextStep",data?.id ? route?.params?.id :  data.id);
+    emit("nextStep",route?.params?.id ?  route?.params?.id : data.id);
   
 
   

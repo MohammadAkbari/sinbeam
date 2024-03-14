@@ -23,6 +23,9 @@ import type FlangeVerification from '@/models/flangeVerification';
 
 import  flangeVerifications from "./components/flangeVerifications.vue";
 import { CombinationType } from '@/enums/combinationType';
+import {useCounterStore} from '@/stores/counter';
+
+const store = useCounterStore();
 
 const emit = defineEmits(['nextStep', 'clearForm', 'saveLinks']);
 const apiServise = inject('apiServise') as ApiServise;
@@ -69,7 +72,7 @@ const combinationTypeList = helper.convertEnumToListItem(CombinationType);
 const combinationTypeSelected = ref(CombinationType.C1 as CombinationType);
 
 onMounted(() => {
-    debugger
+    store.isShowBusyIndicator =true;
     apiServise.callApi(props.links, constants.loading.getLoading).then((data: any) => {
         emit('saveLinks', data._links);
 
@@ -109,6 +112,8 @@ const getData = () => {
         restraintDto.value.combination = data.combination;
 
         reRender.value++;
+
+        store.isShowBusyIndicator = false;
 
         emit('saveLinks', data._links);
     });

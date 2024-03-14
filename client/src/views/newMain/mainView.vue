@@ -82,6 +82,8 @@ const questionDto = ref({} as QuestionDto);
 onMounted(async () => {
   flag.value = false;
 
+  debugger
+
   const data = await apiServise.get(config + (route?.params?.id ? `?id=${route?.params?.id}` : ''));
 
   if (route?.params?.id) {
