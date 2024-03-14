@@ -81,7 +81,7 @@ const saveRequeste = async () => {
     requestDto.value.phoneNumber=requestDto.value.phoneNumber+'';
     const data = await apiServise.callApi(props.links, constants.order.createRequest,requestDto.value);
     showModal.value = false
-    Swal.fire('Your order was successfully submitted')
+    Swal.fire('Your order was successfully submitted.')
     //
 }
 
@@ -154,7 +154,7 @@ const saveRequeste = async () => {
                     </div>
                 </div>
                 <div class="col-12 mt-5" style="padding:0px 40px;">
-                    <div class="mb-1 py-2 ">
+                    <div class="mb-1 py-2 row">
                         <button type="button" class="col-5 btn btn-secondary px-4 fs-14 fw-400"
                             @click="showModal = false">Cancel</button>
                         <div class="col-2"></div>
