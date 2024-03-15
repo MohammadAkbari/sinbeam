@@ -14,6 +14,7 @@ import iron from '@/shared/newComponents/iron.vue';
 import shapeLoading from '@/shared/newComponents/shapeLoading.vue';
 import ApiService from '@/core/services/api.service';
 import ClickOutside from '@/shared/common/outside';
+import PrimeVue from 'primevue/config';
 
 
 import VueSweetalert2 from 'vue-sweetalert2';
@@ -45,6 +46,8 @@ import 'vue-universal-modal/dist/index.css';
 
 
 
+
+
 const app = createApp(App)
 
 
@@ -71,6 +74,13 @@ app.provide('apiServise', new ApiService())
 app.use(VueUniversalModal, {
     teleportTarget: '#modals',
 });
+
+
+import 'primevue/resources/themes/aura-light-green/theme.css' 
+
+app.use(PrimeVue);
+
+
 
 
 app.mount('#app')

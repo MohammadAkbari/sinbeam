@@ -39,6 +39,10 @@ const newConstants = {
     },
     order:{
         createRequest:'create-request'
+    },
+    admin:{
+        questions:'questions',
+        requests:'requests',
     }
 }
 export default newConstants;

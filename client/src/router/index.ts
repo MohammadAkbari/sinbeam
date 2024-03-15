@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MainView from '../views/newMain/mainView.vue'
+import Profile from '../views/profile/profile.vue'
+import Questions from '../views/profile/tabs/questions.vue'
+import Requests from '../views/profile/tabs/requests.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +49,25 @@ const router = createRouter({
         }
       ]
     },
+    {
+      path: '/profile',
+      name: 'profile',
+      component:Profile,
+      redirect:'/profile/questions',
+      children: [
+        {
+          path: '/profile/questions',   
+          name:'questions',
+          component:Questions
+        },
+        {
+          path: '/profile/requests',  
+          name:'requests',
+          component:Requests
+        },
+       
+      ]
+    }
 
 
     // {
