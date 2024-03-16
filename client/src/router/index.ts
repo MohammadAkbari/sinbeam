@@ -50,18 +50,18 @@ const router = createRouter({
       ]
     },
     {
-      path: '/profile',
+      path: '/panel',
       name: 'profile',
       component:Profile,
-      redirect:'/profile/questions',
+      redirect:'/panel/questions',
       children: [
         {
-          path: '/profile/questions',   
+          path: '/panel/questions',   
           name:'questions',
           component:Questions
         },
         {
-          path: '/profile/requests',  
+          path: '/panel/requests',  
           name:'requests',
           component:Requests
         },
